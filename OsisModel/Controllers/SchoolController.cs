@@ -16,7 +16,7 @@ namespace OsisModel.Controllers
     public class SchoolController : Controller
     {
         private OsisContext db = new OsisContext();
-        //using auto mapper and optimize queries for EF
+        //using auto mapper and optimize queries for EF let test GitHub for winodws'
         // GET: /School/
         public ActionResult Index(int? page)
         {
