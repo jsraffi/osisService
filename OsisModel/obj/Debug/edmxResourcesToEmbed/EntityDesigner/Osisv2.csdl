@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OsisEntityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AcademicYear">
+    <Key>
+      <PropertyRef Name="AcademicYearID" />
+    </Key>
+    <Property Name="AcademicYearID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SchoolRefID" Type="Int32" Nullable="false" />
+    <Property Name="DisplayYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StartYear" Type="Int32" Nullable="false" />
+    <Property Name="EndYear" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ActiveYear" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StudentCurrentYears" Relationship="Self.FK_AcademicYearRefID" FromRole="AcademicYears" ToRole="StudentCurrentYears" />
+    <NavigationProperty Name="School" Relationship="Self.FK_SchoolsAcademicYear" FromRole="AcademicYears" ToRole="Schools" />
+    <NavigationProperty Name="UserPreferences" Relationship="OsisEntityModel.AcademicYearUserPreference" FromRole="AcademicYear" ToRole="UserPreference" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="UserPreference" Relationship="OsisEntityModel.UserPreferenceAspNetUser" FromRole="AspNetUser" ToRole="UserPreference" />
+  </EntityType>
+  <EntityType Name="InvoiceDetail">
+    <Key>
+      <PropertyRef Name="InvoiceDetailID" />
+    </Key>
+    <Property Name="InvoiceDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceRefID" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Invoice" Relationship="Self.FK_InvoiceRefID" FromRole="InvoiceDetails" ToRole="Invoices" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceID" />
+    </Key>
+    <Property Name="InvoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CurrentYearRefID" Type="Int32" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Latefee" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="InvoiceDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_InvoiceRefID" FromRole="Invoices" ToRole="InvoiceDetails" />
+    <NavigationProperty Name="StudentCurrentYear" Relationship="Self.FK_StudentCurrentYearInvoice" FromRole="Invoices" ToRole="StudentCurrentYears" />
+  </EntityType>
+  <EntityType Name="SchoolClass">
+    <Key>
+      <PropertyRef Name="ClassID" />
+    </Key>
+    <Property Name="ClassID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SchoolRefID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="School" Relationship="Self.FK_SchoolsSchoolClass" FromRole="SchoolClasses" ToRole="Schools" />
+  </EntityType>
+  <EntityType Name="School">
+    <Key>
+      <PropertyRef Name="SchoolID" />
+    </Key>
+    <Property Name="SchoolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SchoolName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastRegNo" Type="Int32" Nullable="false" />
+    <Property Name="Selected" Type="Int32" />
+    <Property Name="Address_Address1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_Pincode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_Mobile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="website" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AcademicYears" Relationship="Self.FK_SchoolsAcademicYear" FromRole="Schools" ToRole="AcademicYears" />
+    <NavigationProperty Name="SchoolClasses" Relationship="Self.FK_SchoolsSchoolClass" FromRole="Schools" ToRole="SchoolClasses" />
+    <NavigationProperty Name="StudentCurrentYears" Relationship="Self.FK_SchoolRef" FromRole="Schools" ToRole="StudentCurrentYears" />
+    <NavigationProperty Name="UserPreferences" Relationship="OsisEntityModel.SchoolUserPreference" FromRole="School" ToRole="UserPreference" />
+  </EntityType>
+  <EntityType Name="StudentCurrentYear">
+    <Key>
+      <PropertyRef Name="CurrentYearID" />
+    </Key>
+    <Property Name="CurrentYearID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentRefID" Type="Guid" Nullable="false" />
+    <Property Name="SchoolRefID" Type="Int32" Nullable="false" />
+    <Property Name="AcademicYearRefID" Type="Int32" Nullable="false" />
+    <Property Name="ClassRefID" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="AcademicYear" Relationship="Self.FK_AcademicYearRefID" FromRole="StudentCurrentYears" ToRole="AcademicYears" />
+    <NavigationProperty Name="Invoices" Relationship="Self.FK_StudentCurrentYearInvoice" FromRole="StudentCurrentYears" ToRole="Invoices" />
+    <NavigationProperty Name="School" Relationship="Self.FK_SchoolRef" FromRole="StudentCurrentYears" ToRole="Schools" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_StudentsCurrentYear" FromRole="StudentCurrentYears" ToRole="Students" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="Guid" Nullable="false" />
+    <Property Name="Address_Address1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_Pincode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_Mobile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address_website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NickName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Sex" Type="Byte" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FathersName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MothersName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FathersOccupation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MothersOccupation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MothersPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FathersPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FathersQualification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MothersQualifiication" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MotherTongue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IdentificationMarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="KnowMedicalCondition" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SpecialTalents" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ReasonForOlivekids" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PlayschoolExperience" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfJoining" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CenterCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RegistrationNo" Type="Int32" Nullable="false" />
+    <Property Name="AdmissionFee" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="TotalCourseFee" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TermFee" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Height" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Weight" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="StudentCurrentYears" Relationship="Self.FK_StudentsCurrentYear" FromRole="Students" ToRole="StudentCurrentYears" />
+  </EntityType>
+  <EntityType Name="UserPreference">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="School" Relationship="OsisEntityModel.SchoolUserPreference" FromRole="UserPreference" ToRole="School" />
+    <Property Name="SchoolRefID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AcademicYear" Relationship="OsisEntityModel.AcademicYearUserPreference" FromRole="UserPreference" ToRole="AcademicYear" />
+    <Property Name="AcademicYearRefID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="OsisEntityModel.UserPreferenceAspNetUser" FromRole="UserPreference" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="FK_AcademicYearRefID">
+    <End Role="AcademicYears" Type="Self.AcademicYear" Multiplicity="1" />
+    <End Role="StudentCurrentYears" Type="Self.StudentCurrentYear" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcademicYears">
+        <PropertyRef Name="AcademicYearID" />
+      </Principal>
+      <Dependent Role="StudentCurrentYears">
+        <PropertyRef Name="AcademicYearRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SchoolsAcademicYear">
+    <End Role="Schools" Type="Self.School" Multiplicity="1" />
+    <End Role="AcademicYears" Type="Self.AcademicYear" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schools">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="AcademicYears">
+        <PropertyRef Name="SchoolRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceRefID">
+    <End Role="Invoices" Type="Self.Invoice" Multiplicity="1" />
+    <End Role="InvoiceDetails" Type="Self.InvoiceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoices">
+        <PropertyRef Name="InvoiceID" />
+      </Principal>
+      <Dependent Role="InvoiceDetails">
+        <PropertyRef Name="InvoiceRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentCurrentYearInvoice">
+    <End Role="StudentCurrentYears" Type="Self.StudentCurrentYear" Multiplicity="1" />
+    <End Role="Invoices" Type="Self.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentCurrentYears">
+        <PropertyRef Name="CurrentYearID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="CurrentYearRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SchoolsSchoolClass">
+    <End Role="Schools" Type="Self.School" Multiplicity="1" />
+    <End Role="SchoolClasses" Type="Self.SchoolClass" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schools">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="SchoolClasses">
+        <PropertyRef Name="SchoolRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SchoolRef">
+    <End Role="Schools" Type="Self.School" Multiplicity="1" />
+    <End Role="StudentCurrentYears" Type="Self.StudentCurrentYear" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schools">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="StudentCurrentYears">
+        <PropertyRef Name="SchoolRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsCurrentYear">
+    <End Role="Students" Type="Self.Student" Multiplicity="1" />
+    <End Role="StudentCurrentYears" Type="Self.StudentCurrentYear" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="StudentCurrentYears">
+        <PropertyRef Name="StudentRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OsisEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AcademicYears" EntityType="Self.AcademicYear" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetail" />
+    <EntitySet Name="Invoices" EntityType="Self.Invoice" />
+    <EntitySet Name="SchoolClasses" EntityType="Self.SchoolClass" />
+    <EntitySet Name="Schools" EntityType="Self.School" />
+    <EntitySet Name="StudentCurrentYears" EntityType="Self.StudentCurrentYear" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <EntitySet Name="UserPreferences" EntityType="Self.UserPreference" />
+    <AssociationSet Name="FK_AcademicYearRefID" Association="Self.FK_AcademicYearRefID">
+      <End Role="AcademicYears" EntitySet="AcademicYears" />
+      <End Role="StudentCurrentYears" EntitySet="StudentCurrentYears" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SchoolsAcademicYear" Association="Self.FK_SchoolsAcademicYear">
+      <End Role="Schools" EntitySet="Schools" />
+      <End Role="AcademicYears" EntitySet="AcademicYears" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceRefID" Association="Self.FK_InvoiceRefID">
+      <End Role="Invoices" EntitySet="Invoices" />
+      <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentCurrentYearInvoice" Association="Self.FK_StudentCurrentYearInvoice">
+      <End Role="StudentCurrentYears" EntitySet="StudentCurrentYears" />
+      <End Role="Invoices" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SchoolsSchoolClass" Association="Self.FK_SchoolsSchoolClass">
+      <End Role="Schools" EntitySet="Schools" />
+      <End Role="SchoolClasses" EntitySet="SchoolClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SchoolRef" Association="Self.FK_SchoolRef">
+      <End Role="Schools" EntitySet="Schools" />
+      <End Role="StudentCurrentYears" EntitySet="StudentCurrentYears" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsCurrentYear" Association="Self.FK_StudentsCurrentYear">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="StudentCurrentYears" EntitySet="StudentCurrentYears" />
+    </AssociationSet>
+    <AssociationSet Name="SchoolUserPreference" Association="OsisEntityModel.SchoolUserPreference">
+      <End Role="School" EntitySet="Schools" />
+      <End Role="UserPreference" EntitySet="UserPreferences" />
+    </AssociationSet>
+    <AssociationSet Name="AcademicYearUserPreference" Association="OsisEntityModel.AcademicYearUserPreference">
+      <End Role="AcademicYear" EntitySet="AcademicYears" />
+      <End Role="UserPreference" EntitySet="UserPreferences" />
+    </AssociationSet>
+    <AssociationSet Name="UserPreferenceAspNetUser" Association="OsisEntityModel.UserPreferenceAspNetUser">
+      <End Role="UserPreference" EntitySet="UserPreferences" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="SchoolUserPreference">
+    <End Type="OsisEntityModel.School" Role="School" Multiplicity="1" />
+    <End Type="OsisEntityModel.UserPreference" Role="UserPreference" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="UserPreference">
+        <PropertyRef Name="SchoolRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AcademicYearUserPreference">
+    <End Type="OsisEntityModel.AcademicYear" Role="AcademicYear" Multiplicity="1" />
+    <End Type="OsisEntityModel.UserPreference" Role="UserPreference" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcademicYear">
+        <PropertyRef Name="AcademicYearID" />
+      </Principal>
+      <Dependent Role="UserPreference">
+        <PropertyRef Name="AcademicYearRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserPreferenceAspNetUser">
+    <End Type="OsisEntityModel.UserPreference" Role="UserPreference" Multiplicity="1" />
+    <End Type="OsisEntityModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="UserPreference">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

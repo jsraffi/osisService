@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Olive school information ssystem</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div id="page">
+        <div class="navbar navbar-inverse navbar-fixed-top" style="height:75px;padding-top:10px;">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Welcome to Olive School Information System", "Index", "Home", null, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse" style="font-size:25px;">
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+
+
+        @if (User.Identity.IsAuthenticated)
+        {
+
+
+            <div id="sidebar-wrapper" style="margin-top: 1%; width: 20%; float:left;z-index:999999;">
+                <ul class="sidebar-nav" style="border: 2px solid #43C6DB; width: 98%;">
+                    <li class="sidebar-brand" style="margin-bottom: 10px;">
+                        <a style="color: yellow; font-weight: bold; border-bottom: 2px solid #43C6DB;margin-bottom:20px;">Navigation</a>
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("User Management", "Index", "Account")</li>
+                        <li>@Html.ActionLink("Role Management", "ListAllRoles", "Account")</li>
+                        <li>@Html.ActionLink("Set Default School", "ChangeSchool", "School")</li>
+                        <li>@Html.ActionLink("Set Default Academic Year", "ChangeAcademicYear", "AcademicYear")</li>
+                    }
+
+                    <li>@Html.ActionLink("Current Students", "StudentCurrentYearIndex", "Student")</li>
+                    <li>@Html.ActionLink("Student Management", "Index", "Student")</li>
+                    <li>@Html.ActionLink("Invoice Management", "Index", "Invoice")</li>
+                    <li>@Html.ActionLink("School Management", "Index", "School")</li>
+                    <li>@Html.ActionLink("Academic Year Management", "Index", "AcademicYear")</li>
+                    <li>@Html.ActionLink("Class Management", "Index", "SchoolClass")</li>
+                    <li>@Html.ActionLink("Fee Collection Report", "FeeCollectedReport", "Invoice")</li>
+                    <li>@Html.ActionLink("Fee Collection by School", "FeeCollectedReportBySchool", "Invoice")</li>
+                    <li>@Html.ActionLink("User Preference(Logged In)", "UserPrefer", "Userpreference")</li>
+
+
+                </ul>
+            </div>
+
+        }
+        <div style="clear:both"></div>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            @:<div class="container body-content" style="width:100%">
+            }
+        else
+        {
+            @:<div class="container body-content" style="width: 90%; margin-top: 5%; float:left; margin-left: 20%; ">
+            }
+        @RenderBody()
+    </div>
+</div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

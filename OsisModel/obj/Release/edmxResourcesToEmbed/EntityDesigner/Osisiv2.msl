@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="Schools">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Schools)">
+        <MappingFragment StoreEntitySet="Schools">
+          <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+          <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+          <ScalarProperty Name="LastRegNo" ColumnName="LastRegNo" />
+          <ScalarProperty Name="Selected" ColumnName="Selected" />
+          <ComplexProperty Name="Address" TypeName="Model1.Address">
+            <ScalarProperty Name="Address1" ColumnName="Address_Address1" />
+            <ScalarProperty Name="Address2" ColumnName="Address_Address2" />
+            <ScalarProperty Name="City" ColumnName="Address_City" />
+            <ScalarProperty Name="Pincode" ColumnName="Address_Pincode" />
+            <ScalarProperty Name="Mobile" ColumnName="Address_Mobile" />
+            <ScalarProperty Name="Phone" ColumnName="Address_Phone" />
+            <ScalarProperty Name="Email" ColumnName="Address_Email" />
+            <ScalarProperty Name="website" ColumnName="Address_website" />
+          </ComplexProperty>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Students)">
+        <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ComplexProperty Name="Address" TypeName="Model1.Address">
+            <ScalarProperty Name="Address1" ColumnName="Address_Address1" />
+            <ScalarProperty Name="Address2" ColumnName="Address_Address2" />
+            <ScalarProperty Name="City" ColumnName="Address_City" />
+            <ScalarProperty Name="Pincode" ColumnName="Address_Pincode" />
+            <ScalarProperty Name="Mobile" ColumnName="Address_Mobile" />
+            <ScalarProperty Name="Phone" ColumnName="Address_Phone" />
+            <ScalarProperty Name="Email" ColumnName="Address_Email" />
+            <ScalarProperty Name="website" ColumnName="Address_website" />
+          </ComplexProperty>
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="FathersName" ColumnName="FathersName" />
+          <ScalarProperty Name="MothersName" ColumnName="MothersName" />
+          <ScalarProperty Name="FathersOccupation" ColumnName="FathersOccupation" />
+          <ScalarProperty Name="MothersOccupation" ColumnName="MothersOccupation" />
+          <ScalarProperty Name="MothersPhone" ColumnName="MothersPhone" />
+          <ScalarProperty Name="FathersPhone" ColumnName="FathersPhone" />
+          <ScalarProperty Name="FathersQualification" ColumnName="FathersQualification" />
+          <ScalarProperty Name="MothersQualifiication" ColumnName="MothersQualifiication" />
+          <ScalarProperty Name="MotherTongue" ColumnName="MotherTongue" />
+          <ScalarProperty Name="IdentificationMarks" ColumnName="IdentificationMarks" />
+          <ScalarProperty Name="KnowMedicalCondition" ColumnName="KnowMedicalCondition" />
+          <ScalarProperty Name="SpecialTalents" ColumnName="SpecialTalents" />
+          <ScalarProperty Name="ReasonForOlivekids" ColumnName="ReasonForOlivekids" />
+          <ScalarProperty Name="PlayschoolExperience" ColumnName="PlayschoolExperience" />
+          <ScalarProperty Name="DateOfJoining" ColumnName="DateOfJoining" />
+          <ScalarProperty Name="CenterCode" ColumnName="CenterCode" />
+          <ScalarProperty Name="RegistrationNo" ColumnName="RegistrationNo" />
+          <ScalarProperty Name="AdmissionFee" ColumnName="AdmissionFee" />
+          <ScalarProperty Name="TotalCourseFee" ColumnName="TotalCourseFee" />
+          <ScalarProperty Name="TermFee" ColumnName="TermFee" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentCurrentYears">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.StudentCurrentYear)">
+        <MappingFragment StoreEntitySet="StudentCurrentYears">
+          <ScalarProperty Name="CurrentYearID" ColumnName="CurrentYearID" />
+          <ScalarProperty Name="StudentRefID" ColumnName="StudentRefID" />
+          <ScalarProperty Name="SchoolRefID" ColumnName="SchoolRefID" />
+          <ScalarProperty Name="AcademicYearRefID" ColumnName="AcademicYearAcademicYearID" />
+          <ScalarProperty Name="ClassRefID" ColumnName="ClassRefID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SchoolClasses">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.SchoolClass)">
+        <MappingFragment StoreEntitySet="SchoolClasses">
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+          <ScalarProperty Name="SchoolRefID" ColumnName="SchoolRefID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcademicYears">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.AcademicYear)">
+        <MappingFragment StoreEntitySet="AcademicYears">
+          <ScalarProperty Name="AcademicYearID" ColumnName="AcademicYearID" />
+          <ScalarProperty Name="SchoolRefID" ColumnName="SchoolRefID" />
+          <ScalarProperty Name="DisplayYear" ColumnName="DisplayYear" />
+          <ScalarProperty Name="StartYear" ColumnName="StartYear" />
+          <ScalarProperty Name="EndYear" ColumnName="EndYear" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Invoice)">
+        <MappingFragment StoreEntitySet="Invoices">
+          <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+          <ScalarProperty Name="CurrentYearRefID" ColumnName="CurrentYearRefID" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Latefee" ColumnName="Latefee" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.InvoiceDetail)">
+        <MappingFragment StoreEntitySet="InvoiceDetails">
+          <ScalarProperty Name="InvoiceDetailID" ColumnName="InvoiceDetailID" />
+          <ScalarProperty Name="InvoiceRefID" ColumnName="InvoiceRefID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AcademicYears">
+    <Key>
+      <PropertyRef Name="AcademicYearID" />
+    </Key>
+    <Property Name="AcademicYearID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SchoolRefID" Type="int" Nullable="false" />
+    <Property Name="DisplayYear" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartYear" Type="int" Nullable="false" />
+    <Property Name="EndYear" Type="int" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="ActiveYear" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InvoiceDetails">
+    <Key>
+      <PropertyRef Name="InvoiceDetailID" />
+    </Key>
+    <Property Name="InvoiceDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceRefID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Invoices">
+    <Key>
+      <PropertyRef Name="InvoiceID" />
+    </Key>
+    <Property Name="InvoiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CurrentYearRefID" Type="int" Nullable="false" />
+    <Property Name="Discount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Latefee" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="InvoiceDate" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SchoolClasses">
+    <Key>
+      <PropertyRef Name="ClassID" />
+    </Key>
+    <Property Name="ClassID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClassName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SchoolRefID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Schools">
+    <Key>
+      <PropertyRef Name="SchoolID" />
+    </Key>
+    <Property Name="SchoolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SchoolName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastRegNo" Type="int" Nullable="false" />
+    <Property Name="Selected" Type="int" />
+    <Property Name="Address_Address1" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_Address2" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_City" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_Pincode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_Mobile" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="website" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="StudentCurrentYears">
+    <Key>
+      <PropertyRef Name="CurrentYearID" />
+    </Key>
+    <Property Name="CurrentYearID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentRefID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="SchoolRefID" Type="int" Nullable="false" />
+    <Property Name="AcademicYearRefID" Type="int" Nullable="false" />
+    <Property Name="ClassRefID" Type="int" Nullable="false" />
+    <Property Name="Active" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Address_Address1" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_Address2" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_City" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_Pincode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_Mobile" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address_website" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="NickName" Type="nvarchar(max)" />
+    <Property Name="Sex" Type="tinyint" Nullable="false" />
+    <Property Name="DOB" Type="datetime" Nullable="false" />
+    <Property Name="FathersName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MothersName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FathersOccupation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MothersOccupation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MothersPhone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FathersPhone" Type="nvarchar(max)" />
+    <Property Name="FathersQualification" Type="nvarchar(max)" />
+    <Property Name="MothersQualifiication" Type="nvarchar(max)" />
+    <Property Name="MotherTongue" Type="nvarchar(max)" />
+    <Property Name="IdentificationMarks" Type="nvarchar(max)" />
+    <Property Name="KnowMedicalCondition" Type="nvarchar(max)" />
+    <Property Name="SpecialTalents" Type="nvarchar(max)" />
+    <Property Name="ReasonForOlivekids" Type="nvarchar(max)" />
+    <Property Name="PlayschoolExperience" Type="nvarchar(max)" />
+    <Property Name="DateOfJoining" Type="nvarchar(max)" />
+    <Property Name="CenterCode" Type="nvarchar(max)" />
+    <Property Name="RegistrationNo" Type="int" Nullable="false" />
+    <Property Name="AdmissionFee" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="TotalCourseFee" Type="nvarchar(max)" />
+    <Property Name="TermFee" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="UserPreferences">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="AcademicYearRefID" Type="int" Nullable="false" />
+    <Property Name="SchoolsRefID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AcademicYearRefID">
+    <End Role="AcademicYears" Type="Self.AcademicYears" Multiplicity="1" />
+    <End Role="StudentCurrentYears" Type="Self.StudentCurrentYears" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcademicYears">
+        <PropertyRef Name="AcademicYearID" />
+      </Principal>
+      <Dependent Role="StudentCurrentYears">
+        <PropertyRef Name="AcademicYearRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceRefID">
+    <End Role="Invoices" Type="Self.Invoices" Multiplicity="1" />
+    <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoices">
+        <PropertyRef Name="InvoiceID" />
+      </Principal>
+      <Dependent Role="InvoiceDetails">
+        <PropertyRef Name="InvoiceRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SchoolRef">
+    <End Role="Schools" Type="Self.Schools" Multiplicity="1" />
+    <End Role="StudentCurrentYears" Type="Self.StudentCurrentYears" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schools">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="StudentCurrentYears">
+        <PropertyRef Name="SchoolRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SchoolsAcademicYear">
+    <End Role="Schools" Type="Self.Schools" Multiplicity="1" />
+    <End Role="AcademicYears" Type="Self.AcademicYears" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schools">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="AcademicYears">
+        <PropertyRef Name="SchoolRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SchoolsSchoolClass">
+    <End Role="Schools" Type="Self.Schools" Multiplicity="1" />
+    <End Role="SchoolClasses" Type="Self.SchoolClasses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schools">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="SchoolClasses">
+        <PropertyRef Name="SchoolRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentCurrentYearInvoice">
+    <End Role="StudentCurrentYears" Type="Self.StudentCurrentYears" Multiplicity="1" />
+    <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentCurrentYears">
+        <PropertyRef Name="CurrentYearID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="CurrentYearRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentsCurrentYear">
+    <End Role="Students" Type="Self.Students" Multiplicity="1" />
+    <End Role="StudentCurrentYears" Type="Self.StudentCurrentYears" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="StudentCurrentYears">
+        <PropertyRef Name="StudentRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPreferences_UserPreferences">
+    <End Role="UserPreferences" Type="Self.UserPreferences" Multiplicity="1" />
+    <End Role="UserPreferences1" Type="Self.UserPreferences" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserPreferences">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserPreferences1">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="AcademicYears" EntityType="Self.AcademicYears" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Invoices" EntityType="Self.Invoices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SchoolClasses" EntityType="Self.SchoolClasses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Schools" EntityType="Self.Schools" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentCurrentYears" EntityType="Self.StudentCurrentYears" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AcademicYearRefID" Association="Self.FK_AcademicYearRefID">
+      <End Role="AcademicYears" EntitySet="AcademicYears" />
+      <End Role="StudentCurrentYears" EntitySet="StudentCurrentYears" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceRefID" Association="Self.FK_InvoiceRefID">
+      <End Role="Invoices" EntitySet="Invoices" />
+      <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SchoolRef" Association="Self.FK_SchoolRef">
+      <End Role="Schools" EntitySet="Schools" />
+      <End Role="StudentCurrentYears" EntitySet="StudentCurrentYears" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SchoolsAcademicYear" Association="Self.FK_SchoolsAcademicYear">
+      <End Role="Schools" EntitySet="Schools" />
+      <End Role="AcademicYears" EntitySet="AcademicYears" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SchoolsSchoolClass" Association="Self.FK_SchoolsSchoolClass">
+      <End Role="Schools" EntitySet="Schools" />
+      <End Role="SchoolClasses" EntitySet="SchoolClasses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentCurrentYearInvoice" Association="Self.FK_StudentCurrentYearInvoice">
+      <End Role="StudentCurrentYears" EntitySet="StudentCurrentYears" />
+      <End Role="Invoices" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentsCurrentYear" Association="Self.FK_StudentsCurrentYear">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="StudentCurrentYears" EntitySet="StudentCurrentYears" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPreferences_UserPreferences" Association="Self.FK_UserPreferences_UserPreferences">
+      <End Role="UserPreferences" EntitySet="UserPreferences" />
+      <End Role="UserPreferences1" EntitySet="UserPreferences" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

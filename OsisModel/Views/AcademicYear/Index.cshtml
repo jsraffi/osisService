@@ -1,0 +1,75 @@
+﻿@model IEnumerable<OsisModel.Models.AcademicYearSingle>
+@using PagedList;
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Academic Year Listing</h1>
+
+<p>
+    <h1>@Html.ActionLink("Create New", "Create")</h1>
+</p>
+<div id="list">
+    <table style="font-size:22px;width:1700px;" class="table-bordered table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SchoolName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActiveYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisplayYear)
+            </th>
+            <th>Edit Academic Year</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SchoolName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate, "ShortDateTime")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate, "ShortDateTime")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActiveYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisplayYear)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit Academic Year", "Edit", new { id = item.AcademicYearID })
+
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))

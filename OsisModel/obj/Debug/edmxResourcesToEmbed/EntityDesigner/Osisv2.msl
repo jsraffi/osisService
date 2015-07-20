@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OsisEntityModelStoreContainer" CdmEntityContainer="OsisEntities">
+    <EntitySetMapping Name="AcademicYears">
+      <EntityTypeMapping TypeName="OsisEntityModel.AcademicYear">
+        <MappingFragment StoreEntitySet="AcademicYears">
+          <ScalarProperty Name="AcademicYearID" ColumnName="AcademicYearID" />
+          <ScalarProperty Name="SchoolRefID" ColumnName="SchoolRefID" />
+          <ScalarProperty Name="DisplayYear" ColumnName="DisplayYear" />
+          <ScalarProperty Name="StartYear" ColumnName="StartYear" />
+          <ScalarProperty Name="EndYear" ColumnName="EndYear" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="ActiveYear" ColumnName="ActiveYear" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="OsisEntityModel.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceDetails">
+      <EntityTypeMapping TypeName="OsisEntityModel.InvoiceDetail">
+        <MappingFragment StoreEntitySet="InvoiceDetails">
+          <ScalarProperty Name="InvoiceDetailID" ColumnName="InvoiceDetailID" />
+          <ScalarProperty Name="InvoiceRefID" ColumnName="InvoiceRefID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="OsisEntityModel.Invoice">
+        <MappingFragment StoreEntitySet="Invoices">
+          <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+          <ScalarProperty Name="CurrentYearRefID" ColumnName="CurrentYearRefID" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Latefee" ColumnName="Latefee" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SchoolClasses">
+      <EntityTypeMapping TypeName="OsisEntityModel.SchoolClass">
+        <MappingFragment StoreEntitySet="SchoolClasses">
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+          <ScalarProperty Name="SchoolRefID" ColumnName="SchoolRefID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Schools">
+      <EntityTypeMapping TypeName="OsisEntityModel.School">
+        <MappingFragment StoreEntitySet="Schools">
+          <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+          <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+          <ScalarProperty Name="LastRegNo" ColumnName="LastRegNo" />
+          <ScalarProperty Name="Selected" ColumnName="Selected" />
+          <ScalarProperty Name="Address_Address1" ColumnName="Address_Address1" />
+          <ScalarProperty Name="Address_Address2" ColumnName="Address_Address2" />
+          <ScalarProperty Name="Address_City" ColumnName="Address_City" />
+          <ScalarProperty Name="Address_Pincode" ColumnName="Address_Pincode" />
+          <ScalarProperty Name="Address_Mobile" ColumnName="Address_Mobile" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="website" ColumnName="website" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentCurrentYears">
+      <EntityTypeMapping TypeName="OsisEntityModel.StudentCurrentYear">
+        <MappingFragment StoreEntitySet="StudentCurrentYears">
+          <ScalarProperty Name="CurrentYearID" ColumnName="CurrentYearID" />
+          <ScalarProperty Name="StudentRefID" ColumnName="StudentRefID" />
+          <ScalarProperty Name="SchoolRefID" ColumnName="SchoolRefID" />
+          <ScalarProperty Name="AcademicYearRefID" ColumnName="AcademicYearRefID" />
+          <ScalarProperty Name="ClassRefID" ColumnName="ClassRefID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="OsisEntityModel.Student">
+        <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="Address_Address1" ColumnName="Address_Address1" />
+          <ScalarProperty Name="Address_Address2" ColumnName="Address_Address2" />
+          <ScalarProperty Name="Address_City" ColumnName="Address_City" />
+          <ScalarProperty Name="Address_Pincode" ColumnName="Address_Pincode" />
+          <ScalarProperty Name="Address_Mobile" ColumnName="Address_Mobile" />
+          <ScalarProperty Name="Address_Phone" ColumnName="Address_Phone" />
+          <ScalarProperty Name="Address_Email" ColumnName="Address_Email" />
+          <ScalarProperty Name="Address_website" ColumnName="Address_website" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="FathersName" ColumnName="FathersName" />
+          <ScalarProperty Name="MothersName" ColumnName="MothersName" />
+          <ScalarProperty Name="FathersOccupation" ColumnName="FathersOccupation" />
+          <ScalarProperty Name="MothersOccupation" ColumnName="MothersOccupation" />
+          <ScalarProperty Name="MothersPhone" ColumnName="MothersPhone" />
+          <ScalarProperty Name="FathersPhone" ColumnName="FathersPhone" />
+          <ScalarProperty Name="FathersQualification" ColumnName="FathersQualification" />
+          <ScalarProperty Name="MothersQualifiication" ColumnName="MothersQualifiication" />
+          <ScalarProperty Name="MotherTongue" ColumnName="MotherTongue" />
+          <ScalarProperty Name="IdentificationMarks" ColumnName="IdentificationMarks" />
+          <ScalarProperty Name="KnowMedicalCondition" ColumnName="KnowMedicalCondition" />
+          <ScalarProperty Name="SpecialTalents" ColumnName="SpecialTalents" />
+          <ScalarProperty Name="ReasonForOlivekids" ColumnName="ReasonForOlivekids" />
+          <ScalarProperty Name="PlayschoolExperience" ColumnName="PlayschoolExperience" />
+          <ScalarProperty Name="DateOfJoining" ColumnName="DateOfJoining" />
+          <ScalarProperty Name="CenterCode" ColumnName="CenterCode" />
+          <ScalarProperty Name="RegistrationNo" ColumnName="RegistrationNo" />
+          <ScalarProperty Name="AdmissionFee" ColumnName="AdmissionFee" />
+          <ScalarProperty Name="TotalCourseFee" ColumnName="TotalCourseFee" />
+          <ScalarProperty Name="TermFee" ColumnName="TermFee" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserPreferences">
+      <EntityTypeMapping TypeName="OsisEntityModel.UserPreference">
+        <MappingFragment StoreEntitySet="UserPreferences">
+          <ScalarProperty Name="SchoolRefID" ColumnName="SchoolsRefID" />
+          <ScalarProperty Name="AcademicYearRefID" ColumnName="AcademicYearRefID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

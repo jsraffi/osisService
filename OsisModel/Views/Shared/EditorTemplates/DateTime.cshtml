@@ -1,0 +1,7 @@
+﻿@using System.Globalization
+@model DateTime?
+
+@*@Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "datepicker" })*@
+
+@Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, String.Format("{{0: {0} }}",CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern), new { @class = "datepicker" })
+

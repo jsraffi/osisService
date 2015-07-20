@@ -1,0 +1,76 @@
+﻿@model IEnumerable<OsisModel.Models.StudentSingle>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>List of students</h1>
+
+<p>
+    <h1>@Html.ActionLink("Create New", "Create")</h1>
+</p>
+<div id="list">
+    <table style="font-size:22px;width:1700px;" class="table-bordered table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RegistrationNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FathersName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MothersName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MothersPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FathersPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfJoining)
+            </th>
+
+            <th>Operations</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FathersName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MothersName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MothersPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FathersPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfJoining, "ShortDateTime")
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.StudentID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.StudentID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))

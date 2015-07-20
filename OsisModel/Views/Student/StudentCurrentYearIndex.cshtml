@@ -1,0 +1,52 @@
+﻿@model IEnumerable<OsisModel.Models.CurrentYearSingle>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "StudentCurrentYearIndex";
+}
+
+<h1>StudentCurrentYearFor a School</h1>
+
+<p>
+    <h1>@Html.ActionLink("Create New", "Create")</h1>
+</p>
+<div id="list">
+    <table style="font-size:22px;width:1700px;" class="table-bordered table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SchoolName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Operations
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SchoolName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.StudentID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.StudentID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("StudentCurrentYearIndex", new { page }))

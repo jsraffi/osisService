@@ -1,0 +1,113 @@
+﻿@model OsisModel.Models.SchoolViewModel
+
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h1>Edit School</h1>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.SchoolID)
+        @Html.HiddenFor(model => model.LastRegNo)
+        @Html.HiddenFor(model => model.Selected)
+        <div class="form-group" style="margin-bottom:25px">
+            @Html.LabelFor(model => model.SchoolName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SchoolName)
+                @Html.ValidationMessageFor(model => model.SchoolName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.address.Address1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.address.Address1)
+                @Html.ValidationMessageFor(model => model.address.Address1)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.address.Address2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.address.Address2)
+                @Html.ValidationMessageFor(model => model.address.Address2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.address.City, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.address.City)
+                @Html.ValidationMessageFor(model => model.address.City)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.address.Pincode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.address.Pincode)
+                @Html.ValidationMessageFor(model => model.address.Pincode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.address.Mobile, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.address.Mobile)
+                @Html.ValidationMessageFor(model => model.address.Mobile)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Phone)
+                @Html.ValidationMessageFor(model => model.Phone)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.website, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.website)
+                @Html.ValidationMessageFor(model => model.website)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastRegNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10 lastregno">
+                @Html.DisplayFor(model => model.LastRegNo)
+                @Html.ValidationMessageFor(model => model.LastRegNo)
+            </div>
+        </div>
+            <div class="form-group">
+            <div class="col-md-2">
+                </div>
+                <div class="col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" style="height:50px;margin-left:-15px" />
+                </div>
+            </div>
+
+        <div class="form-group">
+            <div class="col-md-10" style="font-size:25px">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

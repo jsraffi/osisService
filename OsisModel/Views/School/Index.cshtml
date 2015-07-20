@@ -1,0 +1,80 @@
+﻿@model IEnumerable<OsisModel.Models.School>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Listing of schools</h1>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div id="list">
+    <table style="font-size:22px;width:1700px;" class="table-bordered table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SchoolName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastRegNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address.Address1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address.Address2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address.Pincode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Selected)
+            </th>
+            <th>Edit</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SchoolName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastRegNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address.Address1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address.Address2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address.Pincode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address.Mobile)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Selected)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SchoolID })
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))

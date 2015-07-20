@@ -1,0 +1,77 @@
+﻿@model OsisModel.Models.AjaxUserPreference
+@using (Html.BeginForm())
+{
+        
+        <div id="userpreferencedata">
+            <div style="font-size:20px;font-weight:bold">
+                @Html.HiddenFor(m => m.School.SchoolID)
+                @Html.HiddenFor(m => m.osisuserid)
+                @Html.HiddenFor(m => m.loggedin)
+                
+            </div>
+            
+            <table width="900" border="1" style="font-size:20px;" cellspacing="10">
+                <tr>
+
+                    <th>
+                        Year Name
+                    </th>
+
+                    <th>
+                        Change Current Academic Year for a School
+                    </th>
+                </tr>
+
+                @for (var i = 0; i < Model.AcademicYear.Count; i++)
+                {
+
+                    <tr>
+                        @Html.HiddenFor(m => Model.AcademicYear[i].AcademicYearID)
+                        @Html.HiddenFor(m => Model.AcademicYear[i].SchoolRefID)
+                        <td>@Html.DisplayFor(m => Model.AcademicYear[i].DisplayYear)</td>
+                        <td>@Html.RadioButtonFor(m => Model.AcademicYear[0].ActiveYear, Model.AcademicYear[i].AcademicYearID, ViewBag.SelectedYear == Model.AcademicYear[i].AcademicYearID ? new { @checked = "Checked", id = "radioschools", name = "radioschools" } : null)</td>
+                    </tr>
+
+                }
+            </table>
+
+
+            <br />
+            <br />
+            @if (Model.AcademicYear.Count > 0 )
+            {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Change Academic Year" class="btn btn-default" style="float:left;margin-left:0;" />
+                    </div>
+                </div>
+            }
+            else if(Model.School != null)
+            {
+                <div style="font-size:25px;">
+                    <span>No Academic year defined for this school</span>
+                </div>
+            }
+            
+
+
+        </div>
+    
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+
+}
+
+
+
+
+
+
+
+
+
