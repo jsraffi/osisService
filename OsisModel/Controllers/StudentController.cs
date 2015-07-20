@@ -13,7 +13,7 @@ using PagedList;
 using AutoMapper;
 
 namespace OsisModel.Controllers
-{
+{// I have put this on github
     public class StudentController : Controller
     {
         private OsisContext db = new OsisContext();
