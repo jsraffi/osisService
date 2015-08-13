@@ -4,20 +4,20 @@
     ViewBag.Title = "Edit";
 }
 
-<h1>Edit a Class Name</h1>
+<h1 class="h1padbot">Edit a Class Name</h1>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+    <div class="form-horizontal formpadleft">
         
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.ClassID)
         @Html.HiddenFor(model => model.SchoolRefID)
         <div class="form-group">
-            @Html.LabelFor(model => model.SchoolRefID, "School Name", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SchoolRefID, "School Name", new { @class = "controlLabel col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("SchoolRefID", null, String.Empty, new { @disabled = "disabled"})
                 @Html.ValidationMessageFor(model => model.SchoolRefID)
@@ -25,7 +25,7 @@
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(model => model.ClassName, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ClassName, new { @class = "controlLabel col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ClassName)
                 @Html.ValidationMessageFor(model => model.ClassName)
@@ -34,7 +34,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" style="height:50px;margin-left:175px" />
+                <input type="submit" value="Save" class="btn btn-default buttonlayout"  />
             </div>
         </div>
     </div>

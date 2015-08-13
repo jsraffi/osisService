@@ -72,7 +72,7 @@ namespace OsisModel.Controllers
             var userprefer = Db.UserPreferences.Where(a => a.UserName == id).Select(x=> new {x.SchoolRefID,x.AcademicYearRefID}).FirstOrDefault();
             
             ViewBag.SchoolID = new SelectList(Db.Schools.AsNoTracking().Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName",userprefer.SchoolRefID);
-            ViewBag.AcademicYearID = new SelectList(Db.AcademicYears.AsNoTracking().Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear",userprefer.AcademicYearRefID);
+            ViewBag.AcademicYearID = new SelectList(Db.AcademicYears.AsNoTracking().Where(a => a.SchoolRefID ==userprefer.SchoolRefID).Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear",userprefer.AcademicYearRefID);
 
             return View(model);
         }

@@ -6,13 +6,13 @@
     ViewBag.Title = "Index";
 }
 
-<h1>Listing of schools</h1>
+<h1 class="h1padbot">List of schools</h1>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <h1>@Html.ActionLink("Create a new school", "Create")</h1>
 </p>
 <div id="list">
-    <table style="font-size:22px;width:1700px;" class="table-bordered table-striped">
+    <table class="table-bordered table-striped tableindex">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.SchoolName)

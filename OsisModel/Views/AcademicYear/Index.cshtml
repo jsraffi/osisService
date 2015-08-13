@@ -7,13 +7,13 @@
     ViewBag.Title = "Index";
 }
 
-<h1>Academic Year Listing</h1>
+<h1 class="h1padbot">List of academic years</h1>
 
 <p>
-    <h1>@Html.ActionLink("Create New", "Create")</h1>
+    <h1>@Html.ActionLink("Create a new academic year", "Create")</h1>
 </p>
 <div id="list">
-    <table style="font-size:22px;width:1700px;" class="table-bordered table-striped">
+    <table class="table-bordered table-striped tableindex">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.SchoolName)

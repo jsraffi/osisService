@@ -6,6 +6,8 @@ using OsisModel.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
+//This model where classes are added to school
 namespace OsisModel.Models
 {
     [Table("SchoolClasses")]
@@ -20,6 +22,8 @@ namespace OsisModel.Models
         [ForeignKey("School")]
         public int SchoolRefID { get; set; }
     
+        //THis proeprty is used by Entity Framework for navigating to school model and getting school Name
+        // for the front end, school name selecting drop down.
         public virtual School School { get; set; }
         
     }

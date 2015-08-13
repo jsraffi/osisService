@@ -171,3 +171,31 @@ table th
     height:50px;
     margin-left:175px
 }
+.h1padbot
+{
+    padding-bottom:30px;
+}
+.controlLabel
+{
+    font-size:25px !important;
+    width:210px !important;
+}
+.formpadleft
+{
+    padding-left:20px !important
+}
+.buttonlayout
+{
+    height:75px !important;
+    margin-left:190px;
+    font-size:40px !important;
+}
+.pagination > li > a
+{
+    font-size:30px;
+}
+.tableindex
+{
+    font-size:22px;
+    width:1700px;
+}

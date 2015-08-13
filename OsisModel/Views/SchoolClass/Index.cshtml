@@ -7,13 +7,13 @@
     ViewBag.Title = "School and Classs Listing";
 }
 
-<h1>Class Listing</h1>
+<h1 class="h1padbot">List of schools with classes</h1>
 
 <p>
-    <h1>@Html.ActionLink("Create New", "Create")</h1>
+    <h1>@Html.ActionLink("Create a new class", "Create")</h1>
 </p>
 <div id="list">
-    <table style="font-size:22px;width:1700px;" class="table-bordered table-striped" >
+    <table class="table-bordered table-striped tableindex" >
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.SchoolName)

@@ -4,41 +4,41 @@
     ViewBag.Title = "Edit";
 }
 
-<h1>Edit User</h1>
+<h1 class="h1padbot">Edit User</h1>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+    <div class="form-horizontal formpadleft">
         @Html.HiddenFor(model => model.UserName)
         @Html.HiddenFor(model => model.UserPreferences.UserID)
         
         @Html.ValidationSummary(true)
         <div class="form-group">
-            @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UserName, new { @class = "controlLabel col-md-2" })
             <div class="col-md-10" style="font-size:25px;">
                 @Html.DisplayFor(model => model.UserName)
                 
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.SchoolID, "School Name", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SchoolID, "School Name", new { @class = "controlLabel col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("SchoolID", null,"Please select a schools")
                 @Html.ValidationMessageFor(model => model.SchoolID)
             </div>
         </div>
         <div class="form-group">        
-            @Html.LabelFor(model => model.AcademicYearID, "Academic Year", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AcademicYearID, "Academic Year", new { @class = "controlLabel col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("AcademicYearID",null, "Please select an academic year")
                 @Html.ValidationMessageFor(model => model.AcademicYearID)
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FirstName, new { @class = "controlLabel col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FirstName)
                 @Html.ValidationMessageFor(model => model.FirstName)
@@ -46,7 +46,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.LastName, new { @class = "controlLabel col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LastName)
                 @Html.ValidationMessageFor(model => model.LastName)
@@ -54,7 +54,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Email, new { @class = "controlLabel col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email)
                 @Html.ValidationMessageFor(model => model.Email)
@@ -63,7 +63,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" style="height:50px;margin-left:175px" />
+                <input type="submit" value="Save" class="btn btn-default buttonlayout"  />
             </div>
         </div>
     </div>
@@ -97,6 +97,8 @@
             });
         }
     });
+
+        
 
 
     </script>
