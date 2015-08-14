@@ -77,6 +77,77 @@ namespace OsisModel.Controllers
             return View(model);
         }
 
+        //This method allow the current logged in user to change the only academic year
+        //while school remains same, the logged in user can't change school for current user
+        //only the admin can do
+        public ActionResult UserChangeAcademicYear()
+        {
+            //This the context that is used by Microsoft default security system that comes 
+            // along MVC project templates
+            var Db = new ApplicationDbContext();
+
+            //get the the logged user's userid, can't call this method in LINQ query
+            //gives error's can't use expression inside Linq query
+            string userid = User.Identity.GetUserId();
+                       
+            //This is the object/table that stores the preferences of each user on the system
+            //like school and academicyear, for which the system will allow the user to add edit the data 
+            // and print reports
+            var userprefer = Db.UserPreferences.Where(a => a.UserID == userid).Select(x => new { x.SchoolRefID, x.AcademicYearRefID }).FirstOrDefault();
+            
+            //Create a refrence to view model for UserChangeAcademicyear view
+            var model = new UserChangeAcademicYearVM();
+
+            // Populate the model School Id reference
+            model.SchoolRefID = userprefer.SchoolRefID;
+
+            //get school name for view readonly(display purpose) 
+            //normal system users can only change academic year
+
+            var schoolname = Db.Schools.AsNoTracking().Where(s => s.SchoolID == userprefer.SchoolRefID).Select(x => new { x.SchoolName }).FirstOrDefault();
+
+            //populate schoolname to model
+            model.SchoolName = schoolname.SchoolName;
+
+            //Populate the view bag Dictionary with the dbset query
+            //the query only gets the two columns required for the dropdown populate(one is academic year id and display year)
+            //with a where condition to get only acamedic years only for a particular school
+            ViewBag.AcademicYearID = new SelectList(Db.AcademicYears.AsNoTracking().Where(a => a.SchoolRefID == userprefer.SchoolRefID).Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear", userprefer.AcademicYearRefID);
+
+            //Send model to view
+            return View(model);
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] 
+        public async Task<ActionResult> UserChangeAcademicYear(UserChangeAcademicYearVM vmodel)
+        {
+            var dbcontext = new ApplicationDbContext();
+            string userid = User.Identity.GetUserId();
+            if(ModelState.IsValid)
+            {
+                
+                // Create a object with partial fields of Userpreference(UP) object
+                var UPAcademicyearupdate = new UserPreference()
+                {
+                    UserID = User.Identity.GetUserId(),
+                    AcademicYearRefID = vmodel.AcademicYearID
+                };
+                    dbcontext.UserPreferences.Attach(UPAcademicyearupdate);
+                    dbcontext.Entry(UPAcademicyearupdate).Property("AcademicYearRefID").IsModified = true;
+                    await dbcontext.SaveChangesAsync();
+
+                    return RedirectToAction("StudentCurrentYearIndex", "Student");
+                
+            }
+
+            ViewBag.AcademicYearID = new SelectList(dbcontext.AcademicYears.AsNoTracking().Where(a => a.SchoolRefID == vmodel.SchoolRefID).Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear", vmodel.AcademicYearID);
+            return View(vmodel);
+
+        }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]

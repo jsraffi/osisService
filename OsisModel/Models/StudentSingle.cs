@@ -25,5 +25,9 @@ namespace OsisModel.Models
         public DateTime DateOfJoining { get; set; }
 
         public string ClassName { get; set; }
+
+        public int AcademicYearRefID { get; set; }
+
+        public int SchoolRefID { get; set; }
     }
  }

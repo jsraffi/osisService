@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using OsisModel.Models;
 using System.Configuration;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PagedList;
 using AutoMapper;
 
@@ -34,25 +36,31 @@ namespace OsisModel.Controllers
             return Json(acyear, JsonRequestBehavior.AllowGet);
         }
 
-
-
-
-
-
-
-
-
         // GET: /Student/
         public ActionResult Index(int? page)
         {
+            //14-Aug-2015-changing the student index view to just students of the current logged user's
+            //school and academic year preference.
 
-           
+            //Get current logged in user need reference to Microsoft.AspNet.Identity
+            string userid = User.Identity.GetUserId();
 
-            var pageNumber = page ?? 1;
-            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
-            var students = db.StudentSingles.OrderBy(d => d.RegistrationNo);
-            return View(students.ToPagedList(pageNumber, pageSize));
+            //Get logged in users school and academic year preference
+            var userprefer = db.UserPreferences.Where(a => a.UserID == userid).Select(x => new { x.SchoolRefID, x.AcademicYearRefID }).FirstOrDefault();
             
+            //need this for paging if page null then 1
+            var pageNumber = page ?? 1;
+            //get the page size from config file
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
+            
+            //to display fields from three different table a database view is used
+            //a model Studentsingle just for index page listing is used.
+            // all fields required for display and used in where clause 
+            //needs to be there in StudentSingle model
+            var students = db.StudentSingles.OrderBy(d => d.RegistrationNo).Where(sa => sa.SchoolRefID == userprefer.SchoolRefID && sa.AcademicYearRefID == userprefer.AcademicYearRefID );
+            
+            //PagedList is Nugget package for just paging
+            return View(students.ToPagedList(pageNumber, pageSize));
         }   
 
         // GET: /Student/Details/5

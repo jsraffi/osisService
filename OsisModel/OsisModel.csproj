@@ -247,6 +247,7 @@
     <Compile Include="Models\School.cs" />
     <Compile Include="Models\SchoolViewModel.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\UserChangeAcademicYearVM.cs" />
     <Compile Include="Models\UserPreference.cs" />
     <Compile Include="Models\UserPreferenceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -701,6 +702,7 @@
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\StudentCurrentYearIndex.cshtml" />
+    <Content Include="Views\Account\UserChangeAcademicYear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

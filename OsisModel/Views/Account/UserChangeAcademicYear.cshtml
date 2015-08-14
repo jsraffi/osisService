@@ -1,0 +1,52 @@
+﻿@model OsisModel.Models.UserChangeAcademicYearVM
+
+@{
+    ViewBag.Title = "Olive school information system- Change acdemic year";
+}
+
+<h1 class="h1padbot">Change academic year</h1>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal formpadleft">
+        @Html.HiddenFor(model => model.SchoolRefID)
+        @Html.HiddenFor(model => model.SchoolName)
+        @Html.ValidationSummary(true)
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.SchoolRefID, "School Name", new { @class = "controlLabel col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SchoolName, new { @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.SchoolRefID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AcademicYearID, new { @class = "controlLabel col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AcademicYearID")
+                @Html.ValidationMessageFor(model => model.AcademicYearID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-default buttonlayout" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="form-group">
+    <div class="col-md-10" style="font-size:25px">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/globalize")
+}
