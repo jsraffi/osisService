@@ -15,8 +15,11 @@ namespace OsisModel.Models
         
         public StudentViewModel()
         {
-            DateOfJoining = System.DateTime.Now;
+            
             this.StudentCurrentYear = new List<StudentCurrentYear>();
+            
+
+            
         }
 
         [Required(ErrorMessage="Please enter a student name")]
@@ -29,8 +32,9 @@ namespace OsisModel.Models
         [Required(ErrorMessage = "Please enter a gender")]
         public string Sex { get; set; }
         
+        [UIHint("ShortDateTime")]
         [Required(ErrorMessage="Enter date in dd/mm/yyyy format")]
-        public System.DateTime DOB { get; set; }
+        public string DOB { get; set; }
         
         
         [Required(ErrorMessage = "Please enter address")]
@@ -111,7 +115,7 @@ namespace OsisModel.Models
         public Nullable<decimal> Height { get; set; }
         public Nullable<decimal> Weight { get; set; }
         public int RegistrationNo { get; set; }
-        public DateTime DateOfJoining { get; set; }
+        public string DateOfJoining { get; set; }
         public System.Guid StudentID { get; set; }
         
         [Required(ErrorMessage="Please select a school")]

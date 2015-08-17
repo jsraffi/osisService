@@ -31,10 +31,18 @@ namespace OsisModel
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/datepicker").Include(
+                      "~/Scripts/bootstrap-datepicker.js"));
+
+
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/simple-sidebar.css"));
+
+            bundles.Add(new StyleBundle("~/Content/datepickercss").Include(
+                      "~/Content/bootstrap-datepicker3.css"));
 
 
         }

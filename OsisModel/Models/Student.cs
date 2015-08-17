@@ -12,7 +12,7 @@ namespace OsisModel.Models
     [Table("Students")]
     public class Student
     {
-             
+           
         [Key()]   
         public System.Guid StudentID { get; set; }
         public string Address_Address1 { get; set; }

@@ -33,7 +33,7 @@ namespace OsisModel.Models
         [Display(Name = "Start date in dd/mm/yyyy")]
         public DateTime StartDate { get; set; }
 
-        [UIHint("DateTIme")]
+        [UIHint("DateTime")]
         [Required(ErrorMessage = "Please enter ending year in dd/mm/yyyy format")]
         [Display(Name = "End date in dd/mm/yyyy")]
         public DateTime EndDate { get; set; }
