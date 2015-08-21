@@ -57,3 +57,4 @@ D:\projects2015\OsisModel\OsisModel\bin\Microsoft.Owin.Security.Twitter.xml
 D:\projects2015\OsisModel\OsisModel\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\projects2015\OsisModel\OsisModel\obj\Debug\OsisModel.dll
 D:\projects2015\OsisModel\OsisModel\obj\Debug\OsisModel.pdb
+D:\projects2015\OsisModel\OsisModel\obj\Debug\OsisModel.csprojResolveAssemblyReference.cache

@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PagedList;
 using AutoMapper;
+using System.Globalization;
 
 namespace OsisModel.Controllers
 {// I have put this on github
@@ -126,15 +127,17 @@ namespace OsisModel.Controllers
                             Student studentmap = Mapper.Map<Student>(student);
                             studentmap.StudentID = Guid.NewGuid();
 
-                            studentmap.StudentCurrentYear[0].AcademicYearRefID = student.AcademicYearRefID;
-                            studentmap.StudentCurrentYear[0].SchoolRefID = student.SchoolRefID;
-                            studentmap.StudentCurrentYear[0].ClassRefID = student.ClassRefID;
-                            studentmap.StudentCurrentYear[0].StudentRefID = studentmap.StudentID;
+                            
+
+                            //studentmap.StudentCurrentYear[0].AcademicYearRefID = student.AcademicYearRefID;
+                            //studentmap.StudentCurrentYear[0].SchoolRefID = student.SchoolRefID;
+                            //studentmap.StudentCurrentYear[0].ClassRefID = student.ClassRefID;
+                            //studentmap.StudentCurrentYear[0].StudentRefID = studentmap.StudentID;
                             studentmap.StudentCurrentYear[0].Active = true;
-                            var LastRegNo = db.Database.SqlQuery<int>("Select LastRegNo from Schools with (XLOCK) where SchoolID={0}", student.SchoolRefID).FirstOrDefault<int>();
+                            var LastRegNo = db.Database.SqlQuery<int>("Select LastRegNo from Schools with (XLOCK) where SchoolID={0}", studentmap.StudentCurrentYear[0].SchoolRefID).FirstOrDefault<int>();
                             int NewRegNo = LastRegNo + 1;
 
-                            db.Database.ExecuteSqlCommand("UPDATE Schools SET LastRegNo = {0} where schoolID= {1}", NewRegNo, student.SchoolRefID);
+                            db.Database.ExecuteSqlCommand("UPDATE Schools SET LastRegNo = {0} where schoolID= {1}", NewRegNo, studentmap.StudentCurrentYear[0].SchoolRefID);
 
                             studentmap.RegistrationNo = NewRegNo;
                             
@@ -147,7 +150,7 @@ namespace OsisModel.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Error occured in the form");
+                            ModelState.AddModelError("", "Error: model state is not valid");
                             ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName");
                             ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear");
                             ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName");
@@ -159,6 +162,7 @@ namespace OsisModel.Controllers
                {
                    dbosisTransaction.Rollback();
                    ModelState.AddModelError("", e.InnerException);
+                   TempData["errormessage"] = e.Message;
                    ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName");
                    ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear");
                    ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName");
@@ -166,19 +170,45 @@ namespace OsisModel.Controllers
                }
             }
          }
-        // GET: /Student/Edit/5
+        //This action uses provide editing the school for a student record
         public async Task<ActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             Student student = await db.Students.FindAsync(id);
+
+            
+            
+            StudentViewModel studentVM = Mapper.Map<StudentViewModel>(student);
+
+            studentVM.DateOfJoining = student.DateOfJoining;
+                       
             if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            StudentCurrentYearSubset CurrentYear = new StudentCurrentYearSubset();
+
+            foreach(var studentCurrentRec in student.StudentCurrentYear)
+            {
+                if (studentCurrentRec.Active == true)
+                {   
+                    CurrentYear.SchoolRefID = studentCurrentRec.SchoolRefID;
+                    CurrentYear.AcademicYearRefID= studentCurrentRec.AcademicYearRefID;
+                    CurrentYear.ClassRefID=studentCurrentRec.ClassRefID;
+                    break;
+                }
+            }
+            
+
+            ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", CurrentYear.SchoolRefID);
+            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Where(sch => sch.SchoolRefID == CurrentYear.SchoolRefID).Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear",CurrentYear.AcademicYearRefID);
+            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Where(sch => sch.SchoolRefID == CurrentYear.SchoolRefID).Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName",CurrentYear.ClassRefID);
+            
+            return View(studentVM);
         }
 
         // POST: /Student/Edit/5

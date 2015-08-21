@@ -5,6 +5,7 @@ using System.Web;
 using OsisModel.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 
 namespace OsisModel.Models
@@ -17,91 +18,84 @@ namespace OsisModel.Models
         {
             
             this.StudentCurrentYear = new List<StudentCurrentYear>();
-            
-
+            this.DateOfJoining = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             
         }
+        
 
         [Required(ErrorMessage="Please enter a student name")]
-        [Display(Name="Student Name")]
         public string Name { get; set; }
 
-        [Display(Name="Nick Name")]
         public string NickName { get; set; }
 
         [Required(ErrorMessage = "Please enter a gender")]
         public string Sex { get; set; }
         
-        [UIHint("ShortDateTime")]
+        
         [Required(ErrorMessage="Enter date in dd/mm/yyyy format")]
-        public string DOB { get; set; }
+        public DateTime DOB { get; set; }
         
         
         [Required(ErrorMessage = "Please enter address")]
-        [Display(Name="Address1")]
         public string Address_Address1 { get; set; }
 
         [Required(ErrorMessage = "Please enter address")]
-        [Display(Name = "Address2")]
         public string Address_Address2 { get; set; }
 
         [Required(ErrorMessage = "Please enter a city")]
-        [Display(Name="City")]
         public string Address_City { get; set; }
 
         [Required(ErrorMessage = "Please enter a pincode")]
-        [Display(Name="Pincode")]
         public string Address_Pincode { get; set; }
-        [Display(Name= "Landline")]
         public string Phone { get; set; }
         
+        [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage="Please enter a vaild emailid")]
         [EmailAddress(ErrorMessage="Emailaddres is not valid")]
         public string Email { get; set; }
         public string website { get; set; }
 
-        [Display(Name = "Father's Name")]
+        [Required(ErrorMessage="Please enter father's name")]
         public string FathersName { get; set; }
         [Display(Name = "Mother's Name")]
+        [Required(ErrorMessage = "Please enter mother's name")]
         public string MothersName { get; set; }
 
-        [Display(Name = "Father's Occupation")]
+        [Required(ErrorMessage = "Please enter father's occupation")]
         public string FathersOccupation { get; set; }
         [Display(Name = "Mother's Occupation")]
+
+        [Required(ErrorMessage = "Please enter mother's occupation")]
         public string MothersOccupation { get; set; }
 
-        [Display(Name = "Mother's Phone")]
+        [Required(ErrorMessage = "Please enter mother's mobile no")]
         public string MothersPhone { get; set; }
 
 
-        [Display(Name = "Father's Phone")]
+        
         public string FathersPhone { get; set; }
 
-        [Display(Name = "Father's Qualification")]
+        [Required(ErrorMessage = "Please enter mother's qualification")]
         public string FathersQualification { get; set; }
 
-        [Display(Name="Mothers Qualification")]
+        [Required(ErrorMessage = "Please enter mother's qualification")]
         public string MothersQualifiication { get; set; }
-        
-        [Display(Name = "Mother tongue")]
+
+        [Required(ErrorMessage = "Please enter mother tongue")]
         public string MotherTongue { get; set; }
 
-        [Display(Name = "Identification marks")]
+        
         public string IdentificationMarks { get; set; }
 
-
-        [Display(Name = "Known Medical condition")]
         public string KnowMedicalCondition { get; set; }
 
-        [Display(Name = "Special talents")]
         public string SpecialTalents { get; set; }
 
-        [Display(Name = "Reason for choosing us")]
         public string ReasonForOlivekids { get; set; }
 
-        [Display(Name = "Previous play school experience")]
         public string PlayschoolExperience { get; set; }
-
-        [Display(Name = "Center Code")]
+        
+        
         public string CenterCode { get; set; }
 
         [Display(Name = "Admission Fees")]
@@ -115,7 +109,9 @@ namespace OsisModel.Models
         public Nullable<decimal> Height { get; set; }
         public Nullable<decimal> Weight { get; set; }
         public int RegistrationNo { get; set; }
-        public string DateOfJoining { get; set; }
+
+        [Required(ErrorMessage="Please enter a valid date(dd/mm/yyy)")]
+        public DateTime DateOfJoining { get; set; }
         public System.Guid StudentID { get; set; }
         
         [Required(ErrorMessage="Please select a school")]
@@ -131,8 +127,6 @@ namespace OsisModel.Models
         [ForeignKey("StudentCurrentYear")]
         public int ClassRefID { get; set; }
 
-        [Required(ErrorMessage="Please tick the checkbox")]
-        public bool Active { get; set; }
         public virtual IList<StudentCurrentYear> StudentCurrentYear { get; set; }
 
         

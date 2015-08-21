@@ -1,306 +1,367 @@
-﻿@model OsisModel.Models.Student
+﻿@model OsisModel.Models.StudentViewModel
+
+@section CustomStyles {
+    @Styles.Render("~/Content/datepickercss")
+}
 
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h1 class="h1padbot">Editing record of student @Model.Name</h1>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Student</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.StudentID)
+    @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Address_Address1, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address_Address1)
-                @Html.ValidationMessageFor(model => model.Address_Address1)
-            </div>
+    <div class="formpadleft form-inline">
+
+        <div class="row rowstudent">
+            <table>
+                <tr>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Name)<br />
+                        @Html.TextBoxFor(model => model.Name, new { @placeholder = "Student Name", @class = "text-box-student", @title = "Please enter a student name" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.NickName)<br />
+                        @Html.TextBoxFor(model => model.NickName, new { @placeholder = "Nick Name", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Sex)<br />
+                        @Html.DropDownListFor(model => model.Sex, new List<SelectListItem>{
+                                new SelectListItem{ Text="Male", Value="M"},
+                                new SelectListItem{ Text="Female", Value="F"}
+                            }, "Please select a gender", new { @class = "text-box-student" }
+                                )
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.DOB)<br />
+                        @Html.TextBoxFor(model => model.DOB, "{0:dd/MM/yyyy}", new { @placeholder = "Date of birth", @class = "text-box-student" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="rowbetweenspace"></div>
+        <div class="row rowstudent">
+
+            <table>
+                <tr>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.FathersName)
+                        <br />
+                        @Html.TextBoxFor(model => model.FathersName, new { @placeholder = "Father's Name", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        @Html.ValidationMessageFor(model => model.MothersName)
+                        <br />
+                        @Html.TextBoxFor(model => model.MothersName, new { @placeholder = "Mother's Name", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        @Html.ValidationMessageFor(model => model.FathersOccupation)
+                        <br />
+                        @Html.TextBoxFor(model => model.FathersOccupation, new { @placeholder = "Father's Occupation", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.MothersOccupation)
+                        <br />
+                        @Html.TextBoxFor(model => model.MothersOccupation, new { @placeholder = "Mother's Occupation", @class = "text-box-student" })
+                    </td>
+                </tr>
+            </table>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Address_Address2, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address_Address2)
-                @Html.ValidationMessageFor(model => model.Address_Address2)
-            </div>
+        <div class="rowbetweenspace"></div>
+        <div class="row rowstudent">
+            <table>
+                <tr>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.FathersQualification)
+                        <br />
+                        @Html.TextBoxFor(model => model.FathersQualification, new { @placeholder = "Father's qualification", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        @Html.ValidationMessageFor(model => model.MothersQualifiication)
+                        <br />
+                        @Html.TextBoxFor(model => model.MothersQualifiication, new { @placeholder = "Mother's qualification", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.MothersPhone)
+                        <br />
+                        @Html.TextBoxFor(model => model.MothersPhone, new { @placeholder = "Mother's mobile no", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        @Html.ValidationMessageFor(model => model.FathersPhone)
+                        <br />
+                        @Html.TextBoxFor(model => model.FathersPhone, new { @placeholder = "Father's mobile no", @class = "text-box-student" })
+                    </td>
+                </tr>
+            </table>
+
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Address_City, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address_City)
-                @Html.ValidationMessageFor(model => model.Address_City)
-            </div>
+
+
+
+        <div class="rowbetweenspace"></div>
+        <div class="row rowstudent">
+
+            <table>
+                <tr>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.MotherTongue)
+                        <br />
+                        @Html.TextBoxFor(model => model.MotherTongue, new { @placeholder = "Mother tongue", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Address_Address1)
+                        <br />
+                        @Html.TextBoxFor(model => model.Address_Address1, new { @placeholder = "Address1", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Address_Address2)
+                        <br />
+                        @Html.TextBoxFor(model => model.Address_Address2, new { @placeholder = "Address2", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Address_City)
+                        <br />
+                        @Html.TextBoxFor(model => model.Address_City, new { @placeholder = "City", @class = "text-box-student" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="rowbetweenspace"></div>
+        <div class="row rowstudent">
+            <table>
+                <tr>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Address_Pincode)
+                        <br />
+                        @Html.TextBoxFor(model => model.Address_Pincode, new { @placeholder = "Pincode", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Phone)
+                        <br />
+                        @Html.TextBoxFor(model => model.Phone, new { @placeholder = "Land Line phone no", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Email)
+                        <br />
+                        @Html.TextBoxFor(model => model.Email, new { @placeholder = "Email", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.website)
+                        <br />
+                        @Html.TextBoxFor(model => model.website, new { @placeholder = "Website", @class = "text-box-student" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="rowbetweenspace"></div>
+        <div class="row rowstudent">
+
+            <table>
+                <tr>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.IdentificationMarks)
+                        <br />
+                        @Html.TextBoxFor(model => model.IdentificationMarks, new { @placeholder = "Identification marks", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        >
+                        @Html.ValidationMessageFor(model => model.KnowMedicalCondition)
+                        <br />
+                        @Html.TextBoxFor(model => model.KnowMedicalCondition, new { @placeholder = "Known medical condition", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.SpecialTalents)
+                        <br />
+                        @Html.TextBoxFor(model => model.SpecialTalents, new { @placeholder = "Special talents", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.ReasonForOlivekids)
+                        <br />
+                        @Html.TextBoxFor(model => model.ReasonForOlivekids, new { @placeholder = "Reason for choosing olveikids", @class = "text-box-student" })
+                    </td>
+                </tr>
+            </table>
+
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Address_Pincode, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address_Pincode)
-                @Html.ValidationMessageFor(model => model.Address_Pincode)
-            </div>
+        <div class="rowbetweenspace"></div>
+        <div class="row rowstudent">
+            <table>
+                <tr>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.PlayschoolExperience)
+                        <br />
+                        @Html.TextBoxFor(model => model.PlayschoolExperience, new { @placeholder = "Playschool experience", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        @Html.ValidationMessageFor(model => model.DateOfJoining)
+                        <br />
+                        @Html.TextBoxFor(model => model.DateOfJoining, "{0:dd/MM/yyyy}", new { @placeholder = "Date of joining", @class = "text-box-student", @Title = "Please select a date of joining" })
+                    </td>
+                    <td>
+
+                        @Html.ValidationMessageFor(model => model.CenterCode)
+                        <br />
+                        @Html.TextBoxFor(model => model.CenterCode, new { @placeholder = "Center Code", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.AdmissionFee)
+                        <br />
+                        @Html.TextBoxFor(model => model.AdmissionFee, new { @placeholder = "Admission Fee", @class = "text-box-student"})
+                    </td>
+                </tr>
+            </table>
+
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Address_Mobile, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address_Mobile)
-                @Html.ValidationMessageFor(model => model.Address_Mobile)
-            </div>
+        <div class="rowbetweenspace"></div>
+        <div class="row rowstudent">
+            <table>
+                <tr>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.TotalCourseFee)
+                        <br />
+                        @Html.TextBoxFor(model => model.TotalCourseFee, new { @placeholder = "Total course fee", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        @Html.ValidationMessageFor(model => model.TermFee)
+                        <br />
+                        @Html.TextBoxFor(model => model.TermFee, new { @placeholder = "Term fee", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Height)
+                        <br />
+                        @Html.TextBoxFor(model => model.Height, new { @placeholder = "Heigth", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Weight)
+                        <br />
+                        @Html.TextBoxFor(model => model.Weight, new { @placeholder = "Weight", @class = "text-box-student" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="rowbetweenspace"></div>
+        <div class="row" style="margin-bottom:25px; margin:0 auto;width:600px">
+            <table id="studentcurrentyear">
+
+                <tbody>
+
+                    @for (var i = 0; i < Model.StudentCurrentYear.Count; i++)
+                    {
+
+                        <tr>
+
+                            <td>
+                                @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].SchoolRefID)<br />
+                                @Html.DropDownListFor(model => model.StudentCurrentYear[i].SchoolRefID, ViewBag.SchoolRefID as IEnumerable<SelectListItem>, "Please select a schoool", new { id = "SchoolRefID", @class = "text-box-student" })
+
+                            </td>
+                            <td>
+                                @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].AcademicYearRefID)<br />
+                                @Html.DropDownListFor(model => model.StudentCurrentYear[i].AcademicYearRefID, ViewBag.AcademicYearREfID as IEnumerable<SelectListItem>, "Please select a academic year", new { id = "AcademicYearRefID", @class = "text-box-student" })
+
+                            </td>
+                            <td>
+                                @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].ClassRefID)<br />
+                                @Html.DropDownListFor(model => model.StudentCurrentYear[i].ClassRefID, ViewBag.ClassRefiD as IEnumerable<SelectListItem>, "Please select a class", new { id = "ClassRefID", @class = "text-box-student" })
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+
+
+            </table>
+
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Phone)
-                @Html.ValidationMessageFor(model => model.Phone)
-            </div>
+        <div class="rowbetweenspace"></div>
+
+        <div class="buttoncenter" style="padding-left:-100px!important">
+            <input type="submit" value="Save" class="btn btn-default widthandheight" />
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email)
-                @Html.ValidationMessageFor(model => model.Email)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.website, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.website)
-                @Html.ValidationMessageFor(model => model.website)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NickName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NickName)
-                @Html.ValidationMessageFor(model => model.NickName)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Sex, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Sex)
-                @Html.ValidationMessageFor(model => model.Sex)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DOB, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DOB)
-                @Html.ValidationMessageFor(model => model.DOB)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FathersName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FathersName)
-                @Html.ValidationMessageFor(model => model.FathersName)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MothersName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MothersName)
-                @Html.ValidationMessageFor(model => model.MothersName)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FathersOccupation, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FathersOccupation)
-                @Html.ValidationMessageFor(model => model.FathersOccupation)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MothersOccupation, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MothersOccupation)
-                @Html.ValidationMessageFor(model => model.MothersOccupation)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MothersPhone, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MothersPhone)
-                @Html.ValidationMessageFor(model => model.MothersPhone)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FathersPhone, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FathersPhone)
-                @Html.ValidationMessageFor(model => model.FathersPhone)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FathersQualification, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FathersQualification)
-                @Html.ValidationMessageFor(model => model.FathersQualification)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MothersQualifiication, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MothersQualifiication)
-                @Html.ValidationMessageFor(model => model.MothersQualifiication)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MotherTongue, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MotherTongue)
-                @Html.ValidationMessageFor(model => model.MotherTongue)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdentificationMarks, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdentificationMarks)
-                @Html.ValidationMessageFor(model => model.IdentificationMarks)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.KnowMedicalCondition, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.KnowMedicalCondition)
-                @Html.ValidationMessageFor(model => model.KnowMedicalCondition)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SpecialTalents, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SpecialTalents)
-                @Html.ValidationMessageFor(model => model.SpecialTalents)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReasonForOlivekids, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ReasonForOlivekids)
-                @Html.ValidationMessageFor(model => model.ReasonForOlivekids)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PlayschoolExperience, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PlayschoolExperience)
-                @Html.ValidationMessageFor(model => model.PlayschoolExperience)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateOfJoining, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfJoining)
-                @Html.ValidationMessageFor(model => model.DateOfJoining)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CenterCode, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CenterCode)
-                @Html.ValidationMessageFor(model => model.CenterCode)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RegistrationNo, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RegistrationNo)
-                @Html.ValidationMessageFor(model => model.RegistrationNo)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdmissionFee, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdmissionFee)
-                @Html.ValidationMessageFor(model => model.AdmissionFee)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalCourseFee, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalCourseFee)
-                @Html.ValidationMessageFor(model => model.TotalCourseFee)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TermFee, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TermFee)
-                @Html.ValidationMessageFor(model => model.TermFee)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Height, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Height)
-                @Html.ValidationMessageFor(model => model.Height)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Weight, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Weight)
-                @Html.ValidationMessageFor(model => model.Weight)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
     </div>
+
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="rowbetweenspace"></div>
+<div class="buttoncenter">
+    <div class="btn btn-default widthandheight backtolist">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 </div>
-
+<div class="rowbetweenspace"></div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/globalize")
+    @Scripts.Render("~/bundles/datepicker")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#DOB').datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+                orientation: "top auto",
+                todayHighlight: true
+
+            });
+
+            $('#DateOfJoining').datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+                orientation: "bottom auto",
+                todayHighlight: true,
+
+            });
+        });
+
+
+        $("select#SchoolRefID").bind('change', function () {
+            var SchoolID = $("select#SchoolRefID option:selected").val();
+            if (SchoolID == "" || SchoolID == 0) {
+                $("select#ClassRefID").empty();
+                $("select#AcademicYearRefID").empty();
+            }
+            else
+            {
+                $.getJSON('@Url.Action("GetClassBySchoolID")', { id: SchoolID }, function (data) {
+                    $("select#ClassRefID").empty();
+                    $.each(data, function (i, c) {
+                        $('select#ClassRefID').append('<option value="' + c.Value + '">' + c.Text + '</option>');
+                    });
+                    $("select#ClassRefID option:first").attr('selected', 'selected');
+
+                });
+
+                $.getJSON('@Url.Action("GetAcademicYearBySchoolID")', { id: SchoolID }, function (data) {
+                    $("select#AcademicYearRefID").empty();
+                    $.each(data, function (i, c) {
+                        $('select#AcademicYearRefID').append('<option value="' + c.Value + '">' + c.Text + '</option>');
+                    });
+                    $("select#AcademicYearRefID option:first").attr('selected', 'selected');
+
+                });
+            }
+        });
+    </script>
+
 }
+
+

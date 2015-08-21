@@ -26,7 +26,7 @@ namespace OsisModel.Models
         public string Name { get; set; }
         public string NickName { get; set; }
         public string Sex { get; set; }
-        public System.DateTime DOB { get; set; }
+        public DateTime DOB { get; set; }
         public string FathersName { get; set; }
         public string MothersName { get; set; }
         public string FathersOccupation { get; set; }
@@ -41,7 +41,7 @@ namespace OsisModel.Models
         public string SpecialTalents { get; set; }
         public string ReasonForOlivekids { get; set; }
         public string PlayschoolExperience { get; set; }
-        public string DateOfJoining { get; set; }
+        public DateTime DateOfJoining { get; set; }
         public string CenterCode { get; set; }
         public int RegistrationNo { get; set; }
         public decimal AdmissionFee { get; set; }

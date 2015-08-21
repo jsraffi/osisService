@@ -9,7 +9,12 @@
 }
 
 <h1 class="h1padbot">Add student to school</h1>
-
+@if(TempData["errormessage"]!= null)
+{
+    <div style="font-size:25px;">
+        @TempData["errormessage"];
+    </div>
+}
 
 @using (Html.BeginForm()) 
 {
@@ -39,7 +44,7 @@
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.DOB)<br />
-                        @Html.TextBoxFor(model => model.DOB, new { @placeholder = "Date of birth", @value = "", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.DOB, new { @placeholder = "Date of birth", Value = "", @class = "text-box-student" })
                     </td>
                 </tr>
             </table>
@@ -74,6 +79,40 @@
                 </tr>
             </table>
     </div>
+
+        <div class="rowbetweenspace"></div>
+        <div class="row rowstudent">
+            <table>
+                <tr>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.FathersQualification)
+                        <br />
+                        @Html.TextBoxFor(model => model.FathersQualification, new { @placeholder = "Father's qualification", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        @Html.ValidationMessageFor(model => model.MothersQualifiication)
+                        <br />
+                        @Html.TextBoxFor(model => model.MothersQualifiication, new { @placeholder = "Mother's qualification", @class = "text-box-student" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(model => model.MothersPhone)
+                        <br />
+                        @Html.TextBoxFor(model => model.MothersPhone, new { @placeholder = "Mother's mobile no", @class = "text-box-student" })
+                    </td>
+
+                    <td>
+                        @Html.ValidationMessageFor(model => model.FathersPhone)
+                        <br />
+                        @Html.TextBoxFor(model => model.FathersPhone, new { @placeholder = "Father's mobile no", @class = "text-box-student" })
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+
             
         <div class="rowbetweenspace"></div>
         <div class="row rowstudent">
@@ -116,7 +155,7 @@
                     <td>
                         @Html.ValidationMessageFor(model => model.Phone)
                         <br />
-                        @Html.TextBoxFor(model => model.Phone, new { @placeholder = "phone", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.Phone, new { @placeholder = "Land Line phone no", @class = "text-box-student" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Email)
@@ -176,7 +215,7 @@
                     <td>
                         @Html.ValidationMessageFor(model => model.DateOfJoining)
                         <br />
-                        @Html.TextBoxFor(model => model.DateOfJoining, new { @placeholder = "Date of joining", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.DateOfJoining,"{0:dd/MM/yyyy}", new { @placeholder = "Date of joining", @class = "text-box-student" ,@Title="Please select a date of joining"})
                     </td>
                     <td>
 
@@ -199,18 +238,18 @@
             <table>
                 <tr>
                     <td>
-                        @Html.ValidationMessageFor(model => model.PlayschoolExperience)
+                        @Html.ValidationMessageFor(model => model.TotalCourseFee)
                         <br />
                         @Html.TextBoxFor(model => model.TotalCourseFee, new { @placeholder = "Total course fee", @class = "text-box-student" })
                     </td>
 
                     <td>
-                        @Html.ValidationMessageFor(model => model.DateOfJoining)
+                        @Html.ValidationMessageFor(model => model.TermFee)
                         <br />
                         @Html.TextBoxFor(model => model.TermFee, new { @placeholder = "Term fee", @class = "text-box-student" })
                     </td>
                     <td>
-                        @Html.ValidationMessageFor(model => model.CenterCode)
+                        @Html.ValidationMessageFor(model => model.Height)
                         <br />
                         @Html.TextBoxFor(model => model.Height, new { @placeholder = "Heigth", @class = "text-box-student" })
                     </td>
@@ -222,65 +261,57 @@
                 </tr>
             </table>
         </div>
+        <div class="rowbetweenspace"></div>
+            <div class="row" style="margin-bottom:25px; margin:0 auto;width:600px">
+                <table id="studentcurrentyear">
 
-        <div class="row" style="margin-bottom:25px;">
-            <table id="studentcurrentyear" >
-                <thead>
-                    <tr>
-                        <td width="25%" style="border:solid 1px black">School Name</td>
-                        <td width="25%" style="border:solid 1px black">Academic Year</td>
-                        <td width="25%" style="border:solid 1px black">Class Name</td>
-                        <td width="25%" style="border:solid 1px black">Active Year</td>
-                    </tr>
-                </thead>
-                <tbody>
-                        
-                  @for (var i=0;i < Model.StudentCurrentYear.Count;i++) 
-                    {
-                        
-                    <tr>
-                        
-                        <td width="25%" style="border:solid 1px black">
-                           
-                            @Html.DropDownList("SchoolRefID", "Please select a schoool")
-                            @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].SchoolRefID)
-                        </td>
-                        <td width="25%" style="border:solid 1px black">
-                            @Html.DropDownList("AcademicYearRefID", null, "Please select a AcademicYear")
-                            @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].AcademicYearRefID)
-                        </td>
-                        <td width="25%" style="border:solid 1px black">
-                            @Html.DropDownList("ClassRefID", null,"Please select a class")
-                            @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].ClassRefID)
-                        </td>
-                        <td width="25%" style="border:solid 1px black">
-                           @Html.CheckBoxFor(x => Model.StudentCurrentYear[i].Active)
-                            @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].Active)
-                        </td>
-                    
-                    </tr>
-                    }
-                </tbody>
+                    <tbody>
+
+                        @for (var i = 0; i < Model.StudentCurrentYear.Count; i++)
+                        {
+
+                            <tr>
+
+                                <td>
+                                    @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].SchoolRefID)<br />
+                                    @Html.DropDownListFor(model => model.StudentCurrentYear[i].SchoolRefID, ViewBag.SchoolRefID as IEnumerable<SelectListItem>, "Please select a schoool", new { id ="SchoolRefID",@class = "text-box-student"})
+
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].AcademicYearRefID)<br />
+                                    @Html.DropDownListFor(model => model.StudentCurrentYear[i].AcademicYearRefID, ViewBag.AcademicYearREfID as IEnumerable<SelectListItem>, "Please select a academic year", new { id="AcademicYearRefID", @class = "text-box-student" })
+
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].ClassRefID)<br />
+                                    @Html.DropDownListFor(model => model.StudentCurrentYear[i].ClassRefID, ViewBag.ClassRefiD as IEnumerable<SelectListItem>, "Please select a class", new { id="ClassRefID"  , @class = "text-box-student" })
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
 
 
-            </table>
+                </table>
 
-        </div>
-        
-        
-        <div class="form-group">
-            <div class="col-md-10">
-                <input type="submit" value="Create" class="btn btn-default buttonlayout" />
             </div>
+
+                <div class="rowbetweenspace"></div>
+            
+        <div class="buttoncenter" style="padding-left:-100px!important">
+            <input type="submit" value="Create" class="btn btn-default widthandheight" />
         </div>
-    </div>
+            
+        </div>
 
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="rowbetweenspace" ></div>
+<div class="buttoncenter">
+    <div class="btn btn-default widthandheight backtolist">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 </div>
-
+<div class="rowbetweenspace"></div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/globalize")
@@ -300,9 +331,9 @@
             $('#DateOfJoining').datepicker({
                 format: "dd/mm/yyyy",
                 autoclose: true,
-                orientation: "top auto",
-                todayHighlight: true
-
+                orientation: "bottom auto",
+                todayHighlight: true,
+         
             });
         });
         

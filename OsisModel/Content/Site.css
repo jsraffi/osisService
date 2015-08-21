@@ -101,18 +101,14 @@ input[type="checkbox"].input-validation-error {
     font-size:15px;     
     margin-left:-20px;
 }
-#SchoolRefID,#AcademicYearRefID
-{
-    height:45px;
-    width:600px;
-    font-size:25px;
-}
+
 #studentcurrentyear td
 {
     font-size:20px;
 }
 #studentcurrentyear{
-    margin-left:40px
+    margin:0 auto;
+    width:600px;
 }
 table th
 {
@@ -226,4 +222,40 @@ table th
 .datepicker
 {
     font-size:40px;
+}
+.widthandheight
+{
+    height:75px;
+    width:600px;
+    font-size:40px;
+    border: 1px solid #999;
+    
+    -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+    
+
+}
+.buttoncenter
+{
+    text-align:center;
+    margin:0 auto;
+    width:1800px;
+}
+
+.backtolist a:link,a:visited,a:active.a:hover
+{
+    
+    text-decoration-color:none;
+    color:black;
+    text-decoration-line:none;
+       
+    
+}
+.backtolist
+{
+    padding-top:12px;
+    display:inline-block;
+    margin-left:35px;
+    
 }
