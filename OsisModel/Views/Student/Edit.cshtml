@@ -15,6 +15,8 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.StudentID)
+    @Html.HiddenFor(model => model.RegistrationNo)
 
     <div class="formpadleft form-inline">
 
@@ -27,7 +29,7 @@
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.NickName)<br />
-                        @Html.TextBoxFor(model => model.NickName, new { @placeholder = "Nick Name", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.NickName, new { @placeholder = "Nick Name", @class = "text-box-student", @title = "Please enter a nick name" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Sex)<br />
@@ -39,7 +41,7 @@
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.DOB)<br />
-                        @Html.TextBoxFor(model => model.DOB, "{0:dd/MM/yyyy}", new { @placeholder = "Date of birth", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.DOB, "{0:dd/MM/yyyy}", new { @placeholder = "Date of birth", @class = "text-box-student", @title = "Please enter students date of birth" })
                     </td>
                 </tr>
             </table>
@@ -52,24 +54,24 @@
                     <td>
                         @Html.ValidationMessageFor(model => model.FathersName)
                         <br />
-                        @Html.TextBoxFor(model => model.FathersName, new { @placeholder = "Father's Name", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.FathersName, new { @placeholder = "Father's Name", @class = "text-box-student", @title = "Please enter father's name" })
                     </td>
 
                     <td>
                         @Html.ValidationMessageFor(model => model.MothersName)
                         <br />
-                        @Html.TextBoxFor(model => model.MothersName, new { @placeholder = "Mother's Name", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.MothersName, new { @placeholder = "Mother's Name", @class = "text-box-student", @title = "Please enter mother's name" })
                     </td>
 
                     <td>
                         @Html.ValidationMessageFor(model => model.FathersOccupation)
                         <br />
-                        @Html.TextBoxFor(model => model.FathersOccupation, new { @placeholder = "Father's Occupation", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.FathersOccupation, new { @placeholder = "Father's Occupation", @class = "text-box-student", @title = "Please enter father's occupation" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.MothersOccupation)
                         <br />
-                        @Html.TextBoxFor(model => model.MothersOccupation, new { @placeholder = "Mother's Occupation", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.MothersOccupation, new { @placeholder = "Mother's Occupation", @class = "text-box-student", @title = "Please enter mother's occupation" })
                     </td>
                 </tr>
             </table>
@@ -82,24 +84,24 @@
                     <td>
                         @Html.ValidationMessageFor(model => model.FathersQualification)
                         <br />
-                        @Html.TextBoxFor(model => model.FathersQualification, new { @placeholder = "Father's qualification", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.FathersQualification, new { @placeholder = "Father's qualification", @class = "text-box-student", @title = "Please enter father's qualification" })
                     </td>
 
                     <td>
                         @Html.ValidationMessageFor(model => model.MothersQualifiication)
                         <br />
-                        @Html.TextBoxFor(model => model.MothersQualifiication, new { @placeholder = "Mother's qualification", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.MothersQualifiication, new { @placeholder = "Mother's qualification", @class = "text-box-student", @title = "Please enter mother's qualification" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.MothersPhone)
                         <br />
-                        @Html.TextBoxFor(model => model.MothersPhone, new { @placeholder = "Mother's mobile no", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.MothersPhone, new { @placeholder = "Mother's mobile no", @class = "text-box-student", @title = "Please enter mother's mobile no" })
                     </td>
 
                     <td>
                         @Html.ValidationMessageFor(model => model.FathersPhone)
                         <br />
-                        @Html.TextBoxFor(model => model.FathersPhone, new { @placeholder = "Father's mobile no", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.FathersPhone, new { @placeholder = "Father's mobile no", @class = "text-box-student", @title = "Please enter father's mobile no" })
                     </td>
                 </tr>
             </table>
@@ -117,22 +119,22 @@
                     <td>
                         @Html.ValidationMessageFor(model => model.MotherTongue)
                         <br />
-                        @Html.TextBoxFor(model => model.MotherTongue, new { @placeholder = "Mother tongue", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.MotherTongue, new { @placeholder = "Mother's tongue", @class = "text-box-student", @title = "Please enter mother's tongue" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Address_Address1)
                         <br />
-                        @Html.TextBoxFor(model => model.Address_Address1, new { @placeholder = "Address1", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.Address_Address1, new { @placeholder = "Address1", @class = "text-box-student", @title = "Please enter a address1" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Address_Address2)
                         <br />
-                        @Html.TextBoxFor(model => model.Address_Address2, new { @placeholder = "Address2", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.Address_Address2, new { @placeholder = "Address2", @class = "text-box-student", @title = "Please enter a address2" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Address_City)
                         <br />
-                        @Html.TextBoxFor(model => model.Address_City, new { @placeholder = "City", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.Address_City, new { @placeholder = "City", @class = "text-box-student", @title = "Please enter a city" })
                     </td>
                 </tr>
             </table>
@@ -144,23 +146,23 @@
                     <td>
                         @Html.ValidationMessageFor(model => model.Address_Pincode)
                         <br />
-                        @Html.TextBoxFor(model => model.Address_Pincode, new { @placeholder = "Pincode", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.Address_Pincode, new { @placeholder = "Pincode", @class = "text-box-student", @title = "Please enter a pincode" })
                     </td>
 
                     <td>
                         @Html.ValidationMessageFor(model => model.Phone)
                         <br />
-                        @Html.TextBoxFor(model => model.Phone, new { @placeholder = "Land Line phone no", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.Phone, new { @placeholder = "Land Line phone no", @class = "text-box-student", @title = "Please enter a Land line phone number" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Email)
                         <br />
-                        @Html.TextBoxFor(model => model.Email, new { @placeholder = "Email", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.Email, new { @placeholder = "Email", @class = "text-box-student", @title = "Please enter a email id" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.website)
                         <br />
-                        @Html.TextBoxFor(model => model.website, new { @placeholder = "Website", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.website, new { @placeholder = "Website", @class = "text-box-student", @title = "Please enter a website address" })
                     </td>
                 </tr>
             </table>
@@ -173,24 +175,24 @@
                     <td>
                         @Html.ValidationMessageFor(model => model.IdentificationMarks)
                         <br />
-                        @Html.TextBoxFor(model => model.IdentificationMarks, new { @placeholder = "Identification marks", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.IdentificationMarks, new { @placeholder = "Identification marks", @class = "text-box-student", @title = "Please enter identification mark" })
                     </td>
 
                     <td>
-                        >
+                        
                         @Html.ValidationMessageFor(model => model.KnowMedicalCondition)
                         <br />
-                        @Html.TextBoxFor(model => model.KnowMedicalCondition, new { @placeholder = "Known medical condition", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.KnowMedicalCondition, new { @placeholder = "Known medical condition", @class = "text-box-student", @title = "Please enter a medical condition, if any" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.SpecialTalents)
                         <br />
-                        @Html.TextBoxFor(model => model.SpecialTalents, new { @placeholder = "Special talents", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.SpecialTalents, new { @placeholder = "Special talents", @class = "text-box-student", @title = "Please enter a special talents if any" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.ReasonForOlivekids)
                         <br />
-                        @Html.TextBoxFor(model => model.ReasonForOlivekids, new { @placeholder = "Reason for choosing olveikids", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.ReasonForOlivekids, new { @placeholder = "Reason for choosing olveikids", @class = "text-box-student", @title = "Please enter a reason for choosing Olive kids" })
                     </td>
                 </tr>
             </table>
@@ -204,7 +206,7 @@
                     <td>
                         @Html.ValidationMessageFor(model => model.PlayschoolExperience)
                         <br />
-                        @Html.TextBoxFor(model => model.PlayschoolExperience, new { @placeholder = "Playschool experience", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.PlayschoolExperience, new { @placeholder = "Playschool experience", @class = "text-box-student", @title = "Please enter play school experince if any" })
                     </td>
 
                     <td>
@@ -216,12 +218,12 @@
 
                         @Html.ValidationMessageFor(model => model.CenterCode)
                         <br />
-                        @Html.TextBoxFor(model => model.CenterCode, new { @placeholder = "Center Code", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.CenterCode, new { @placeholder = "Center Code", @class = "text-box-student", @title = "Please enter a centre code" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.AdmissionFee)
                         <br />
-                        @Html.TextBoxFor(model => model.AdmissionFee, new { @placeholder = "Admission Fee", @class = "text-box-student"})
+                        @Html.TextBoxFor(model => model.AdmissionFee, new { @placeholder = "Admission Fee", @class = "text-box-student", @title = "Please enter Admission fee" })
                     </td>
                 </tr>
             </table>
@@ -235,23 +237,23 @@
                     <td>
                         @Html.ValidationMessageFor(model => model.TotalCourseFee)
                         <br />
-                        @Html.TextBoxFor(model => model.TotalCourseFee, new { @placeholder = "Total course fee", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.TotalCourseFee, new { @placeholder = "Total course fee", @class = "text-box-student", @title = "Please enter total course fee" })
                     </td>
 
                     <td>
                         @Html.ValidationMessageFor(model => model.TermFee)
                         <br />
-                        @Html.TextBoxFor(model => model.TermFee, new { @placeholder = "Term fee", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.TermFee, new { @placeholder = "Term fee", @class = "text-box-student", @title = "Please enter term fee" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Height)
                         <br />
-                        @Html.TextBoxFor(model => model.Height, new { @placeholder = "Heigth", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.Height, new { @placeholder = "Heigth", @class = "text-box-student", @title = "Please enter height" })
                     </td>
                     <td>
                         @Html.ValidationMessageFor(model => model.Weight)
                         <br />
-                        @Html.TextBoxFor(model => model.Weight, new { @placeholder = "Weight", @class = "text-box-student" })
+                        @Html.TextBoxFor(model => model.Weight, new { @placeholder = "Weight", @class = "text-box-student", @title = "Please enter a student Weigth" })
                     </td>
                 </tr>
             </table>
@@ -266,7 +268,8 @@
                     {
 
                         <tr>
-
+                            @Html.HiddenFor(model => model.StudentCurrentYear[i].StudentRefID)
+                            @Html.HiddenFor(model => model.StudentCurrentYear[i].CurrentYearID)
                             <td>
                                 @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].SchoolRefID)<br />
                                 @Html.DropDownListFor(model => model.StudentCurrentYear[i].SchoolRefID, ViewBag.SchoolRefID as IEnumerable<SelectListItem>, "Please select a schoool", new { id = "SchoolRefID", @class = "text-box-student" })

@@ -49,7 +49,7 @@ namespace OsisModel.Models
         public Nullable<decimal> TermFee { get; set; }
         public Nullable<decimal> Height { get; set; }
         public Nullable<decimal> Weight { get; set; }
-    
+
         public virtual IList<StudentCurrentYear> StudentCurrentYear { get; set; }
     }
  }

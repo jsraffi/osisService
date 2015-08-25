@@ -85,12 +85,17 @@ namespace OsisModel.Controllers
         public ActionResult Create()
         {
             
-            //this new code from previous version optimize for performance
+            //This new code from previous version optimized for performance
+            //context object does not return all the colums of table for dropdown boxes 
+            //only id and display columns are fetched(checked with sql profiler)
+ 
             ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }),"SchoolID","SchoolName");
             ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear");
             ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new {x.ClassID,x.ClassName}),"ClassID","ClassName");
             StudentViewModel stuVMObj = new StudentViewModel();
 
+            //Create a empty row in Current year table/object
+            //data is returned will form gets posted
             List<StudentCurrentYear> CyObj = new List<StudentCurrentYear>
             {
                 new StudentCurrentYear
@@ -114,9 +119,9 @@ namespace OsisModel.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(StudentViewModel student)
-
-
         {
+               
+               //Create a transaction 
                using (var dbosisTransaction = db.Database.BeginTransaction())
                {
                    
@@ -124,36 +129,50 @@ namespace OsisModel.Controllers
                   {
                         if (ModelState.IsValid)
                         {
+                            //user auto mapper to fill student object incluing
+                            // navigation object studentcurrentyear
                             Student studentmap = Mapper.Map<Student>(student);
                             studentmap.StudentID = Guid.NewGuid();
 
-                            
-
-                            //studentmap.StudentCurrentYear[0].AcademicYearRefID = student.AcademicYearRefID;
-                            //studentmap.StudentCurrentYear[0].SchoolRefID = student.SchoolRefID;
-                            //studentmap.StudentCurrentYear[0].ClassRefID = student.ClassRefID;
-                            //studentmap.StudentCurrentYear[0].StudentRefID = studentmap.StudentID;
+                            //The current is always true when create a student
+                            // for the first time
                             studentmap.StudentCurrentYear[0].Active = true;
+                            // the school table/object has registration no
+                            // which needs to update for for every student
+                            // always store the last registration no given to'
+                            // a student
                             var LastRegNo = db.Database.SqlQuery<int>("Select LastRegNo from Schools with (XLOCK) where SchoolID={0}", studentmap.StudentCurrentYear[0].SchoolRefID).FirstOrDefault<int>();
+                            
+                            // increment the lastregno by one
                             int NewRegNo = LastRegNo + 1;
 
+                            //Update database school table with the new latest regno
                             db.Database.ExecuteSqlCommand("UPDATE Schools SET LastRegNo = {0} where schoolID= {1}", NewRegNo, studentmap.StudentCurrentYear[0].SchoolRefID);
 
+                            // assign new registration to student object Registration No property
                             studentmap.RegistrationNo = NewRegNo;
                             
-                            
+                            //Add student object to student db context
                             db.Students.Add(studentmap);
                             
+                            //User Task Parallel Library(TPL) to save changes in asynchronous(background) way
                             await db.SaveChangesAsync();
+                            
+                            //Commit the transaction
                             dbosisTransaction.Commit();
+                            
+                            //Return to student index page
                             return RedirectToAction("Index");
                         }
                         else
                         {
+                            //if model is invalid the following will excuted
+                            //repoulate the dropdown's with values they had
+                            //before post
                             ModelState.AddModelError("", "Error: model state is not valid");
-                            ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName");
-                            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear");
-                            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName");
+                            ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", student.SchoolRefID);
+                            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear",student.AcademicYearRefID);
+                            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName", student.ClassRefID);
             
                             return View(student);
                         } 
@@ -163,9 +182,9 @@ namespace OsisModel.Controllers
                    dbosisTransaction.Rollback();
                    ModelState.AddModelError("", e.InnerException);
                    TempData["errormessage"] = e.Message;
-                   ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName");
-                   ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear");
-                   ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName");
+                   ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName",student.SchoolRefID);
+                   ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear",student.AcademicYearRefID);
+                   ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName",student.ClassRefID);
                    return View(student);
                }
             }
@@ -178,20 +197,32 @@ namespace OsisModel.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             
+            //if the student by id using db context
             Student student = await db.Students.FindAsync(id);
 
-            
-            
-            StudentViewModel studentVM = Mapper.Map<StudentViewModel>(student);
-
-            studentVM.DateOfJoining = student.DateOfJoining;
-                       
             if (student == null)
             {
                 return HttpNotFound();
             }
+
+            //populate view model with student values retrived from db            
+            StudentViewModel studentVM = Mapper.Map<StudentViewModel>(student);
+
+            //student view model has constructor which populates
+            // Data of joining property to current date
+            // hence repopulating date of joining property with database retrived value
+            studentVM.DateOfJoining = student.DateOfJoining;
+                       
+            
+            
+            // A model is created just to hold a subset StudentCurrentyear Record
+            // namely schoolrefid, academictyearrefid and classrefid
             StudentCurrentYearSubset CurrentYear = new StudentCurrentYearSubset();
 
+            //This loop is nesscary as studentcurrentyear object/table may contain 
+            // more than one record for student who are studying in school for 
+            // more than one year, so the active flag is checked before retriving the
+            // the relevant record for editing
             foreach(var studentCurrentRec in student.StudentCurrentYear)
             {
                 if (studentCurrentRec.Active == true)
@@ -216,15 +247,33 @@ namespace OsisModel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="StudentID,Address_Address1,Address_Address2,Address_City,Address_Pincode,Address_Mobile,Phone,Email,website,Name,NickName,Sex,DOB,FathersName,MothersName,FathersOccupation,MothersOccupation,MothersPhone,FathersPhone,FathersQualification,MothersQualifiication,MotherTongue,IdentificationMarks,KnowMedicalCondition,SpecialTalents,ReasonForOlivekids,PlayschoolExperience,DateOfJoining,CenterCode,RegistrationNo,AdmissionFee,TotalCourseFee,TermFee,Height,Weight")] Student student)
+        public async Task<ActionResult> Edit(StudentViewModel studentVM)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(student).State = EntityState.Modified;
+                Student studentDBC = Mapper.Map<Student>(studentVM);
+                studentDBC.StudentCurrentYear[0].Active = true;
+                
+
+                foreach(var studCY in studentDBC.StudentCurrentYear)
+                {
+                    db.StudentCurrentYears.Attach(studCY);
+                    db.Entry(studCY).State = EntityState.Modified;
+                }
+                db.Entry(studentDBC).State = EntityState.Modified;
+                
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(student);
+            else
+            {
+                ModelState.AddModelError("", "Error: model state is not valid");
+            }
+            ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", studentVM.StudentCurrentYear[0].SchoolRefID);
+            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Where(sch => sch.SchoolRefID == studentVM.StudentCurrentYear[0].SchoolRefID).Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear", studentVM.StudentCurrentYear[0].AcademicYearRefID);
+            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Where(sch => sch.SchoolRefID == studentVM.StudentCurrentYear[0].SchoolRefID).Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName",studentVM.StudentCurrentYear[0].ClassRefID);
+            
+            return View(studentVM);
         }
 
         // GET: /Student/Delete/5
