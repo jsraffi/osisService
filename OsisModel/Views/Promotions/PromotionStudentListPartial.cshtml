@@ -1,0 +1,79 @@
+﻿@model OsisModel.Models.PromotionsSelectVM
+@using (Ajax.BeginForm("PromotionStudentListPartial", "Promotions", new AjaxOptions
+{
+    HttpMethod = "Post",
+    UpdateTargetId = "PromotionsStudentListData",
+    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace
+}))
+{
+
+    @Html.AntiForgeryToken()
+
+        <div id="PromotionsStudentListData">
+            @Html.HiddenFor(m => Model.ClassTo)
+            @Html.HiddenFor(m => Model.ClassFrom)
+            @if(ViewBag.Success!= null)
+            {
+                @ViewBag.Success
+            }
+            
+            <table  class="table-bordered table-striped" style="font-size:30px;" width="900">
+                <tr>
+
+                    <th width="40%">
+                        Student Name
+                    </th>
+
+                    <th width="40%">
+                        Class Name
+                    </th>
+                    <th class="20%">
+                        Detained
+                    </th>
+                </tr>
+
+                @for (var i = 0; i < Model.StudentLists.Count; i++ )
+                {
+
+                    <tr>
+                        
+                        @Html.HiddenFor(m => Model.StudentLists[i].StudentRefID)
+                        @Html.HiddenFor(m => Model.StudentLists[i].SchoolRefID)
+                        @Html.HiddenFor(m => Model.StudentLists[i].ClassRefID)
+                        <td>&nbsp;&nbsp;@Html.DisplayFor(m => Model.StudentLists[i].Name)</td>
+                        <td>&nbsp;&nbsp;@Html.DisplayFor(m => Model.StudentLists[i].ClassName)</td>
+                        <td>&nbsp;&nbsp;@Html.EditorFor(m => Model.StudentLists[i].Active, new { @name = "Active" })</td>
+                    </tr>
+
+                }
+            </table>
+
+
+            <br />
+            <br />
+            @if (Model.StudentLists.Count > 0 )
+            {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" id="submitstudent" value="Promote to new class" class="btn btn-default" style="float:left;margin-left:0;" />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div style="font-size:25px;">
+                    <span>No student found</span>
+                </div>
+            }
+    
+        </div>
+    
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+
+}

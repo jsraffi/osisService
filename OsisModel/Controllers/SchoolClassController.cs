@@ -19,6 +19,13 @@ namespace OsisModel.Controllers
     {
         private OsisContext db = new OsisContext();
 
+        public JsonResult GetClassOrderBySchoolID(int id)
+        {
+            var classes = db.SchoolClasses.AsNoTracking().Where(s => s.SchoolRefID == id).Select(c => new { ClassName = c.ClassName, ClassID = c.ClassID , ClassOrder= c.ClassOrder}).ToList();
+
+            return Json(classes, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: /SchoolClass/
         public  ActionResult Index(int? page)
         {
@@ -60,11 +67,32 @@ namespace OsisModel.Controllers
         {
             if (ModelState.IsValid)
             {
-                SchoolClass scObj = Mapper.Map<SchoolClass>(schoolclass);
                 
-                db.SchoolClasses.Add(scObj);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                SchoolClass scObj = Mapper.Map<SchoolClass>(schoolclass);
+                using(var dbtransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        
+                        var LastClassOrderNo = db.Database.SqlQuery<int>("Select ISNULL(Max(ClassOrder),0) from SchoolClasses with (XLOCK,HOLDLOCK) where SchoolRefID={0}", scObj.SchoolRefID).SingleOrDefault<int>();
+                        scObj.ClassOrder = LastClassOrderNo + 1;
+                        db.SchoolClasses.Add(scObj);
+                        await db.SaveChangesAsync();
+                        dbtransaction.Commit();
+                        return RedirectToAction("Index");
+                        
+                    }
+                    catch(Exception e)
+                    {
+                        dbtransaction.Rollback();
+                        TempData["errormessage"] = e.Message;
+                        ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", schoolclass.SchoolRefID);
+                        return View(schoolclass);
+
+                    }
+                }
+                
+                
             }
 
             ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", schoolclass.SchoolRefID);

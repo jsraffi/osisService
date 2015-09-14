@@ -21,7 +21,8 @@ namespace OsisModel.Models
         {
             
         }
-               
+
+        public DbSet<StudentList> AjaxStudentLists { get; set; }
         public DbSet<StudentSingle> StudentSingles {get; set;}
         public DbSet<School> Schools { get; set; }
         public DbSet<AcademicYearSingle> AcademicYearSingles { get; set; }
@@ -35,6 +36,7 @@ namespace OsisModel.Models
         public DbSet<UserPreference> UserPreferences { get; set; }
 
         public DbSet<Student> Students { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

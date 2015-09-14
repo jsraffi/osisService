@@ -19,7 +19,8 @@ namespace OsisModel
             AutoMapper.Mapper.CreateMap<SchoolClass, SchoolClassViewModel>().ReverseMap();
             AutoMapper.Mapper.CreateMap<StudentViewModel, Student>();
             AutoMapper.Mapper.CreateMap<StudentViewModel, Student>().ReverseMap();
-                
+            AutoMapper.Mapper.CreateMap<StudentListVM, StudentList>();
+            AutoMapper.Mapper.CreateMap<StudentListVM, StudentList>().ReverseMap();    
         }
     }
 }

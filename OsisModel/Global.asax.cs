@@ -8,6 +8,7 @@ using System.Web.Routing;
 using System.Data.Entity;
 using OsisModel.Models;
 using System.Globalization;
+using FluentValidation.Mvc;
 
 namespace OsisModel
 {
@@ -19,6 +20,7 @@ namespace OsisModel
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            FluentValidationModelValidatorProvider.Configure();
 
             Database.SetInitializer<ApplicationDbContext>(null);
 

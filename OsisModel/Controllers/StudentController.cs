@@ -24,15 +24,15 @@ namespace OsisModel.Controllers
 
         public JsonResult GetClassBySchoolID(int id)
         {
-            var classes = db.SchoolClasses.Where(s => s.SchoolRefID == id).Select(c => new { Text = c.ClassName, Value = c.ClassID }).ToList();
+            var classes = db.SchoolClasses.AsNoTracking().Where(s => s.SchoolRefID == id).Select(c => new { Text = c.ClassName, Value = c.ClassID }).ToList();
 
             return Json(classes, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetAcademicYearBySchoolID(int id)
         {
-            
 
-            var acyear = db.AcademicYears.Where(s => s.SchoolRefID == id).Select(a => new { Text = a.DisplayYear, Value = a.AcademicYearID }).ToList();
+
+            var acyear = db.AcademicYears.AsNoTracking().Where(s => s.SchoolRefID == id).Select(a => new { Text = a.DisplayYear, Value = a.AcademicYearID }).ToList();
 
             return Json(acyear, JsonRequestBehavior.AllowGet);
         }
@@ -47,7 +47,7 @@ namespace OsisModel.Controllers
             string userid = User.Identity.GetUserId();
 
             //Get logged in users school and academic year preference
-            var userprefer = db.UserPreferences.Where(a => a.UserID == userid).Select(x => new { x.SchoolRefID, x.AcademicYearRefID }).FirstOrDefault();
+            var userprefer = db.UserPreferences.AsNoTracking().Where(a => a.UserID == userid).Select(x => new { x.SchoolRefID, x.AcademicYearRefID }).FirstOrDefault();
             
             //need this for paging if page null then 1
             var pageNumber = page ?? 1;
@@ -59,7 +59,7 @@ namespace OsisModel.Controllers
             //a model Studentsingle just for index page listing is used.
             // all fields required for display and used in where clause 
             //needs to be there in StudentSingles model
-            var students = db.StudentSingles.OrderBy(d => d.RegistrationNo).Where(sa => sa.SchoolRefID == userprefer.SchoolRefID && sa.AcademicYearRefID == userprefer.AcademicYearRefID );
+            var students = db.StudentSingles.AsNoTracking().OrderBy(d => d.RegistrationNo).Where(sa => sa.SchoolRefID == userprefer.SchoolRefID && sa.AcademicYearRefID == userprefer.AcademicYearRefID);
             
             //PagedList is Nugget package for just paging
             return View(students.ToPagedList(pageNumber, pageSize));
@@ -88,10 +88,10 @@ namespace OsisModel.Controllers
             //This new code from previous version optimized for performance
             //context object does not return all the colums of table for dropdown boxes 
             //only id and display columns are fetched(checked with sql profiler)
- 
-            ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }),"SchoolID","SchoolName");
-            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear");
-            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new {x.ClassID,x.ClassName}),"ClassID","ClassName");
+
+            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName");
+            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.AsNoTracking().Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear");
+            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.AsNoTracking().Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName");
             StudentViewModel stuVMObj = new StudentViewModel();
 
             //Create a empty row in Current year table/object
@@ -170,9 +170,9 @@ namespace OsisModel.Controllers
                             //repoulate the dropdown's with values they had
                             //before post
                             ModelState.AddModelError("", "Error: model state is not valid");
-                            ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", student.SchoolRefID);
-                            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear",student.AcademicYearRefID);
-                            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName", student.ClassRefID);
+                            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", student.SchoolRefID);
+                            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.AsNoTracking().Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear", student.AcademicYearRefID);
+                            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.AsNoTracking().Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName", student.ClassRefID);
             
                             return View(student);
                         } 
@@ -182,9 +182,9 @@ namespace OsisModel.Controllers
                    dbosisTransaction.Rollback();
                    ModelState.AddModelError("", e.InnerException);
                    TempData["errormessage"] = e.Message;
-                   ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName",student.SchoolRefID);
-                   ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear",student.AcademicYearRefID);
-                   ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName",student.ClassRefID);
+                   ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", student.SchoolRefID);
+                   ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.AsNoTracking().Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear", student.AcademicYearRefID);
+                   ViewBag.ClassRefID = new SelectList(db.SchoolClasses.AsNoTracking().Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName", student.ClassRefID);
                    return View(student);
                }
             }
@@ -197,7 +197,7 @@ namespace OsisModel.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             
-            //if the student by id using db context
+            //get the student by id using db context
             Student student = await db.Students.FindAsync(id);
 
             if (student == null)
@@ -233,11 +233,11 @@ namespace OsisModel.Controllers
                     break;
                 }
             }
-            
 
-            ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", CurrentYear.SchoolRefID);
-            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Where(sch => sch.SchoolRefID == CurrentYear.SchoolRefID).Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear",CurrentYear.AcademicYearRefID);
-            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Where(sch => sch.SchoolRefID == CurrentYear.SchoolRefID).Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName",CurrentYear.ClassRefID);
+
+            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", CurrentYear.SchoolRefID);
+            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.AsNoTracking().Where(sch => sch.SchoolRefID == CurrentYear.SchoolRefID).Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear", CurrentYear.AcademicYearRefID);
+            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.AsNoTracking().Where(sch => sch.SchoolRefID == CurrentYear.SchoolRefID).Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName", CurrentYear.ClassRefID);
             
             return View(studentVM);
         }
@@ -269,9 +269,9 @@ namespace OsisModel.Controllers
             {
                 ModelState.AddModelError("", "Error: model state is not valid");
             }
-            ViewBag.SchoolRefID = new SelectList(db.Schools.Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", studentVM.StudentCurrentYear[0].SchoolRefID);
-            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.Where(sch => sch.SchoolRefID == studentVM.StudentCurrentYear[0].SchoolRefID).Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear", studentVM.StudentCurrentYear[0].AcademicYearRefID);
-            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.Where(sch => sch.SchoolRefID == studentVM.StudentCurrentYear[0].SchoolRefID).Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName",studentVM.StudentCurrentYear[0].ClassRefID);
+            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", studentVM.StudentCurrentYear[0].SchoolRefID);
+            ViewBag.AcademicYearRefID = new SelectList(db.AcademicYears.AsNoTracking().Where(sch => sch.SchoolRefID == studentVM.StudentCurrentYear[0].SchoolRefID).Select(x => new { x.AcademicYearID, x.DisplayYear }), "AcademicYearID", "DisplayYear", studentVM.StudentCurrentYear[0].AcademicYearRefID);
+            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.AsNoTracking().Where(sch => sch.SchoolRefID == studentVM.StudentCurrentYear[0].SchoolRefID).Select(x => new { x.ClassID, x.ClassName }), "ClassID", "ClassName", studentVM.StudentCurrentYear[0].ClassRefID);
             
             return View(studentVM);
         }
@@ -307,7 +307,7 @@ namespace OsisModel.Controllers
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
             var userprefer = db.UserPreferences.Where(a => a.UserName == User.Identity.Name).Select(x => new { x.SchoolRefID, x.AcademicYearRefID }).FirstOrDefault();
 
-            var students = db.CurrentYearSingles.Where(x => x.SchoolRefID == userprefer.SchoolRefID && x.AcademicYearRefID == userprefer.AcademicYearRefID).OrderBy(d => d.Name);
+            var students = db.CurrentYearSingles.AsNoTracking().Where(x => x.SchoolRefID == userprefer.SchoolRefID && x.AcademicYearRefID == userprefer.AcademicYearRefID).OrderBy(d => d.Name);
             return View(students.ToPagedList(pageNumber, pageSize));
         }
         protected override void Dispose(bool disposing)

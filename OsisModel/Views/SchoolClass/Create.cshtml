@@ -5,36 +5,66 @@
 }
 
 <h1 class="h1padbot">Create a class for a school</h1>
+@if (TempData["errormessage"] != null)
+{
+    <div style="font-size:25px;">
+        @TempData["errormessage"];
+    </div>
+}
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal formpadleft">
-        @Html.ValidationSummary(true)
+    <div class="row" style="width:1500px;">
+        <div class="col-lg-6">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SchoolRefID, "School Name", new { @class = "controlLabel col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("SchoolRefID")
-                @Html.ValidationMessageFor(model => model.SchoolRefID)
+            <div class="form-horizontal formpadleft" style="border:solid 1px black;">
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SchoolRefID, "School Name", new { @class = "controlLabel col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("SchoolRefID","Please select a school")
+                        @Html.ValidationMessageFor(model => model.SchoolRefID)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ClassName, new { @class = "controlLabel col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ClassName)
+                        @Html.ValidationMessageFor(model => model.ClassName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" style="height:75px" />
+                    </div>
+                </div>
+
             </div>
         </div>
+        <div class="col-md-6">
+            <div id="ClassOrderDisplay" style="float:right;font-size:25px;">
+                <table id="ClassOrderTable" class="table-bordered table-striped" style="width:600px;" >
+                    <thead>
+                        <tr>
+                            <th style="width:20%">ClassID</th>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ClassName, new { @class = "controlLabel col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ClassName)
-                @Html.ValidationMessageFor(model => model.ClassName)
-            </div>
-        </div>
+                            <th style="width:60%">ClassName</th>
 
-              <div class="form-group">
-            <div class="col-md-10">
-                <input type="submit" value="Create" class="btn btn-default buttonlayout" />
+                            <th style="width:60%">ClassOrder</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+
+                </table>
             </div>
+
         </div>
     </div>
+    
 }
 
 <div class="form-group">
@@ -42,6 +72,28 @@
         @Html.ActionLink("Back to List", "Index")
     </div>
 </div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+
+        
+
+        $("select#SchoolRefID").bind('change', function () {
+            var SchoolID = $("select#SchoolRefID option:selected").val();
+                $.getJSON('@Url.Action("GetClassOrderBySchoolID")', { id: SchoolID }, function (data) {
+                    $('#ClassOrderTable tbody').remove();
+                    var tr;
+                    for (var i = 0; i < data.length; i++) {
+                        tr = $('<tr/>');
+                        tr.append("<td>" + data[i].ClassID + "</td>");
+                        tr.append("<td>" + data[i].ClassName + "</td>");
+                        tr.append("<td>" + data[i].ClassOrder + "</td>");
+                        $("#ClassOrderTable").append(tr);
+                    }
+
+                });
+        });
+</script>
 }

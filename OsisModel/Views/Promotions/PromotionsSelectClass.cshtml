@@ -1,0 +1,40 @@
+﻿@model OsisModel.Models.PromotionsSelectVM
+@{
+    ViewBag.Title = "PromotionsSelectClass";
+}
+<h1 class="h1padbot">Promote a student from one class to another</h1>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row layoutrow">
+    
+        <div class="col-md-4">
+            @Html.ValidationMessageFor(model => model.ClassFrom)<br />
+            @Html.DropDownListFor(model => model.ClassFrom, ViewBag.ClassRefID as IEnumerable<SelectListItem>, "Please select a class from", new { name = "ClassFrom", id = "ClassFrom", @class = "text-box-student" })
+            
+        </div>
+        <div class="col-md-4">
+            @Html.ValidationMessageFor(model => model.ClassTo)<br />
+            @Html.DropDownListFor(model => model.ClassTo, ViewBag.ClassRefID as IEnumerable<SelectListItem>, "Please select a class to", new { id = "ClassTo", @class = "text-box-student" })
+        </div>
+        
+        <div class="col-md-4">
+            <br />
+            <input type="submit" value="List students" class="btn btn-default widthandheight1"  id="submit"/>
+        </div>
+
+    </div>
+}
+
+<br />
+<br />
+@if (Model.StudentLists != null)
+{
+    @Html.Partial("PromotionStudentListPartial", Model);
+}
+
+@section Scripts
+{
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

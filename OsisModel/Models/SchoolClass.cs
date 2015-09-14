@@ -21,6 +21,8 @@ namespace OsisModel.Models
         
         [ForeignKey("School")]
         public int SchoolRefID { get; set; }
+
+        public int ClassOrder { get; set; }
     
         //THis proeprty is used by Entity Framework for navigating to school model and getting school Name
         // for the front end, school name selecting drop down.
