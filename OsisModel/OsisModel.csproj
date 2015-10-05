@@ -300,6 +300,8 @@
       <DependentUpon>Osisv2.edmx</DependentUpon>
       <LastGenOutput>Osisv2.cs</LastGenOutput>
     </Content>
+    <Content Include="databasebackup\05-Oct-2015full.bak" />
+    <Content Include="databasebackup\osismodel31-aug-2015.bak" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\globalize\cultures\globalize.culture.af-ZA.js" />
     <Content Include="Scripts\globalize\cultures\globalize.culture.af.js" />

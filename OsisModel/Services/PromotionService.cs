@@ -81,17 +81,25 @@ namespace OsisModel.Services
             {
                 //using try catch block to rollback transaction in case of error
                 try
-                {
+                {   //iterate through studentlist object of PromotionsSelectVM
                     foreach (var studentlist in model.StudentLists)
                     {
+                        // if detained is false then
                         if (studentlist.Detained == false)
                         {
+                            //fetch the active academicyear record from database
                             StudentCurrentYear currentacademicyear = db.StudentCurrentYears.Where(scy => scy.StudentRefID == studentlist.StudentRefID && scy.Active == true).SingleOrDefault();
+                            //Change the active flag to false
                             currentacademicyear.Active = false;
+                            //add record to be updated by entityframework
                             db.StudentCurrentYears.Attach(currentacademicyear);
                             db.Entry(currentacademicyear).State = EntityState.Modified;
+                            //Create a new record, inserted for newly promoted class
                             StudentCurrentYear addStudentCurrentYear = new StudentCurrentYear
                             {
+                                //get the next academicyear available in the academicyear table
+                                //by using method getNextyearfromCurrent by passing students academicyear
+                                //and current school id's
                                 AcademicYearRefID = getNextYearfromCurrent(studentlist.AcademicYearRefID, studentlist.SchoolRefID),
                                 ClassRefID = getClassID(model.ClassTo),
                                 SchoolRefID = studentlist.SchoolRefID,
@@ -140,6 +148,7 @@ namespace OsisModel.Services
 
             return nextacademicyear.AcademicYearID;
         }
+
         //by changing the value schoolredid and classid, we can get different datasets
         private PromotionsSelectVM getPromotionlistCommon(int classfrom,int classto,int schoolrefid,int academicyearid,int classid)
         {
