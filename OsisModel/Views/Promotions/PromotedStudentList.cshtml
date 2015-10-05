@@ -5,7 +5,12 @@
 }
 <h1>List of students</h1>
         <div id="PromotionsStudentListData">
-            
+            <div style="font-family:'Lucida Sans';font-size:25px;color:red">
+                @if (TempData["academicyearMsg"]!="")
+                {
+                    @TempData["academicyearMsg"];
+                }
+            </div>
             
             
             <table  class="table-bordered table-striped" style="font-size:30px;" width="900">
@@ -31,6 +36,9 @@
                         @Html.HiddenFor(m => Model.StudentLists[i].StudentRefID)
                         @Html.HiddenFor(m => Model.StudentLists[i].SchoolRefID)
                         @Html.HiddenFor(m => Model.StudentLists[i].ClassRefID)
+                        @Html.HiddenFor(m => Model.StudentLists[i].AcademicYearRefID)
+
+
                         <td>&nbsp;&nbsp;@Html.DisplayFor(m => Model.StudentLists[i].Name)</td>
                         <td>&nbsp;&nbsp;@Html.DisplayFor(m => Model.StudentLists[i].ClassName)</td>
                         <td>&nbsp;&nbsp;Promoted</td>

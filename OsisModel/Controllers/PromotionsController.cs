@@ -4,212 +4,98 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OsisModel.Models;
+using OsisModel.Services;
 using Microsoft.AspNet.Identity;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace OsisModel.Controllers
 {
 
     public class PromotionsController : Controller
     {
-        private OsisContext db = new OsisContext();
-        // GET: /Promotions/
+        private IPromotionService _service;
+
+        public PromotionsController()
+        {
+            _service = new PromotionService(this.ModelState);
+
+        }
+        public PromotionsController(IPromotionService service)
+        {
+            _service = service;
+        }
+        
         
         public ActionResult PromotionsSelectClass()
         {
 
-            //Get current logged in user need reference to Microsoft.AspNet.Identity
-            string userid = User.Identity.GetUserId();
+            //get current school by passing promotion service db context
+            Tuple<int,int> currentuserpreference = _service.getUserCurrentSchool(_service.getDBContext());
 
-            //Get logged in users school and academic year preference
-            var userprefer = db.UserPreferences.AsNoTracking().Where(a => a.UserID == userid).Select(x => new { x.SchoolRefID}).FirstOrDefault();
+            //get promotion service db context to be used for dropdownlist
+            OsisContext dbc = _service.getDBContext();
 
-
-            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.AsNoTracking().OrderBy(x => x.ClassOrder).Where(sch => sch.SchoolRefID == userprefer.SchoolRefID).Select(x => new { ClassOrder = x.ClassOrder + "" + x.ClassID, x.ClassName }), "ClassOrder", "ClassName");
+            ViewBag.ClassRefID = new SelectList(dbc.SchoolClasses.AsNoTracking().OrderBy(x => x.ClassOrder).Where(sch => sch.SchoolRefID == currentuserpreference.Item1).Select(x => new { ClassOrder = x.ClassOrder + "" + x.ClassID, x.ClassName }), "ClassOrder", "ClassName");
 
             return View(new PromotionsSelectVM());
         
         }
         
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PromotionsSelectClass(PromotionsSelectVM promotions)
         {
-            string userid = User.Identity.GetUserId();
-            
-            //Get logged in users school and academic year preference
-            var userprefer = db.UserPreferences.AsNoTracking().Where(a => a.UserID == userid).Select(x => new { x.SchoolRefID }).FirstOrDefault();
+            Tuple<int, int> currentuserpreference = _service.getUserCurrentSchool(_service.getDBContext());
 
+            OsisContext dbc = _service.getDBContext();
+            // store list from db in variable to used commonly when model fails or valid
+            var dropdownlist = new SelectList(dbc.SchoolClasses.AsNoTracking().Where(sch => sch.SchoolRefID == currentuserpreference.Item1).Select(x => new { ClassOrder = x.ClassOrder + "" + x.ClassID, x.ClassName }), "ClassOrder", "ClassName");
             
             if(ModelState.IsValid)
             {
-                ViewBag.ClassRefID = new SelectList(db.SchoolClasses.AsNoTracking().Where(sch => sch.SchoolRefID == userprefer.SchoolRefID).Select(x => new { ClassOrder = x.ClassOrder + "" + x.ClassID, x.ClassName }), "ClassOrder", "ClassName");
-                
-                int classid = getClassID(promotions.ClassFrom);
-                var studentlist = db.AjaxStudentLists.AsNoTracking().Where(s => s.SchoolRefID == userprefer.SchoolRefID && s.ClassRefID == classid ).ToList();
-                IList<StudentListVM> studentVM = Mapper.Map<IList<StudentListVM>>(studentlist);
-                
-                PromotionsSelectVM PVM = new PromotionsSelectVM()
-                {
-                    ClassFrom = promotions.ClassFrom,
-                    ClassTo = promotions.ClassTo,
-                    StudentLists = studentVM
-                };
-
-                return View(PVM);
+                ViewBag.ClassRefID = dropdownlist;
+                //passing 1 paramter to getpromotionlist we get list of studentS for userpreference school and academicyear in a class
+                 return View(_service.getPromotionList(promotions.ClassFrom,promotions.ClassTo,1));
             }
 
-            //Get current logged in user need reference to Microsoft.AspNet.Identity
-            
-            //This view bag is use to populate both ClassFrom and classTo dropdown.
-            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.AsNoTracking().Where(sch => sch.SchoolRefID == userprefer.SchoolRefID).Select(x => new { ClassOrder = x.ClassOrder + "" + x.ClassID, x.ClassName }), "ClassOrder", "ClassName");
-            var studentlisterror = db.AjaxStudentLists.AsNoTracking().Where(s => s.SchoolRefID == 0 && s.ClassRefID == 0).ToList();
-            IList<StudentListVM> studenterrorVM = Mapper.Map<IList<StudentListVM>>(studentlisterror);
-            PromotionsSelectVM PVMerror = new PromotionsSelectVM()
-            {
-                ClassFrom = promotions.ClassFrom,
-                ClassTo = promotions.ClassTo,
-                StudentLists = studenterrorVM
-            };            
-            return View(PVMerror);
+            ViewBag.ClassRefID = dropdownlist;
+            //passing no parameter value for thrid parameter(ie valid) dafault to zero, hence a empty dataset is 
+            //returned(studentlist of PromotionSelectVM)
+            return View(_service.getPromotionList(promotions.ClassFrom,promotions.ClassTo));
         }
 
-        private int getClassID( int classfrom)
-        {   
-            string cofValue = Convert.ToString(classfrom);
-            int classorderFrom = Convert.ToInt32(cofValue.Substring(1, 1));
-            return classorderFrom;
-        }
-        
         [HttpGet]
         public ActionResult PromotedStudentList()
         {
+            //casting the object stored in tempdata back to PromotionsSelctVM
             PromotionsSelectVM studVM = (PromotionsSelectVM)TempData["studentVM"];
             return View(studVM);
         }
-        public ActionResult PromotionStudentListPartial(PromotionsSelectVM model )
+        
+        
+        public async Task<ActionResult> PromotionStudentListPartial(PromotionsSelectVM model )
         {
-            //int classFrom = Convert.ToInt32(Request["PromoVM.ClassFrom"]);
-            //int classTo = Convert.ToInt32(Request["ClassTo"]);
-
-            /*
-                string userid = User.Identity.GetUserId();
-
-                //Get logged in users school and academic year preference
-                var userprefer = db.UserPreferences.AsNoTracking().Where(a => a.UserID == userid).Select(x => new { x.SchoolRefID }).FirstOrDefault();
-
-                var studentlist = db.AjaxStudentLists.AsNoTracking().Where(s => s.SchoolRefID == userprefer.SchoolRefID && s.ClassRefID == model.PromoVM.ClassFrom).ToList();
-
-                PromotionsSelectVM PVM = new PromotionsSelectVM()
-                {
-                         ClassFrom = model.PromoVM.ClassFrom,
-                         ClassTo = model.PromoVM.ClassTo
-                };
-                PromotionClassStudentListWrapper wrapper = new PromotionClassStudentListWrapper()
-                {
-                    PromoVM = PVM,
-                    StudentLists = studentlist
-                };
-            */
-            string userid = User.Identity.GetUserId();
-            var userprefer = db.UserPreferences.AsNoTracking().Where(a => a.UserID == userid).Select(x => new { x.SchoolRefID }).FirstOrDefault();
-            int classidFrom = getClassID(model.ClassFrom);
-            var studentlist = db.AjaxStudentLists.AsNoTracking().Where(s => s.SchoolRefID == userprefer.SchoolRefID && s.ClassRefID == classidFrom).ToList();
-            IList<StudentListVM> studentVM = Mapper.Map<IList<StudentListVM>>(studentlist);
-            PromotionsSelectVM modelVM = new PromotionsSelectVM()
+            //ViewBag.Success = "Student Promoted";
+            //TempData["studentVM"] = _service.getPromotionList(model.ClassFrom, model.ClassTo, 1);
+            if(await _service.promoteStudents(model) == false)
             {
-                ClassFrom = model.ClassFrom,
-                ClassTo=model.ClassTo,
-                StudentLists = studentVM
-            };
-            //Get logged in users school and academic year preference
-            
-
-            ViewBag.ClassRefID = new SelectList(db.SchoolClasses.AsNoTracking().Where(sch => sch.SchoolRefID == userprefer.SchoolRefID).Select(x => new { ClassOrder = x.ClassOrder + "" + x.ClassID, x.ClassName }), "ClassOrder", "ClassName");
-            ViewBag.Success = "Student Promoted";
-            TempData["studentVM"] = modelVM;
+                TempData["academicyearMsg"] = "No next academic year from current userprefered academic year";
+                //buy passing 0 to getpromotionlist the data returned is empty studentlist in PromotionSelectVM
+                // which is stored in Tempdata to be accesed by PromotedStudentList view
+                TempData["studentVM"] = _service.getPromotionList(model.ClassFrom, model.ClassTo, 0);
+            }
+            else
+            {
+                TempData["academicyearMsg"] = "Following students are promoted";
+                //buy passing 2 to getpromotionlist the data returned is promoted to next year students in studentlist of PromotionSelectVM 
+                // which is stored in Tempdata to be accesed by PromotedStudentList view
+                TempData["studentVM"] = _service.getPromotionList(model.ClassFrom, model.ClassTo, 2);
+            }
             return RedirectToAction("PromotedStudentList");
-                
-
-            
-        }
-        //
-        // GET: /Promotions/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
-        //
-        // GET: /Promotions/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Promotions/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Promotions/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Promotions/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Promotions/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Promotions/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

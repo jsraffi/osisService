@@ -22,5 +22,9 @@ namespace OsisModel.Models
 
         public int SchoolRefID { get; set; }
 
+        public int AcademicYearRefID { get; set; }
+
+        public bool Active { get; set; }
+
     }
 }

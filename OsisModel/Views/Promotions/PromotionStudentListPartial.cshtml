@@ -40,9 +40,10 @@
                         @Html.HiddenFor(m => Model.StudentLists[i].StudentRefID)
                         @Html.HiddenFor(m => Model.StudentLists[i].SchoolRefID)
                         @Html.HiddenFor(m => Model.StudentLists[i].ClassRefID)
+                        @Html.HiddenFor(m => Model.StudentLists[i].AcademicYearRefID)
                         <td>&nbsp;&nbsp;@Html.DisplayFor(m => Model.StudentLists[i].Name)</td>
                         <td>&nbsp;&nbsp;@Html.DisplayFor(m => Model.StudentLists[i].ClassName)</td>
-                        <td>&nbsp;&nbsp;@Html.EditorFor(m => Model.StudentLists[i].Active, new { @name = "Active" })</td>
+                        <td>&nbsp;&nbsp;@Html.EditorFor(m => Model.StudentLists[i].Detained, new { @name = "Active" })</td>
                     </tr>
 
                 }

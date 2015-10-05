@@ -85,7 +85,7 @@ namespace OsisModel.Controllers
             //This the context that is used by Microsoft default security system that comes 
             // along MVC project templates
             var Db = new ApplicationDbContext();
-
+            
             //get the the logged user's userid, can't call this method in LINQ query
             //gives error's can't use expression inside Linq query
             string userid = User.Identity.GetUserId();

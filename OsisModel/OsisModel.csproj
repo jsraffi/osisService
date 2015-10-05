@@ -239,7 +239,10 @@
     </Compile>
     <Compile Include="Models\AcademicYear.cs" />
     <Compile Include="Models\AjaxClassOrder.cs" />
+    <Compile Include="Services\AcademicYearService.cs" />
+    <Compile Include="Services\CommonServices.cs" />
     <Compile Include="Models\PromotionClassStudentListWrapper.cs" />
+    <Compile Include="Services\PromotionService.cs" />
     <Compile Include="Models\StudentListVM.cs" />
     <Compile Include="Models\StudentList.cs" />
     <Compile Include="Models\PromotionsSelectVM.cs" />

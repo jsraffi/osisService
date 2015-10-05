@@ -266,26 +266,28 @@
 
                     @for (var i = 0; i < Model.StudentCurrentYear.Count; i++)
                     {
+                        if(Model.StudentCurrentYear[i].Active== true)
+                        { 
+                            <tr>
+                                @Html.HiddenFor(model => model.StudentCurrentYear[i].StudentRefID)
+                                @Html.HiddenFor(model => model.StudentCurrentYear[i].CurrentYearID)
+                                <td>
+                                    @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].SchoolRefID)<br />
+                                    @Html.DropDownListFor(model => model.StudentCurrentYear[i].SchoolRefID, ViewBag.SchoolRefID as IEnumerable<SelectListItem>, "Please select a schoool", new { id = "SchoolRefID", @class = "text-box-student" })
 
-                        <tr>
-                            @Html.HiddenFor(model => model.StudentCurrentYear[i].StudentRefID)
-                            @Html.HiddenFor(model => model.StudentCurrentYear[i].CurrentYearID)
-                            <td>
-                                @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].SchoolRefID)<br />
-                                @Html.DropDownListFor(model => model.StudentCurrentYear[i].SchoolRefID, ViewBag.SchoolRefID as IEnumerable<SelectListItem>, "Please select a schoool", new { id = "SchoolRefID", @class = "text-box-student" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].AcademicYearRefID)<br />
+                                    @Html.DropDownListFor(model => model.StudentCurrentYear[i].AcademicYearRefID, ViewBag.AcademicYearREfID as IEnumerable<SelectListItem>, "Please select a academic year", new { id = "AcademicYearRefID", @class = "text-box-student" })
 
-                            </td>
-                            <td>
-                                @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].AcademicYearRefID)<br />
-                                @Html.DropDownListFor(model => model.StudentCurrentYear[i].AcademicYearRefID, ViewBag.AcademicYearREfID as IEnumerable<SelectListItem>, "Please select a academic year", new { id = "AcademicYearRefID", @class = "text-box-student" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].ClassRefID)<br />
+                                    @Html.DropDownListFor(model => model.StudentCurrentYear[i].ClassRefID, ViewBag.ClassRefiD as IEnumerable<SelectListItem>, "Please select a class", new { id = "ClassRefID", @class = "text-box-student" })
+                                </td>
 
-                            </td>
-                            <td>
-                                @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].ClassRefID)<br />
-                                @Html.DropDownListFor(model => model.StudentCurrentYear[i].ClassRefID, ViewBag.ClassRefiD as IEnumerable<SelectListItem>, "Please select a class", new { id = "ClassRefID", @class = "text-box-student" })
-                            </td>
-
-                        </tr>
+                            </tr>
+                        }
                     }
                 </tbody>
 

@@ -12,8 +12,6 @@ namespace OsisModel.Models
     public class StudentCurrentYear
     {
 
-        Boolean _active = true;
-        
         [Key, Column(Order = 0)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int CurrentYearID { get; set; }
@@ -34,24 +32,14 @@ namespace OsisModel.Models
         [Required(ErrorMessage="Please select a class")]
         [ForeignKey("SchoolClass")]
         public int ClassRefID { get; set; }
-       
-        public bool Active { 
-            get
-            {
-                return true;
-            }
-            set
-            {
-                _active = value;
-            }
-        }
+
+        public bool Active { get; set; }
 
         public virtual AcademicYear AcademicYear { get; set; }
         public virtual School School { get; set; }
         public virtual Student Student { get; set; }
         
         public virtual SchoolClass SchoolClass { get; set; } 
-
 
     }
 }

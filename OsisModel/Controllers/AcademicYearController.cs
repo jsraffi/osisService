@@ -13,6 +13,7 @@ using System.IO;
 using System.Configuration;
 using PagedList;
 using AutoMapper;
+using OsisModel.Services;
 
 namespace OsisModel.Controllers
 {
@@ -20,35 +21,26 @@ namespace OsisModel.Controllers
     {
         private OsisContext db = new OsisContext();
         
+        private IAcademicYearService _service;
 
+        public AcademicYearController()
+        {
+            _service = new AcademicYearService(this.ModelState);
+        }
+        
+        public AcademicYearController(IAcademicYearService service)
+        {
+            _service = service;
+        }
         // GET: /AcademicYear/
         public ActionResult Index(int? page)
         {
-            
             var pageNumber = page ?? 1;
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
-            var ayear = db.AcademicYearSingles.SqlQuery("Select AcademicYearID,StartYear,EndYear,StartDate,EndDate,DisplayYear,SchoolREfID,ActiveYear, SchoolName from AcademicYears as ac inner join Schools as sc on sc.SchoolID = ac.SchoolRefID");                                              
-            var aclist = ayear.ToList();
-            return View(ayear.ToPagedList(pageNumber, pageSize));
-            
+            return View(_service.getAcademicYearList().ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: /AcademicYear/Details/5
-        //public async Task<ActionResult> Details(int? id)
-        //{
-        //    //if (id == null)
-        //    //{
-        //    //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    //}
-        //    ////AcademicYearSingle academicyear = await db.AcademicYears.FindAsync(id);
-        //    //if (academicyear == null)
-        //    //{
-        //    //    return HttpNotFound();
-        //    //}
-        //    //return View(academicyear);
-        //}
-
-        // GET: /AcademicYear/Create
+        
         public ActionResult Create()
         {
             ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName");
@@ -65,10 +57,11 @@ namespace OsisModel.Controllers
             if (ModelState.IsValid)
             {
 
-                AcademicYear ayObj = Mapper.Map<AcademicYear>(academicyear);
-                db.AcademicYears.Add(ayObj);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if( await _service.AddNewAcademicYear(academicyear) == true)
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
 
             ViewBag.SchoolRefID = new SelectList(db.Schools, "SchoolID", "SchoolName", academicyear.SchoolRefID);
@@ -82,15 +75,15 @@ namespace OsisModel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AcademicYear academicyear = await db.AcademicYears.FindAsync(id);
-
-            AcademicYearViewModel ayObj = Mapper.Map<AcademicYearViewModel>(academicyear);
-            if (academicyear == null)
+            int idnotnull = (int) id;
+            
+            AcademicYearViewModel academicYearVM = await _service.FindAcademicYearForEditing(idnotnull);
+            if (academicYearVM == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new {x.SchoolID,x.SchoolName }), "SchoolID", "SchoolName", academicyear.SchoolRefID);
-            return View(ayObj);
+            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new {x.SchoolID,x.SchoolName }), "SchoolID", "SchoolName", academicYearVM.SchoolRefID);
+            return View(academicYearVM);
         }
 
         // POST: /AcademicYear/Edit/5
@@ -102,33 +95,20 @@ namespace OsisModel.Controllers
         {
             if (ModelState.IsValid)
             {
-                AcademicYear ayObj = Mapper.Map<AcademicYear>(academicyear);
-                db.Entry(ayObj).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (await _service.SaveAcademicYearAfterEditing(academicyear) == true)
+                {
+                    return RedirectToAction("Index");
+                }
             }
             ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", academicyear.SchoolRefID);
             return View(academicyear);
         }
 
-        // GET: /AcademicYear/Delete/5
-        //public async Task<ActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    AcademicYearSingle academicyear = await db.AcademicYears.FindAsync(id);
-        //    if (academicyear == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(academicyear);
-        //}
+        
 
         // POST: /AcademicYear/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
         //public async Task<ActionResult> DeleteConfirmed(int id)
         //{
         //    AcademicYearSingle academicyear = await db.AcademicYears.FindAsync(id);
