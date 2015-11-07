@@ -42,6 +42,32 @@ namespace OsisModel.Services
             return db;
         }
 
+        //Validating Promotion viewmodel 
+
+        public bool ValidatePromotions(int ClassTo,int ClassFrom)
+        {
+            if(!CheckClassOrder(ClassTo, ClassFrom))
+            {
+                _modelState.AddModelError("ClassFrom", "Class from is greater than class to");
+            }
+            
+            return _modelState.IsValid;
+        }
+
+        private bool CheckClassOrder(int ClassTo, int ClassFrom)
+        {
+            bool isInOrder = false;
+            string classFromValue = Convert.ToString(ClassFrom);
+            string classToValue = Convert.ToString(ClassTo);
+            int classorderFrom = Convert.ToInt32(classFromValue.Substring(0, 1));
+            int classorderTo = Convert.ToInt32(classToValue.Substring(0, 1));
+            if (classorderTo > classorderFrom)
+            {
+                isInOrder = true;
+            }
+            return isInOrder;
+        }
+
         //gets list of students when classfrom and classto parameters are passed from view
         //valid method parameter with default value is used, so that the same method is called when
         //model is valid or has error by changing the value of the valid parameter so that an empty PromotionselectVM is used.
@@ -180,6 +206,7 @@ namespace OsisModel.Services
        OsisContext getDBContext();
        PromotionsSelectVM getPromotionList(int classfrom,int classto, int valid=0);
        Task<bool> promoteStudents(PromotionsSelectVM model);
+       bool ValidatePromotions(int ClassTo, int ClassFrom);
 
     }
 }

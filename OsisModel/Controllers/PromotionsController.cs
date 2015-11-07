@@ -55,9 +55,12 @@ namespace OsisModel.Controllers
             
             if(ModelState.IsValid)
             {
-                ViewBag.ClassRefID = dropdownlist;
-                //passing 1 paramter to getpromotionlist we get list of studentS for userpreference school and academicyear in a class
-                 return View(_service.getPromotionList(promotions.ClassFrom,promotions.ClassTo,1));
+                if (_service.ValidatePromotions(promotions.ClassTo, promotions.ClassFrom))
+                { 
+                    ViewBag.ClassRefID = dropdownlist;
+                    //passing 1 paramter to getpromotionlist we get list of studentS for userpreference school and academicyear in a class
+                     return View(_service.getPromotionList(promotions.ClassFrom,promotions.ClassTo,1));
+                }
             }
 
             ViewBag.ClassRefID = dropdownlist;
