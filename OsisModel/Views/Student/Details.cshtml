@@ -1,288 +1,339 @@
 ﻿@model OsisModel.Models.Student
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Students Details";
 }
+@section viewpagestyle
+{
+    <style type="text/css">
+        tr {
+            line-height: 25px;
+            min-height: 25px;
+            height: 50px;
+           }
 
-<h2>Details</h2>
+        .table-striped>tbody>tr:nth-child(odd)>td, 
+        .table-striped>tbody>tr:nth-child(odd)>th {
+        background-color: #adebad;
+        }
+        .tborder tbody > tr > td{
+           border:5px solid black;
+        }
+    </style>
+
+
+}
+<h1>Student Details</h1>
 
 <div>
-    <h4>Student</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Address_Address1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address_Address1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address_Address2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address_Address2)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address_City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address_City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address_Pincode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address_Pincode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address_Mobile)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address_Mobile)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.website)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.website)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NickName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NickName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Sex)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Sex)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DOB)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DOB)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FathersName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FathersName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MothersName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MothersName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FathersOccupation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FathersOccupation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MothersOccupation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MothersOccupation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MothersPhone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MothersPhone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FathersPhone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FathersPhone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FathersQualification)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FathersQualification)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MothersQualifiication)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MothersQualifiication)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MotherTongue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MotherTongue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdentificationMarks)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdentificationMarks)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.KnowMedicalCondition)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.KnowMedicalCondition)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SpecialTalents)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SpecialTalents)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReasonForOlivekids)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReasonForOlivekids)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PlayschoolExperience)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PlayschoolExperience)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfJoining)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOfJoining)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CenterCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CenterCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RegistrationNo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RegistrationNo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AdmissionFee)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AdmissionFee)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalCourseFee)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalCourseFee)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TermFee)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TermFee)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Height)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Height)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Weight)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Weight)
-        </dd>
-
-    </dl>
+    <table class="table-bordered table-striped tborder" width="1500" style="font-size:25px;font-family:'Malgun Gothic'">
+        
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.NickName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.NickName)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Sex)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Sex)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.DOB)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.DOB)
+            </td>
+
+        </tr>
+
+        
+        
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Address_Address1)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Address_Address1)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Address_Address2)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Address_Address2)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Address_City)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Address_City)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Address_Pincode)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Address_Pincode)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Address_Mobile)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Address_Mobile)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.Phone)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Phone)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Email)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Email)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.website)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.website)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.FathersName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.FathersName)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.MothersName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.MothersName)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.FathersOccupation)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.FathersOccupation)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.MothersOccupation)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.MothersOccupation)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.MothersPhone)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.MothersPhone)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.FathersPhone)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.FathersPhone)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.FathersQualification)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.FathersQualification)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.MothersQualifiication)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.MothersQualifiication)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.MotherTongue)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.MotherTongue)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.IdentificationMarks)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.IdentificationMarks)
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.KnowMedicalCondition)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.KnowMedicalCondition)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.SpecialTalents)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.SpecialTalents)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ReasonForOlivekids)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ReasonForOlivekids)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.PlayschoolExperience)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.PlayschoolExperience)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.DateOfJoining)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.DateOfJoining)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.CenterCode)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.CenterCode)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.RegistrationNo)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.RegistrationNo)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.AdmissionFee)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.AdmissionFee)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.TotalCourseFee)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.TotalCourseFee)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.TermFee)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.TermFee)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Height)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Height)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.Weight)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Weight)
+            </td>
+
+        </tr>
+    </table>
+    
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.StudentID }) |
