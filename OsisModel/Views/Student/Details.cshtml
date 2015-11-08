@@ -1,4 +1,4 @@
-﻿@model OsisModel.Models.Student
+﻿@model OsisModel.Models.StudentViewModel
 
 @{
     ViewBag.Title = "Students Details";
@@ -19,14 +19,18 @@
         .tborder tbody > tr > td{
            border:5px solid black;
         }
+        tr td:first-child{color:red}
+        tr td:nth-child(3){color:red}
+        
+        
     </style>
 
 
 }
 <h1>Student Details</h1>
 
-<div>
-    <table class="table-bordered table-striped tborder" width="1500" style="font-size:25px;font-family:'Malgun Gothic'">
+<div style="width:1500px">
+    <table class="table-bordered table-striped tborder table" style="font-size:25px;font-family:'Trebuchet MS';">
         
         <tr>
             <td>
@@ -60,7 +64,7 @@
             </td>
 
             <td>
-                @Html.DisplayFor(model => model.DOB)
+                @Html.DisplayFor(model => model.DOB, "ShortDateTime")
             </td>
 
         </tr>
@@ -100,24 +104,7 @@
             </td>
 
         </tr>
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => model.Address_Mobile)
-            </td>
-
-            <td>
-                @Html.DisplayFor(model => model.Address_Mobile)
-            </td>
-
-            <td>
-                @Html.DisplayNameFor(model => model.Phone)
-            </td>
-
-            <td>
-                @Html.DisplayFor(model => model.Phone)
-            </td>
-
-        </tr>
+        
         <tr>
             <td>
                 @Html.DisplayNameFor(model => model.Email)
@@ -267,7 +254,7 @@
             </td>
 
             <td>
-                @Html.DisplayFor(model => model.DateOfJoining)
+                @Html.DisplayFor(model => model.DateOfJoining, "ShortDateTime")
             </td>
 
             <td>
@@ -332,10 +319,18 @@
             </td>
 
         </tr>
+        <tr>
+
+            <td>
+                @Html.DisplayNameFor(model => model.Phone)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Phone)
+            </td>
+            <td>@Html.ActionLink("Edit student record", "Edit", new { id = Model.StudentID }, new { style= "Color:Yellow;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" })</td>
+            <td>@Html.ActionLink("Back to List", "Index" ,null,new { style = "Color:yellow;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" })</td>
+        </tr>
     </table>
     
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

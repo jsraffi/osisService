@@ -74,11 +74,15 @@ namespace OsisModel.Controllers
             }
             
             Student student = await db.Students.FindAsync(id);
+            StudentViewModel studentVM = Mapper.Map<StudentViewModel>(student);
+            
             if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            studentVM.Sex = (studentVM.Sex == "M") ? "Male" : "Female";
+
+            return View(studentVM);
         }
 
         // GET: /Student/Create

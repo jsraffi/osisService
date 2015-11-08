@@ -157,9 +157,10 @@ namespace OsisModel.Services
 
             var currrentacademicyear = db.AcademicYears.Where(ac => ac.AcademicYearID == userpreferSchoolandAcademicYear.Item2).Select(x => new { x.StartYear, x.EndYear }).SingleOrDefault();
 
-            int nextacademicyear = db.AcademicYears.Where(ay => ay.StartYear == currrentacademicyear.StartYear + 1 && ay.SchoolRefID == userpreferSchoolandAcademicYear.Item1).Count();
+            int nextacademicyear = db.AcademicYears.Where(ay => ay.StartYear == currrentacademicyear.EndYear  && ay.SchoolRefID == userpreferSchoolandAcademicYear.Item1).Count();
 
-            if(nextacademicyear > 0)
+              
+            if (nextacademicyear > 0)
             {
                 return true;
             }
