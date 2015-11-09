@@ -697,11 +697,11 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\School\Create.cshtml" />
-    <Content Include="Views\School\Delete.cshtml" />
-    <Content Include="Views\School\Details.cshtml" />
-    <Content Include="Views\School\Edit.cshtml" />
-    <Content Include="Views\School\Index.cshtml" />
+    <Content Include="Views\SchoolClass\School\Create.cshtml" />
+    <Content Include="Views\SchoolClass\School\Delete.cshtml" />
+    <Content Include="Views\SchoolClass\School\Details.cshtml" />
+    <Content Include="Views\SchoolClass\School\Edit.cshtml" />
+    <Content Include="Views\SchoolClass\School\Index.cshtml" />
     <Content Include="Views\AcademicYear\Create.cshtml" />
     <Content Include="Views\AcademicYear\Delete.cshtml" />
     <Content Include="Views\AcademicYear\Details.cshtml" />

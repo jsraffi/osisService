@@ -35,11 +35,15 @@ namespace OsisModel.Models
 
         public bool Active { get; set; }
 
+        public DateTime PromotedOn { get; set; }
+
         public virtual AcademicYear AcademicYear { get; set; }
         public virtual School School { get; set; }
         public virtual Student Student { get; set; }
         
         public virtual SchoolClass SchoolClass { get; set; } 
+
+       
 
     }
 }

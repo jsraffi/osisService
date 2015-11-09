@@ -19,6 +19,10 @@
         .tborder tbody > tr > td{
            border:5px solid black;
         }
+        .tborder thead > tr > td{
+            border:5px solid black;
+            border-top:5px solid black !important;     
+        }
         tr td:first-child{color:red}
         tr td:nth-child(3){color:red}
         
@@ -332,5 +336,28 @@
             <td>@Html.ActionLink("Back to List", "Index" ,null,new { style = "Color:yellow;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" })</td>
         </tr>
     </table>
-    
+    <div style="height:50px;">
+
+    </div>
+    <table class="table table-striped tborder table-bordered" style="font-size:25px;font-family:'Trebuchet MS';">
+        <thead>
+            <tr>
+                <td>School Name</td>
+                <td>Academicyear</td>
+                <td>Class Name</td>
+                <td>Promoted on</td>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.StudentCurrentYear.Count; i++)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => Model.StudentCurrentYear[i].School.SchoolName)</td>
+                    <td>@Html.DisplayFor(m => Model.StudentCurrentYear[i].AcademicYear.DisplayYear)</td>
+                    <td>@Html.DisplayFor(m => Model.StudentCurrentYear[i].SchoolClass.ClassName)</td>
+                    <td>@Html.DisplayFor(m => Model.StudentCurrentYear[i].PromotedOn)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
