@@ -26,5 +26,7 @@ namespace OsisModel.Models
         public bool Active { get; set; }
 
         public bool Detained { get; set; }
+
+        public DateTime PromotedOn { get; set; }
     }
 }

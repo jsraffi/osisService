@@ -155,4 +155,3 @@ D:\Raffi\Projects\osisService\OsisModel\bin\pt\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\ru\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\sv\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\tr\FluentValidation.resources.dll
-D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.csprojResolveAssemblyReference.cache

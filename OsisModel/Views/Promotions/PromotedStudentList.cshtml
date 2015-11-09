@@ -6,7 +6,7 @@
 <h1>List of students</h1>
         <div id="PromotionsStudentListData">
             <div style="font-family:'Lucida Sans';font-size:25px;color:red">
-                @if (TempData["academicyearMsg"]!="")
+                @if (TempData["academicyearMsg"] != "")
                 {
                     @TempData["academicyearMsg"];
                 }
@@ -41,7 +41,7 @@
 
                         <td>&nbsp;&nbsp;@Html.DisplayFor(m => Model.StudentLists[i].Name)</td>
                         <td>&nbsp;&nbsp;@Html.DisplayFor(m => Model.StudentLists[i].ClassName)</td>
-                        <td>&nbsp;&nbsp;Promoted</td>
+                        <td>&nbsp;&nbsp;@Html.DisplayFor(m => Model.StudentLists[i].PromotedOn)</td>
                     </tr>
 
                 }
