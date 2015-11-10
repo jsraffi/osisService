@@ -85,6 +85,7 @@ D:\Raffi\Projects\osisService\OsisModel\bin\Antlr3.Runtime.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\AutoMapper.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\EntityFramework.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\EntityFramework.SqlServer.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.Mvc.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\Microsoft.AspNet.Identity.Core.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\Microsoft.AspNet.Identity.EntityFramework.dll
@@ -114,6 +115,8 @@ D:\Raffi\Projects\osisService\OsisModel\bin\AutoMapper.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\AutoMapper.Net4.pdb
 D:\Raffi\Projects\osisService\OsisModel\bin\EntityFramework.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\EntityFramework.SqlServer.xml
+D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.pdb
+D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.Mvc.pdb
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.Helpers.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.Mvc.xml
@@ -136,11 +139,6 @@ D:\Raffi\Projects\osisService\OsisModel\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\Microsoft.Owin.Security.Google.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.dll
-D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.pdb
-D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.dll
-D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.pdb
-D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\da\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\de\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\es\FluentValidation.resources.dll
@@ -155,4 +153,5 @@ D:\Raffi\Projects\osisService\OsisModel\bin\pt\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\ru\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\sv\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\tr\FluentValidation.resources.dll
-D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.csprojResolveAssemblyReference.cache
+D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.dll
+D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.pdb

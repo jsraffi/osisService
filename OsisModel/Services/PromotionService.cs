@@ -42,18 +42,24 @@ namespace OsisModel.Services
             return db;
         }
 
-        //Validating Promotion viewmodel 
-
+        //Validating Promotion viewmodel,the classto dropdown and classfrom dropdown are
+        //concatinated with order of the class(ie order which the class are define in schoool
+        //from lower to higher like LKG to class12.The below method is used to validate
+        //promotion is sought from lower to higher class and also checks students are promoted to
+        //only to next class in the hierarchy 
         public bool ValidatePromotions(int ClassTo,int ClassFrom)
         {
             if(!CheckClassOrder(ClassTo, ClassFrom))
             {
-                _modelState.AddModelError("ClassFrom", "Class from is greater than class to");
+                _modelState.AddModelError("", "'Class from' should be lesser than 'class to' and the difference should be one level");
             }
             
             return _modelState.IsValid;
         }
 
+        //This method does all checking for validating order of the class lower to higher
+        //by spliting value returned by classto and classfrom dropdown and also checking the promotion only for
+        // the next class
         private bool CheckClassOrder(int ClassTo, int ClassFrom)
         {
             bool isInOrder = false;
@@ -61,7 +67,7 @@ namespace OsisModel.Services
             string classToValue = Convert.ToString(ClassTo);
             int classorderFrom = Convert.ToInt32(classFromValue.Substring(0, 1));
             int classorderTo = Convert.ToInt32(classToValue.Substring(0, 1));
-            if (classorderTo > classorderFrom)
+            if (classorderTo > classorderFrom && (classorderTo-classorderFrom == 1))
             {
                 isInOrder = true;
             }
