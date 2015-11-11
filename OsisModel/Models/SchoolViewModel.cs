@@ -22,14 +22,14 @@ namespace OsisModel.Models
 
         public Address address {get; set;}
 
-        [Display(Name="Land line")]
+        [Display(Name="Land line no")]
         public String Phone { get; set; }
 
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Display(Name="Websit")]
+        [Display(Name="Website")]
         public string website { get; set; }
 
         [Required(ErrorMessage = "Please enter a zero or starting no for students Roll No")]

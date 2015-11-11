@@ -1,44 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using OsisModel.Models;
-using AutoMapper;
 using PagedList;
 using System.Configuration;
+using OsisModel.Services;
+using System.Threading.Tasks;
 
 namespace OsisModel.Controllers
 {
     public class SchoolController : Controller
     {
-        private OsisContext db = new OsisContext();
-        //using auto mapper and optimize queries for EF let test GitHub for winodws'
-        // GET: /School/
+        private ISchoolService _service;
+
+        public SchoolController(ISchoolService service)
+        {
+            _service = service;
+        }
+
+        public SchoolController()
+        {
+            _service = new SchoolService(this.ModelState);
+        }
         public ActionResult Index(int? page)
         {
             var pageNumber = page ?? 1;
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
-            var schools = db.Schools.OrderBy(s => s.SchoolName);
-            return View(schools.ToPagedList(pageNumber,pageSize));
+            return View(_service.getSchoolList().ToPagedList(pageNumber,pageSize));
         }
 
         // GET: /School/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            School school = db.Schools.Find(id);
-            if (school == null)
+            
+            SchoolViewModel schoolVM = await Task.Run(() => _service.findSchoolById(id));
+
+            if (schoolVM == null)
             {
                 return HttpNotFound();
             }
-            return View(school);
+            return View(schoolVM);
         }
 
         // GET: /School/Create
@@ -52,34 +57,32 @@ namespace OsisModel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SchoolViewModel school)
+        public async Task<ActionResult> Create(SchoolViewModel school)
         {
             if (ModelState.IsValid)
             {
-                School schObj = Mapper.Map<School>(school);
-                db.Schools.Add(schObj);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (await _service.createNewSchool(school) == true)
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(school);
         }
 
         // GET: /School/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            School school = db.Schools.Find(id);
-
-            SchoolViewModel schVM = Mapper.Map<SchoolViewModel>(school);
-            if (school == null)
+            SchoolViewModel schoolVM = await Task.Run(() => _service.findSchoolById(id));
+            if (schoolVM == null)
             {
                 return HttpNotFound();
             }
-            return View(schVM);
+            return View(schoolVM);
         }
 
         // POST: /School/Edit/5
@@ -87,21 +90,21 @@ namespace OsisModel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(SchoolViewModel school)
+        public async Task<ActionResult> Edit(SchoolViewModel schoolVM)
         {
             if (ModelState.IsValid)
             {
-                School schObj = Mapper.Map<School>(school);
+                if(await _service.saveAfterEdit(schoolVM) == true)
+                {
+                    return RedirectToAction("Index");
+                }
                 
-                db.Entry(schObj).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
-            return View(school);
+            return View(schoolVM);
         }
 
         // GET: /School/Delete/5
-        public ActionResult Delete(int? id)
+        /*public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -125,7 +128,7 @@ namespace OsisModel.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -134,5 +137,6 @@ namespace OsisModel.Controllers
             }
             base.Dispose(disposing);
         }
+        */
     }
 }

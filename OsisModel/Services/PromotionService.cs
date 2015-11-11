@@ -44,7 +44,7 @@ namespace OsisModel.Services
 
         //Validating Promotion viewmodel,the classto dropdown and classfrom dropdown are
         //concatinated with order of the class(ie order which the class are define in schoool
-        //from lower to higher like LKG to class12.The below method is used to validate
+        //from lower to higher like LKG to class12).The below method is used to validate
         //promotion is sought from lower to higher class and also checks students are promoted to
         //only to next class in the hierarchy 
         public bool ValidatePromotions(int ClassTo,int ClassFrom)
@@ -210,8 +210,8 @@ namespace OsisModel.Services
     public interface IPromotionService
     {
        Tuple<int,int> getUserCurrentSchool(OsisContext db);
-       OsisContext getDBContext();
-       PromotionsSelectVM getPromotionList(int classfrom,int classto, int valid=0);
+        OsisContext getDBContext();
+        PromotionsSelectVM getPromotionList(int classfrom,int classto, int valid=0);
        Task<bool> promoteStudents(PromotionsSelectVM model);
        bool ValidatePromotions(int ClassTo, int ClassFrom);
 

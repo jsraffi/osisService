@@ -11,7 +11,7 @@ using OsisModel.Models;
 using PagedList;
 using AutoMapper;
 using System.Configuration;
-
+using OsisModel.Services;
 
 namespace OsisModel.Controllers
 {
@@ -19,10 +19,22 @@ namespace OsisModel.Controllers
     {
         private OsisContext db = new OsisContext();
 
+        private ISchoolClass _service;
+
+        public SchoolClassController()
+        {
+            _service = new SchoolClassService(this.ModelState);
+        }
+
+        public SchoolClassController(ISchoolClass service)
+        {
+            _service = service;
+        }
+        
         public JsonResult GetClassOrderBySchoolID(int id)
         {
-            var classes = db.SchoolClasses.AsNoTracking().Where(s => s.SchoolRefID == id).Select(c => new { ClassName = c.ClassName, ClassID = c.ClassID , ClassOrder= c.ClassOrder}).ToList();
-
+            var dbc = _service.getDBContext();
+            var classes = dbc.SchoolClasses.AsNoTracking().Where(s => s.SchoolRefID == id).Select(c => new { ClassName = c.ClassName, ClassID = c.ClassID , ClassOrder= c.ClassOrder}).ToList();
             return Json(classes, JsonRequestBehavior.AllowGet);
         }
 
@@ -31,8 +43,7 @@ namespace OsisModel.Controllers
         {
             var pageNumber = page ?? 1;
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
-            var sclass = db.SchoolClassSingles.OrderBy(c => c.ClassName);
-            return View(sclass.ToPagedList(pageNumber, pageSize));
+            return View(_service.getListofClassesofSchool().ToPagedList(pageNumber, pageSize));
            
         }
 
@@ -54,7 +65,8 @@ namespace OsisModel.Controllers
         // GET: /SchoolClass/Create
         public ActionResult Create()
         {
-            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new {x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName");
+            var dbc = _service.getDBContext();
+            ViewBag.SchoolRefID = new SelectList(dbc.Schools.AsNoTracking().Select(x => new {x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName");
             return View();
         }
 

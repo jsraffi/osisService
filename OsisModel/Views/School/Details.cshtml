@@ -3,77 +3,113 @@
 @{
     ViewBag.Title = "Details";
 }
+@section viewpagestyle
+{
+    <style type="text/css">
+        tr {
+            line-height: 25px;
+            min-height: 25px;
+            height: 50px;
+        }
 
-<h2>Details</h2>
+        .table-striped > tbody > tr:nth-child(odd) > td,
+        .table-striped > tbody > tr:nth-child(odd) > th {
+            background-color: #adebad;
+        }
 
-<div>
-    <h4>School</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SchoolName)
-        </dt>
+        .tborder tbody > tr > td {
+            border: 5px solid black;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.SchoolName)
-        </dd>
+        .tborder thead > tr > td {
+            border: 5px solid black;
+            border-top: 5px solid black !important;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastRegNo)
-        </dt>
+        tr td:first-child {
+            color: red;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.LastRegNo)
-        </dd>
+        tr td:nth-child(3) {
+            color: red;
+        }
+    </style>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.address.Address1)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.address.Address1)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.address.Address2)
-        </dt>
+}
+<h1>Schools Details</h1>
 
-        <dd>
-            @Html.DisplayFor(model => model.address.Address2)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.address.City)
-        </dt>
+<div style="width:1500px">
 
-        <dd>
-            @Html.DisplayFor(model => model.address.City)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.address.Pincode)
-        </dt>
+    <table class="table-bordered table-striped tborder table" style="font-size:25px;font-family:'Trebuchet MS';">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.SchoolName)
+            </td>
 
-        <dd>
-            @Html.DisplayFor(model => model.address.Pincode)
-        </dd>
+            <td>
+                @Html.DisplayFor(model => model.SchoolName)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.LastRegNo)
+            </td>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.address.Mobile)
-        </dt>
+            <td>
+                @Html.DisplayFor(model => model.LastRegNo)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.address.Address1)
+            </td>
 
-        <dd>
-            @Html.DisplayFor(model => model.address.Mobile)
-        </dd>
+            <td>
+                @Html.DisplayFor(model => model.address.Address1)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.address.Address2)
+            </td>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Selected)
-        </dt>
+            <td>
+                @Html.DisplayFor(model => model.address.Address2)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.address.City)
+            </td>
 
-        <dd>
-            @Html.DisplayFor(model => model.Selected)
-        </dd>
+            <td>
+                @Html.DisplayFor(model => model.address.City)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.address.Pincode)
+            </td>
 
-    </dl>
+            <td>
+                @Html.DisplayFor(model => model.address.Pincode)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.address.Mobile)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.address.Mobile)
+            </td>
+
+            <td>
+                @Html.DisplayNameFor(model => model.Selected)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Selected)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">@Html.ActionLink("Edit", "Edit", new { id = Model.SchoolID })</td>
+            <td colspan="2">@Html.ActionLink("Back to List", "Index")</td>
+        </tr>
+    </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SchoolID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

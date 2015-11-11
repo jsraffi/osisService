@@ -39,6 +39,7 @@
                 @Html.DisplayNameFor(model => model.Selected)
             </th>
             <th>Edit</th>
+            <th>Details</th>
         </tr>
 
         @foreach (var item in Model)
@@ -71,6 +72,9 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.SchoolID })
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.SchoolID })
                 </td>
             </tr>
         }
