@@ -57,17 +57,17 @@ namespace OsisModel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(SchoolViewModel school)
+        public async Task<ActionResult> Create(SchoolViewModel schoolVM)
         {
             if (ModelState.IsValid)
             {
-                if (await _service.createNewSchool(school) == true)
+                if (await Task.Run(() => _service.createNewSchool(schoolVM)) == true)
                 {
                     return RedirectToAction("Index");
                 }
             }
 
-            return View(school);
+            return View(schoolVM);
         }
 
         // GET: /School/Edit/5
@@ -94,7 +94,7 @@ namespace OsisModel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(await _service.saveAfterEdit(schoolVM) == true)
+                if(await Task.Run(() => _service.saveAfterEdit(schoolVM)) == true)
                 {
                     return RedirectToAction("Index");
                 }

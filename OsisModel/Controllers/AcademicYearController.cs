@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using OsisModel.Models;
-using System.Diagnostics;
-using System.IO;
 using System.Configuration;
 using PagedList;
-using AutoMapper;
 using OsisModel.Services;
 
 namespace OsisModel.Controllers
 {
     public class AcademicYearController : Controller
     {
-        private OsisContext db = new OsisContext();
-        
+             
         private IAcademicYearService _service;
 
         public AcademicYearController()
@@ -43,7 +36,8 @@ namespace OsisModel.Controllers
         
         public ActionResult Create()
         {
-            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName");
+            var dbc = _service.getDBContext();
+            ViewBag.SchoolRefID = new SelectList(dbc.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName");
             return View();
         }
 
@@ -57,14 +51,14 @@ namespace OsisModel.Controllers
             if (ModelState.IsValid)
             {
 
-                if( await _service.AddNewAcademicYear(academicyear) == true)
+                if( await Task.Run(() =>_service.AddNewAcademicYear(academicyear)) == true)
                 {
                     return RedirectToAction("Index");
                 }
                 
             }
-
-            ViewBag.SchoolRefID = new SelectList(db.Schools, "SchoolID", "SchoolName", academicyear.SchoolRefID);
+            var dbc = _service.getDBContext();
+            ViewBag.SchoolRefID = new SelectList(dbc.Schools, "SchoolID", "SchoolName", academicyear.SchoolRefID);
             return View(academicyear);
         }
 
@@ -77,12 +71,13 @@ namespace OsisModel.Controllers
             }
             int idnotnull = (int) id;
             
-            AcademicYearViewModel academicYearVM = await _service.FindAcademicYearForEditing(idnotnull);
+            AcademicYearViewModel academicYearVM = await Task.Run(() => _service.FindAcademicYearForEditing(idnotnull));
             if (academicYearVM == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new {x.SchoolID,x.SchoolName }), "SchoolID", "SchoolName", academicYearVM.SchoolRefID);
+            var dbc = _service.getDBContext();
+            ViewBag.SchoolRefID = new SelectList(dbc.Schools.AsNoTracking().Select(x => new {x.SchoolID,x.SchoolName }), "SchoolID", "SchoolName", academicYearVM.SchoolRefID);
             return View(academicYearVM);
         }
 
@@ -91,17 +86,18 @@ namespace OsisModel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(AcademicYearViewModel academicyear)
+        public async Task<ActionResult> Edit(AcademicYearViewModel academicYearVM)
         {
             if (ModelState.IsValid)
             {
-                if (await _service.SaveAcademicYearAfterEditing(academicyear) == true)
+                if (await Task.Run(() => _service.SaveAcademicYearAfterEditing(academicYearVM)) == true)
                 {
                     return RedirectToAction("Index");
                 }
             }
-            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", academicyear.SchoolRefID);
-            return View(academicyear);
+            var dbc = _service.getDBContext();
+            ViewBag.SchoolRefID = new SelectList(dbc.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", academicYearVM.SchoolRefID);
+            return View(academicYearVM);
         }
 
         
@@ -116,7 +112,7 @@ namespace OsisModel.Controllers
         //    await db.SaveChangesAsync();
         //    return RedirectToAction("Index");
         //}
-
+        /*
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -125,5 +121,6 @@ namespace OsisModel.Controllers
             }
             base.Dispose(disposing);
         }
+        */
     }
 }

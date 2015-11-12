@@ -75,40 +75,20 @@ namespace OsisModel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(SchoolClassViewModel schoolclass)
+        public async Task<ActionResult> Create(SchoolClassViewModel schoolVM)
         {
+            
             if (ModelState.IsValid)
             {
-                
-                SchoolClass scObj = Mapper.Map<SchoolClass>(schoolclass);
-                using(var dbtransaction = db.Database.BeginTransaction())
+                if(await Task.Run(() => _service.addNewClasstoSchool(schoolVM)) == true)
                 {
-                    try
-                    {
-                        
-                        var LastClassOrderNo = db.Database.SqlQuery<int>("Select ISNULL(Max(ClassOrder),0) from SchoolClasses with (XLOCK,HOLDLOCK) where SchoolRefID={0}", scObj.SchoolRefID).SingleOrDefault<int>();
-                        scObj.ClassOrder = LastClassOrderNo + 1;
-                        db.SchoolClasses.Add(scObj);
-                        await db.SaveChangesAsync();
-                        dbtransaction.Commit();
-                        return RedirectToAction("Index");
-                        
-                    }
-                    catch(Exception e)
-                    {
-                        dbtransaction.Rollback();
-                        TempData["errormessage"] = e.Message;
-                        ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID, x.SchoolName }), "SchoolID", "SchoolName", schoolclass.SchoolRefID);
-                        return View(schoolclass);
-
-                    }
+                    return RedirectToAction("Index");
                 }
                 
-                
             }
-
-            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", schoolclass.SchoolRefID);
-            return View(schoolclass);
+            var dbc = _service.getDBContext();
+            ViewBag.SchoolRefID = new SelectList(dbc.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", schoolVM.SchoolRefID);
+            return View(schoolVM);
         }
 
         // GET: /SchoolClass/Edit/5
@@ -118,15 +98,14 @@ namespace OsisModel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SchoolClass schoolclass = await db.SchoolClasses.FindAsync(id);
-
-            SchoolClassViewModel changetoSchoolViewModel = Mapper.Map<SchoolClassViewModel>(schoolclass);
-            if (schoolclass == null)
+            SchoolClassViewModel SchoolClassVM = await Task.Run(() => _service.findClassByID(id));
+            if (SchoolClassVM == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", schoolclass.SchoolRefID);
-            return View(changetoSchoolViewModel);
+            var dbc = _service.getDBContext();
+            ViewBag.SchoolRefID = new SelectList(dbc.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", SchoolClassVM.SchoolRefID);
+            return View(SchoolClassVM);
         }
 
         // POST: /SchoolClass/Edit/5
@@ -134,53 +113,54 @@ namespace OsisModel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(SchoolClassViewModel schoolclass)
+        public async Task<ActionResult> Edit(SchoolClassViewModel SchoolClassVM)
         {
             if (ModelState.IsValid)
             {
-
-                SchoolClass changetoschoolclass = Mapper.Map<SchoolClass>(schoolclass);
-                db.Entry(changetoschoolclass).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (await Task.Run(() => _service.saveClassAfterEditing(SchoolClassVM)) == true)
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            ViewBag.SchoolRefID = new SelectList(db.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", schoolclass.SchoolRefID);
-            return View(schoolclass);
+            var dbc = _service.getDBContext();
+            ViewBag.SchoolRefID = new SelectList(dbc.Schools.AsNoTracking().Select(x => new { x.SchoolID,x.SchoolName}), "SchoolID", "SchoolName", SchoolClassVM.SchoolRefID);
+            return View(SchoolClassVM);
         }
+        /*
+                // GET: /SchoolClass/Delete/5
+                public async Task<ActionResult> Delete(int? id)
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    SchoolClass schoolclass = await db.SchoolClasses.FindAsync(id);
+                    if (schoolclass == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(schoolclass);
+                }
 
-        // GET: /SchoolClass/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SchoolClass schoolclass = await db.SchoolClasses.FindAsync(id);
-            if (schoolclass == null)
-            {
-                return HttpNotFound();
-            }
-            return View(schoolclass);
-        }
+                // POST: /SchoolClass/Delete/5
+                [HttpPost, ActionName("Delete")]
+                [ValidateAntiForgeryToken]
+                public async Task<ActionResult> DeleteConfirmed(int id)
+                {
+                    SchoolClass schoolclass = await db.SchoolClasses.FindAsync(id);
+                    db.SchoolClasses.Remove(schoolclass);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
 
-        // POST: /SchoolClass/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            SchoolClass schoolclass = await db.SchoolClasses.FindAsync(id);
-            db.SchoolClasses.Remove(schoolclass);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+                protected override void Dispose(bool disposing)
+                {
+                    if (disposing)
+                    {
+                        db.Dispose();
+                    }
+                    base.Dispose(disposing);
+                }
+                */
     }
 }

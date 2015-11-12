@@ -39,20 +39,29 @@ namespace OsisModel.Services
             return SchoolVM;
         }
 
-        public  async Task<bool> createNewSchool(SchoolViewModel schoolVM)
+        public  bool createNewSchool(SchoolViewModel schoolVM)
         {
             School schoolmodel = Mapper.Map<School>(schoolVM);
             db.Schools.Add(schoolmodel);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
             return true;
         }
 
-        public async Task<bool> saveAfterEdit(SchoolViewModel schoolVM)
+        public bool saveAfterEdit(SchoolViewModel schoolVM)
         {
             School school = Mapper.Map<School>(schoolVM);
             db.Entry(school).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            db.SaveChanges();
             return true;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
     }
@@ -62,8 +71,8 @@ namespace OsisModel.Services
         OsisContext getDBContext();
         List<School> getSchoolList();
         SchoolViewModel findSchoolById(int? id);
-        Task<bool> createNewSchool(SchoolViewModel schooolVM);
-        Task<bool> saveAfterEdit(SchoolViewModel schoolVM);
+        bool createNewSchool(SchoolViewModel schooolVM);
+        bool saveAfterEdit(SchoolViewModel schoolVM);
     }
 
 }

@@ -3,23 +3,29 @@
 @{
     ViewBag.Title = "Create";
 }
+@section viewpagestyle
+{
+    <style type="text/css">
+        .validation-summary-errors{ font-size:20px; font-weight:bold}
+    </style>
+
+
+}
+
+
+
 
 <h1 class="h1padbot">Create a class for a school</h1>
-@if (TempData["errormessage"] != null)
-{
-    <div style="font-size:25px;">
-        @TempData["errormessage"];
-    </div>
-}
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     <div class="row" style="width:1500px;">
+        @Html.ValidationSummary(true)
         <div class="col-lg-6">
 
             <div class="form-horizontal formpadleft" style="border:solid 1px black;">
-                @Html.ValidationSummary(true)
+                
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.SchoolRefID, "School Name", new { @class = "controlLabel col-md-2" })

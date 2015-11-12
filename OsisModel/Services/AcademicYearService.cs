@@ -26,7 +26,10 @@ namespace OsisModel.Services
             return db.AcademicYearSingles.ToList();
 
         }
-
+        public OsisContext getDBContext()
+        {
+            return db;
+        }
         protected bool ValidateAcademicYear(AcademicYearViewModel acamedicyearVM)
         {
             if(CheckStartandEndYear(acamedicyearVM.StartYear,acamedicyearVM.EndYear) == false)
@@ -88,7 +91,7 @@ namespace OsisModel.Services
             
             return false;
         }
-        public async Task<bool> AddNewAcademicYear(AcademicYearViewModel academicyear)
+        public bool AddNewAcademicYear(AcademicYearViewModel academicyear)
         {
             if (!ValidateAcademicYear(academicyear))
             {
@@ -96,12 +99,12 @@ namespace OsisModel.Services
             }
             AcademicYear academicYearModel = Mapper.Map<AcademicYear>(academicyear);
             db.AcademicYears.Add(academicYearModel);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
             return true;
             
         }
 
-        public async Task<bool> SaveAcademicYearAfterEditing(AcademicYearViewModel academicyear)
+        public bool SaveAcademicYearAfterEditing(AcademicYearViewModel academicyear)
         {
             if(!ValidateAcademicYear(academicyear))
             {
@@ -109,22 +112,33 @@ namespace OsisModel.Services
             }
             AcademicYear academicYearModel = Mapper.Map<AcademicYear>(academicyear);
             db.Entry(academicYearModel).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            db.SaveChanges();
             return true;
         }
-        public async Task<AcademicYearViewModel> FindAcademicYearForEditing(int id)
+        public AcademicYearViewModel FindAcademicYearForEditing(int id)
         {
-
-            AcademicYearViewModel academicYearVM = Mapper.Map<AcademicYearViewModel>(await db.AcademicYears.FindAsync(id));
+            AcademicYearViewModel academicYearVM = Mapper.Map<AcademicYearViewModel>(db.AcademicYears.Find(id));
             return academicYearVM;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 
     public interface IAcademicYearService
     {
         List<AcademicYearSingle> getAcademicYearList();
-        Task<bool> AddNewAcademicYear(AcademicYearViewModel academicyear);
-        Task<AcademicYearViewModel> FindAcademicYearForEditing(int id);
-        Task<bool> SaveAcademicYearAfterEditing(AcademicYearViewModel academicyear);
+        bool AddNewAcademicYear(AcademicYearViewModel academicyear);
+        AcademicYearViewModel FindAcademicYearForEditing(int id);
+        bool SaveAcademicYearAfterEditing(AcademicYearViewModel academicyear);
+        OsisContext getDBContext();
+        
     }
 }

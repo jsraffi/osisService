@@ -8,7 +8,7 @@ using OsisModel.Models;
 
 namespace OsisModel.Services
 {
-    public abstract class CommonServices
+    public abstract class CommonServices:IDisposable
     {
         
         //allow inheriting class to get current school when dbcontext is class passed
@@ -28,7 +28,17 @@ namespace OsisModel.Services
         {
             return HttpContext.Current.User.Identity.Name;
         }
-        
+
+
+        public void Dispose()
+        {
+            Dispose(true /* disposing */);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+        }
     }
 
     public interface ICommonService

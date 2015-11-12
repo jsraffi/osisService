@@ -205,6 +205,15 @@ namespace OsisModel.Services
             return classid;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 
     public interface IPromotionService
