@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using OsisModel.Models;
+using Microsoft.AspNet.Identity;
 
 
 namespace OsisModel.Services
@@ -12,9 +13,10 @@ namespace OsisModel.Services
     {
         
         //allow inheriting class to get current school when dbcontext is class passed
-        public virtual Tuple<int,int> getUserCurrentSchool(OsisContext db)
+        public virtual Tuple<int,int> getUserCurrentSchool(OsisContext db,string user=null)
         {
-            string username = getCurrentUserName();
+
+            string username = (user == null) ? getCurrentUserName() : user;
             //Get logged in users school and academic year preference
             var userprefer = db.UserPreferences.AsNoTracking().Where(a => a.UserName == username).Select(x => new { x.SchoolRefID ,x.AcademicYearRefID}).FirstOrDefault();
 
@@ -27,6 +29,7 @@ namespace OsisModel.Services
         private string getCurrentUserName()
         {
             return HttpContext.Current.User.Identity.Name;
+
         }
 
 

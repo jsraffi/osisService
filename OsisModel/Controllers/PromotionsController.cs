@@ -45,7 +45,7 @@ namespace OsisModel.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PromotionsSelectClass(PromotionsSelectVM promotions)
+        public async Task<ActionResult> PromotionsSelectClass(PromotionsSelectVM promotionsVM)
         {
             Tuple<int, int> currentuserpreference = _service.getUserCurrentSchool(_service.getDBContext());
 
@@ -55,18 +55,18 @@ namespace OsisModel.Controllers
             
             if(ModelState.IsValid)
             {
-                if (_service.ValidatePromotions(promotions.ClassTo, promotions.ClassFrom))
+                if (await Task.Run(() =>_service.ValidatePromotions(promotionsVM.ClassTo, promotionsVM.ClassFrom)))
                 { 
                     ViewBag.ClassRefID = dropdownlist;
                     //passing 1 paramter to getpromotionlist we get list of studentS for userpreference school and academicyear in a class
-                     return View(_service.getPromotionList(promotions.ClassFrom,promotions.ClassTo,1));
+                     return View(await Task.Run(() => _service.getPromotionList(promotionsVM.ClassFrom,promotionsVM.ClassTo,1,User.Identity.GetUserName())));
                 }
             }
 
             ViewBag.ClassRefID = dropdownlist;
             //passing no parameter value for thrid parameter(ie valid) dafault to zero, hence a empty dataset is 
             //returned(studentlist of PromotionSelectVM)
-            return View(_service.getPromotionList(promotions.ClassFrom,promotions.ClassTo));
+            return View(await Task.Run(() => _service.getPromotionList(promotionsVM.ClassFrom,promotionsVM.ClassTo,0,User.Identity.GetUserName())));
         }
 
         [HttpGet]
@@ -78,23 +78,23 @@ namespace OsisModel.Controllers
         }
         
         
-        public async Task<ActionResult> PromotionStudentListPartial(PromotionsSelectVM model )
+        public async Task<ActionResult> PromotionStudentListPartial(PromotionsSelectVM promotionVM )
         {
             //ViewBag.Success = "Student Promoted";
             //TempData["studentVM"] = _service.getPromotionList(model.ClassFrom, model.ClassTo, 1);
-            if(await _service.promoteStudents(model) == false)
+            if(await Task.Run(() => _service.promoteStudents(promotionVM,User.Identity.GetUserName()))== false)
             {
-                TempData["academicyearMsg"] = "No next academic year from current userprefered academic year";
+               TempData["academicyearMsg"] = "No next academic year from current userprefered academic year";
                 //buy passing 0 to getpromotionlist the data returned is empty studentlist in PromotionSelectVM
                 // which is stored in Tempdata to be accesed by PromotedStudentList view
-                TempData["studentVM"] = _service.getPromotionList(model.ClassFrom, model.ClassTo, 0);
+                TempData["studentVM"] = _service.getPromotionList(promotionVM.ClassFrom, promotionVM.ClassTo, 0,User.Identity.GetUserName());
             }
             else
             {
                 TempData["academicyearMsg"] = "Following students are promoted";
                 //buy passing 2 to getpromotionlist the data returned is promoted to next year students in studentlist of PromotionSelectVM 
                 // which is stored in Tempdata to be accesed by PromotedStudentList view
-                TempData["studentVM"] = _service.getPromotionList(model.ClassFrom, model.ClassTo, 2);
+                TempData["studentVM"] = _service.getPromotionList(promotionVM.ClassFrom, promotionVM.ClassTo, 2,User.Identity.GetUserName());
             }
             return RedirectToAction("PromotedStudentList");
         }

@@ -26,6 +26,7 @@ namespace OsisModel.Models
 
         public bool Active { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime PromotedOn { get; set; }
     }
 }

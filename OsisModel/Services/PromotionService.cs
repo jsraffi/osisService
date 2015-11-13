@@ -30,9 +30,9 @@ namespace OsisModel.Services
 
         //get current school and current academic year from common service base class
         //this method is used get current school and academic year from controller
-        public override Tuple<int,int> getUserCurrentSchool(OsisContext db)
+        public override Tuple<int,int> getUserCurrentSchool(OsisContext db,string user=null)
         {
-            return base.getUserCurrentSchool(db);
+            return base.getUserCurrentSchool(db,user);
         }
         
         //using one dbcontext for unitofwork,this method provides access to dbcontext for dropdownlist creation from controller
@@ -77,9 +77,9 @@ namespace OsisModel.Services
         //gets list of students when classfrom and classto parameters are passed from view
         //valid method parameter with default value is used, so that the same method is called when
         //model is valid or has error by changing the value of the valid parameter so that an empty PromotionselectVM is used.
-        public PromotionsSelectVM getPromotionList(int classfrom, int classto,int valid=0)
+        public PromotionsSelectVM getPromotionList(int classfrom, int classto, int valid = 0, string user=null)
         {
-            Tuple<int, int> userprerence = base.getUserCurrentSchool(db);
+            Tuple<int, int> userprerence = base.getUserCurrentSchool(db,user);
             //1 validation works for listing students to be promoted(current year academicyearid from userpreference)
             // the view returned is PromotionSelectClass
             if (valid == 1)
@@ -98,11 +98,11 @@ namespace OsisModel.Services
         }
 
         //this method is used to promote students from one class to other
-        public async Task<bool> promoteStudents(PromotionsSelectVM model)
+        public bool promoteStudents(PromotionsSelectVM model,string user = null)
         {
             //This mehod is called to check if next academic year from the next exist
             
-            if (!CheckNextAcademicYear())
+            if (!CheckNextAcademicYear(user))
             {
                 return false;
                 
@@ -136,19 +136,21 @@ namespace OsisModel.Services
                                 ClassRefID = getClassID(model.ClassTo),
                                 SchoolRefID = studentlist.SchoolRefID,
                                 StudentRefID = studentlist.StudentRefID,
-                                Active = true
-
+                                Active = true,
+                                PromotedOn = DateTime.Now
+                                
                             };
                             db.StudentCurrentYears.Add(addStudentCurrentYear);
                         }
                     }
 
-                    await db.SaveChangesAsync();
+                    db.SaveChanges();
                     dbtrans.Commit();
                     return true;
                 }
                 catch (Exception e)
                 {
+                    _modelState.AddModelError("", e.Message);
                     dbtrans.Rollback();
                     return false;
                 }
@@ -157,9 +159,9 @@ namespace OsisModel.Services
             }
         }
 
-        private bool CheckNextAcademicYear()
+        private bool CheckNextAcademicYear(string user = null)
         {
-            Tuple<int, int> userpreferSchoolandAcademicYear = getUserCurrentSchool(db);
+            Tuple<int, int> userpreferSchoolandAcademicYear = getUserCurrentSchool(db,user);
 
             var currrentacademicyear = db.AcademicYears.Where(ac => ac.AcademicYearID == userpreferSchoolandAcademicYear.Item2).Select(x => new { x.StartYear, x.EndYear }).SingleOrDefault();
 
@@ -218,10 +220,10 @@ namespace OsisModel.Services
 
     public interface IPromotionService
     {
-       Tuple<int,int> getUserCurrentSchool(OsisContext db);
+       Tuple<int,int> getUserCurrentSchool(OsisContext db,string user=null);
         OsisContext getDBContext();
-        PromotionsSelectVM getPromotionList(int classfrom,int classto, int valid=0);
-       Task<bool> promoteStudents(PromotionsSelectVM model);
+        PromotionsSelectVM getPromotionList(int classfrom,int classto, int valid=0,string user=null);
+       bool promoteStudents(PromotionsSelectVM model, string user = null);
        bool ValidatePromotions(int ClassTo, int ClassFrom);
 
     }

@@ -5,6 +5,7 @@
 }
 <h1>List of students</h1>
         <div id="PromotionsStudentListData">
+            @Html.ValidationSummary(true)
             <div style="font-family:'Lucida Sans';font-size:25px;color:red">
                 @if (TempData["academicyearMsg"] != "")
                 {
