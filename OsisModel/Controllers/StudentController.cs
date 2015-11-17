@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using PagedList;
 using AutoMapper;
 using System.Globalization;
+using OsisModel.Services;
 
 namespace OsisModel.Controllers
 {// I have put this on github
@@ -21,48 +22,39 @@ namespace OsisModel.Controllers
     {
         private OsisContext db = new OsisContext();
 
+        private IStudentService _service;
+
+        public StudentController(IStudentService service)
+        {
+            _service = service;
+        }
+
+        public StudentController()
+        {
+            _service = new StudentService(this.ModelState);
+        }
 
         public JsonResult GetClassBySchoolID(int id)
         {
-            var classes = db.SchoolClasses.AsNoTracking().Where(s => s.SchoolRefID == id).Select(c => new { Text = c.ClassName, Value = c.ClassID }).ToList();
+
+            var dbc = _service.getDBContext();
+            var classes = dbc.SchoolClasses.AsNoTracking().Where(s => s.SchoolRefID == id).Select(c => new { Text = c.ClassName, Value = c.ClassID }).ToList();
 
             return Json(classes, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetAcademicYearBySchoolID(int id)
         {
 
-
-            var acyear = db.AcademicYears.AsNoTracking().Where(s => s.SchoolRefID == id).Select(a => new { Text = a.DisplayYear, Value = a.AcademicYearID }).ToList();
+            var dbc = _service.getDBContext();
+            var acyear = dbc.AcademicYears.AsNoTracking().Where(s => s.SchoolRefID == id).Select(a => new { Text = a.DisplayYear, Value = a.AcademicYearID }).ToList();
 
             return Json(acyear, JsonRequestBehavior.AllowGet);
         }
 
         // GET: /Student/
-        public ActionResult Index(int? page)
+        public async Task<ActionResult> Index(int? page)
         {
-            //14-Aug-2015-changing the student index view to display just students of the current 
-            //logged user's school and academic year preference.
-
-            //Get current logged in user need reference to Microsoft.AspNet.Identity
-            string userid = User.Identity.GetUserId();
-
-            //Get logged in users school and academic year preference
-            var userprefer = db.UserPreferences.AsNoTracking().Where(a => a.UserID == userid).Select(x => new { x.SchoolRefID, x.AcademicYearRefID }).FirstOrDefault();
-            
-            //need this for paging if page null then 1
-            var pageNumber = page ?? 1;
-            
-            //get the page size from config file
-            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
-            
-            //to display fields from three different table a database view is used
-            //a model Studentsingle just for index page listing is used.
-            // all fields required for display and used in where clause 
-            //needs to be there in StudentSingles model
-            var students = db.StudentSingles.AsNoTracking().OrderBy(d => d.RegistrationNo).Where(sa => sa.SchoolRefID == userprefer.SchoolRefID && sa.AcademicYearRefID == userprefer.AcademicYearRefID);
-            
-            //PagedList is Nugget package for just paging
-            return View(students.ToPagedList(pageNumber, pageSize));
+            return View(await Task.Run(() => _service.getStudentList(page,User.Identity.GetUserName())));
         }   
 
         // GET: /Student/Details/5
