@@ -266,14 +266,20 @@
 
                     @for (var i = 0; i < Model.StudentCurrentYear.Count; i++)
                     {
-                        if(Model.StudentCurrentYear[i].Active== true)
-                        { 
+                        if (Model.StudentCurrentYear[i].Active == true)
+                        {
+                            
                             <tr>
+                                <input type="hidden" name="StudentCurrentYear.Index" value="@i" />
                                 @Html.HiddenFor(model => model.StudentCurrentYear[i].StudentRefID)
                                 @Html.HiddenFor(model => model.StudentCurrentYear[i].CurrentYearID)
+                                @Html.HiddenFor(model => model.StudentCurrentYear[i].Active)
+                                @Html.HiddenFor(model => model.StudentCurrentYear[i].PromotedOn)
                                 <td>
+                                    
                                     @Html.ValidationMessageFor(model => model.StudentCurrentYear[i].SchoolRefID)<br />
-                                    @Html.DropDownListFor(model => model.StudentCurrentYear[i].SchoolRefID, ViewBag.SchoolRefID as IEnumerable<SelectListItem>, "Please select a schoool", new { id = "SchoolRefID", @class = "text-box-student" })
+                                    @Html.DropDownListFor(model => model.StudentCurrentYear[i].SchoolRefID, ViewBag.SchoolRefID as IEnumerable<SelectListItem>, "Please select a schoool", new { id = "SchoolRefID", @class = "text-box-student"})
+                                    
 
                                 </td>
                                 <td>

@@ -9,6 +9,7 @@ using System.Data.Entity;
 using OsisModel.Models;
 using System.Globalization;
 using FluentValidation.Mvc;
+using System.Threading;
 
 namespace OsisModel
 {
@@ -29,15 +30,25 @@ namespace OsisModel
 
         protected void Application_BeginRequest()
         {
-            CultureInfo cInf = new CultureInfo("en-GB", false);
+            //CultureInfo cInf = new CultureInfo.("en-GB", false);
+
+            CultureInfo cInf;
+            cInf = CultureInfo.CreateSpecificCulture("en-GB");
+
             // NOTE: change the culture name en-ZA to whatever culture suits your needs
 
             cInf.DateTimeFormat.DateSeparator = "/";
             cInf.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
             cInf.DateTimeFormat.LongDatePattern = "dd/MM/yyyy hh:mm:ss tt";
 
-            System.Threading.Thread.CurrentThread.CurrentCulture = cInf;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = cInf;
+            CultureInfo.DefaultThreadCurrentCulture = cInf;
+            CultureInfo.DefaultThreadCurrentUICulture = cInf;
+
+            //System.Threading.Thread.CurrentThread.CurrentCulture = cInf;
+            //System.Threading.Thread.CurrentThread.CurrentUICulture = cInf;
+
+            Thread.CurrentThread.CurrentCulture = cInf;
+            Thread.CurrentThread.CurrentUICulture = cInf;
         }
     }
 }

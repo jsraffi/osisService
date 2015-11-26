@@ -156,3 +156,15 @@ D:\Raffi\Projects\osisService\OsisModel\bin\tr\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.dll
 D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.pdb
 D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.csprojResolveAssemblyReference.cache
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.CrystalReports.Engine.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportSource.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.Shared.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.Prompting.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\stdole.dll

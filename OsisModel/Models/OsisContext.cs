@@ -22,6 +22,7 @@ namespace OsisModel.Models
             
         }
 
+        public DbSet<InvoiceSingle> InvoiceSingle { get; set; }
         public DbSet<StudentList> AjaxStudentLists { get; set; }
         public DbSet<StudentSingle> StudentSingles {get; set;}
         public DbSet<School> Schools { get; set; }
