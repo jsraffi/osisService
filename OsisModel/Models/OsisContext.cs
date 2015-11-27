@@ -43,8 +43,6 @@ namespace OsisModel.Models
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
-       
-
-        
+        public System.Data.Entity.DbSet<OsisModel.Models.InvoiceViewModel> InvoiceViewModels { get; set; }
     }
 }

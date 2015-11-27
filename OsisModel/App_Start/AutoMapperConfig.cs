@@ -20,7 +20,12 @@ namespace OsisModel
             AutoMapper.Mapper.CreateMap<StudentViewModel, Student>();
             AutoMapper.Mapper.CreateMap<StudentViewModel, Student>().ReverseMap();
             AutoMapper.Mapper.CreateMap<StudentListVM, StudentList>();
-            AutoMapper.Mapper.CreateMap<StudentListVM, StudentList>().ReverseMap();    
+            AutoMapper.Mapper.CreateMap<StudentListVM, StudentList>().ReverseMap();
+            AutoMapper.Mapper.CreateMap<Invoice, InvoiceViewModel>().ForMember(dest => dest.InvoiceDetailsViewModel, opt => opt.MapFrom(src => src.InvoiceDetails));
+            AutoMapper.Mapper.CreateMap<Invoice, InvoiceViewModel>().ForMember(dest => dest.InvoiceDetailsViewModel, opt => opt.MapFrom(src => src.InvoiceDetails)).ReverseMap();
+            AutoMapper.Mapper.CreateMap<InvoiceDetails, InvoiceDetailsViewModel>();
+            AutoMapper.Mapper.CreateMap<InvoiceDetails, InvoiceDetailsViewModel>().ReverseMap();
+
         }
     }
 }

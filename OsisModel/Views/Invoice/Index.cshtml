@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<OsisModel.Models.InvoiceSingle>
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "List of Invoices";
 }
 
 <h2>View</h2>
@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table-bordered table-striped" style="font-size:25px;" width="1500">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.InvoiceID)

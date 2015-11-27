@@ -259,6 +259,8 @@
     </Compile>
     <Compile Include="Models\AcademicYear.cs" />
     <Compile Include="Models\AjaxClassOrder.cs" />
+    <Compile Include="Models\InvoiceDetailsViewModel.cs" />
+    <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\InvoiceDetails.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceSingle.cs" />
@@ -764,6 +766,7 @@
     <Content Include="Views\Promotions\PromotionStudentListPartial.cshtml" />
     <Content Include="Views\Promotions\PromotedStudentList.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Invoice\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
