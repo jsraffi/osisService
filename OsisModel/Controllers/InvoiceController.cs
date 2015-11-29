@@ -50,7 +50,7 @@ namespace okisSIS.Controllers
         {
                 if (ModelState.IsValid)
                 {
-                    if(_service.validateInvoice(invoiceVM)== true)
+                    if(_service.saveInvoice(invoiceVM))
                     {
                         return RedirectToAction("Index");
                     }

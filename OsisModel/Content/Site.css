@@ -218,7 +218,10 @@ table th
 {
     height:50px;
 }
-
+.spacebetweenrowlayout
+{
+    height:100px;
+}
 .datepicker
 {
     font-size:40px;
@@ -229,7 +232,7 @@ table th
     width:600px;
     font-size:40px;
     border: 1px solid #999;
-    
+    background-color:yellow!important;
     -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
@@ -250,7 +253,6 @@ table th
     
 
 }
-
 .buttoncenter
 {
     text-align:center;
@@ -267,10 +269,19 @@ table th
        
     
 }
+.backtolistanchor a:link,a:visited,a:active.a:hover
+{
+    
+    text-decoration-color:none;
+    color:black;
+    text-decoration-line:none;
+       
+    
+}
+
+
 .backtolist
 {
-    padding-top:12px;
-    display:inline-block;
     margin-left:35px;
     
 }

@@ -21,7 +21,8 @@ namespace OsisModel.Models
         {
             
         }
-
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceDetails> InvoiceDetails { get; set; }
         public DbSet<InvoiceSingle> InvoiceSingle { get; set; }
         public DbSet<StudentList> AjaxStudentLists { get; set; }
         public DbSet<StudentSingle> StudentSingles {get; set;}
@@ -43,6 +44,6 @@ namespace OsisModel.Models
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
-        public System.Data.Entity.DbSet<OsisModel.Models.InvoiceViewModel> InvoiceViewModels { get; set; }
+        
     }
 }

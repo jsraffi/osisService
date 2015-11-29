@@ -80,28 +80,66 @@ namespace OsisModel.Services
         public bool validateInvoice(InvoiceViewModel invoiceVM)
         {
             Boolean iserror = true;
-            //InvoiceViewModel invVM = new InvoiceViewModel();
-            //invVM.InvoiceDetailsViewModel = invoiceVM.InvoiceDetailsViewModel;
-            
+            int Count = 0;
             for(var i=0;i < invoiceVM.InvoiceDetailsViewModel.Count;i++)
             {
-                string desc = (invoiceVM.InvoiceDetailsViewModel[0].Description != null) ? invoiceVM.InvoiceDetailsViewModel[0].Description.Trim() : "";
+                string desc = (invoiceVM.InvoiceDetailsViewModel[i].Description != null) ? invoiceVM.InvoiceDetailsViewModel[i].Description.Trim() : "";
 
                 if (desc != "" )
                 {
-                    if(invoiceVM.InvoiceDetailsViewModel[i].Quantity <0)
+                    if(invoiceVM.InvoiceDetailsViewModel[i].Quantity <1)
                     {
-                        _modelstate.AddModelError("InvoiceDetailsViewModel[" + i + "].Quantity", "Quanity should be greate than zero");
+                        _modelstate.AddModelError("InvoiceDetailsViewModel[" + i + "].Quantity", "less than one");
                         iserror = false;
+                    }
+                    if(invoiceVM.InvoiceDetailsViewModel[i].UnitPrice <1)
+                    {
+                        _modelstate.AddModelError("InvoiceDetailsViewModel[" + i + "].UnitPrice", "less than one");
+                        iserror = false;
+
+                    }
+                    if(invoiceVM.InvoiceDetailsViewModel[i].Amount <1)
+                    {
+                        _modelstate.AddModelError("InvoiceDetailsViewModel[" + i + "].Amount", "less than one");
+                        iserror = false;
+
+                    }
+
+                    if(iserror)
+                    {
+                        Count = Count + 1;
+
                     }
                 }
             }
+            if (Count == 0)
+            {
+                iserror = false;
+                _modelstate.AddModelError("", "No Records to add");
+            }
+
+
             return iserror;
         }
 
         public bool saveInvoice(InvoiceViewModel invoiceVM)
         {
+            if(!validateInvoice(invoiceVM))
+            {
+                return false;
+            }
+            for (var i = invoiceVM.InvoiceDetailsViewModel.Count-1;i >=0; i--)
+            {
+                string desc = (invoiceVM.InvoiceDetailsViewModel[i].Description != null) ? invoiceVM.InvoiceDetailsViewModel[i].Description.Trim() : "";
 
+                if (desc == "")
+                {
+                    invoiceVM.InvoiceDetailsViewModel.RemoveAt(i);
+                }
+            }
+            Invoice addInvoice = Mapper.Map<Invoice>(invoiceVM);
+            db.Invoices.Add(addInvoice);
+            db.SaveChanges();
             return true;
         }
     }

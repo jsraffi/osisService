@@ -264,6 +264,12 @@
     <Compile Include="Models\InvoiceDetails.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceSingle.cs" />
+    <Compile Include="Reports\FeeReceiptedited.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FeeReceiptedited.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Services\AcademicYearService.cs" />
     <Compile Include="Services\CommonServices.cs" />
     <Compile Include="Models\PromotionClassStudentListWrapper.cs" />
@@ -770,7 +776,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -784,6 +789,10 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\FeeReceiptedited.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>FeeReceiptedited.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="test.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>test.cs</LastGenOutput>

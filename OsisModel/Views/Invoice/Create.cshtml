@@ -35,8 +35,15 @@
            margin-left:-20px !important;
         }
         .tborder tbody > tr > td{
-            background-color:aqua !important;
+            background-color:yellow !important;
         }
+        .invoice{
+            border:10px solid yellow;padding:50px;width:1380px;margin-left:-22px;
+        }
+        .text-danger{
+            color:black !important;
+        }
+        .validation-summary-errors{ font-size:25px; font-weight:bold;color:red!important}
     </style>
 }
 <h1>Create an Invoice</h1>
@@ -50,7 +57,7 @@
         
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.CurrentYearRefID)
-   
+        <div class="invoice">
             <div class="form-group">
                 @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "controlLabel col-md-2" })
                 <div class="col-md-10">
@@ -59,22 +66,23 @@
                 </div>
             </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Latefee, htmlAttributes: new { @class = "controlLabel col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Latefee, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Latefee, "", new { @class = "text-danger" })
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Latefee, htmlAttributes: new { @class = "controlLabel col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Latefee, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Latefee, "", new { @class = "text-danger" })
                 </div>
+            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "controlLabel col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "controlLabel col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
                 </div>
-    
+            </div>
+        </div>
+
         <div class="invoicepad">
             <table class="table-bordered table-striped tborder" style="font-size:30px;" width="500">
                 <thead>
@@ -106,25 +114,37 @@
                                 <br />
                                 @Html.ValidationMessageFor(m => Model.InvoiceDetailsViewModel[i].Quantity, "", new { @class = "text-danger" })
                             </td>
-                            <td height="100" valign="top">@Html.EditorFor(m => Model.InvoiceDetailsViewModel[i].UnitPrice, new { htmlAttributes = new { @class = "unitprice" } })</td>
-                            <td height="100" valign="top">@Html.EditorFor(m => Model.InvoiceDetailsViewModel[i].Amount, new { htmlAttributes = new { @class = "amount" } })</td>
+                            <td height="100" valign="top">@Html.EditorFor(m => Model.InvoiceDetailsViewModel[i].UnitPrice, new { htmlAttributes = new { @class = "unitprice" } })
+                                <br />
+                                @Html.ValidationMessageFor(m => Model.InvoiceDetailsViewModel[i].UnitPrice, "", new { @class = "text-danger" })
+                            </td>
+                            <td height="100" valign="top">@Html.EditorFor(m => Model.InvoiceDetailsViewModel[i].Amount, new { htmlAttributes = new { @class = "amount" } })
+                                <br />
+                                @Html.ValidationMessageFor(m => Model.InvoiceDetailsViewModel[i].Amount, "", new { @class = "text-danger" })
+                            </td>
                         </tr>
 
                     }
                 </tbody>
             </table>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+        
+            <div class="rowbetweenspace"></div>
+            <div class="col-md-offset-3 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default widthandheight" />
             </div>
-        </div>
+            <div style="clear:both"></div>
+            <div class="rowbetweenspace"></div>
+        
+              
+            <div class="col-md-offset-3 col-md-10">
+                <div class="btn btn-default widthandheight backtolistanchor">
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
+            
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
 
