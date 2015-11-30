@@ -1,0 +1,159 @@
+﻿@model OsisModel.Models.InvoiceViewModel
+
+@{
+    ViewBag.Title = "Edit student fee invoice";
+}
+
+@section viewpagestyle
+{
+    <style type="text/css">
+        .description{
+           width: 800px !important;
+        }
+
+        .quantity{
+            width:150px !important;
+            width:100%;
+        }
+        .unitprice{
+            width:200px !important;
+            text-align:right;
+        }
+        .amount{
+            width:200px !important;
+            text-align:right;
+        }
+
+        .tborder tbody > tr > td{
+           border:5px solid black;
+        }
+        .tborder thead > tr > th{
+            border:5px solid black;
+            border-top:5px solid black !important;     
+        }
+        .invoicepad{
+           margin-left:-20px !important;
+        }
+        .tborder tbody > tr > td{
+            background-color:yellow !important;
+        }
+        .invoice{
+            border:10px solid yellow;padding:50px;width:1380px;margin-left:-22px;
+        }
+        .text-danger{
+            color:black !important;
+        }
+        .validation-summary-errors{ font-size:25px; font-weight:bold;color:red!important}
+    </style>
+}
+<h1>Edit an Invoice</h1>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal formpadleft" style="width:1500px;" >
+        
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CurrentYearRefID)
+        @Html.HiddenFor(model => model.InvoiceID)
+        <div class="invoice">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "controlLabel col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Latefee, htmlAttributes: new { @class = "controlLabel col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Latefee, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Latefee, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "controlLabel col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="invoicepad">
+            <table class="table-bordered table-striped tborder" style="font-size:30px;" width="500">
+                <thead>
+                    <tr>
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+                        <th style="text-align:right">
+                            UnitPrice
+                        </th>
+                        <th style="text-align:right">
+                            Amount
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.InvoiceDetailsViewModel.Count; i++)
+                {
+
+                        <tr>
+                            @Html.HiddenFor(m =>Model.InvoiceDetailsViewModel[i].InvoiceDetailID)
+                            @Html.HiddenFor(m => Model.InvoiceDetailsViewModel[i].InvoiceRefID)
+                            <td height="100" valign="top">@Html.EditorFor(m => Model.InvoiceDetailsViewModel[i].Description, new { htmlAttributes = new { @class = "description" } })</td>
+                                                  
+                            <td height="100" valign="top">@Html.EditorFor(m => Model.InvoiceDetailsViewModel[i].Quantity, new { htmlAttributes = new { @class = "quantity" } })
+                                <br />
+                                @Html.ValidationMessageFor(m => Model.InvoiceDetailsViewModel[i].Quantity, "", new { @class = "text-danger" })
+                            </td>
+                            <td height="100" valign="top">@Html.EditorFor(m => Model.InvoiceDetailsViewModel[i].UnitPrice, new { htmlAttributes = new { @class = "unitprice" } })
+                                <br />
+                                @Html.ValidationMessageFor(m => Model.InvoiceDetailsViewModel[i].UnitPrice, "", new { @class = "text-danger" })
+                            </td>
+                            <td height="100" valign="top">@Html.EditorFor(m => Model.InvoiceDetailsViewModel[i].Amount, new { htmlAttributes = new { @class = "amount" } })
+                                <br />
+                                @Html.ValidationMessageFor(m => Model.InvoiceDetailsViewModel[i].Amount, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+            <div class="rowbetweenspace"></div>
+            <div class="col-md-offset-3 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default widthandheight" />
+            </div>
+            <div style="clear:both"></div>
+            <div class="rowbetweenspace"></div>
+        
+              
+            <div class="col-md-offset-3 col-md-10">
+                <div class="btn btn-default widthandheight backtolistanchor">
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
+            
+    </div>
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+
+}
+
+

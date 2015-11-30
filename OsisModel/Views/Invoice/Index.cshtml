@@ -52,7 +52,7 @@
                 <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.InvoiceID }) |
             @Html.ActionLink("Details", "Details", new { id=item.InvoiceID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.InvoiceID })
+            @Html.ActionLink("PrintInvoice", "ShowInvoiceReport", new { id=item.InvoiceID })
         </td>
     </tr>
 }

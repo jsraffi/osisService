@@ -33,7 +33,7 @@ namespace OsisModel.Services
             Tuple<int,int> currentschoolandacademicyear = getUserCurrentSchool(db, user);
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
             var pageNumber = page ?? 1;
-            var students = db.StudentSingles.AsNoTracking().OrderBy(d => d.RegistrationNo).Where(sa => sa.SchoolRefID == currentschoolandacademicyear.Item1 && sa.AcademicYearRefID == currentschoolandacademicyear.Item2 &&).;
+            var students = db.StudentSingles.AsNoTracking().OrderBy(d => d.RegistrationNo).Where(sa => sa.SchoolRefID == currentschoolandacademicyear.Item1 && sa.AcademicYearRefID == currentschoolandacademicyear.Item2);
 
             return students.ToPagedList(pageNumber, pageSize);
         }
