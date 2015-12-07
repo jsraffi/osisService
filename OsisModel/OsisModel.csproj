@@ -265,15 +265,36 @@
     </Compile>
     <Compile Include="Models\AcademicYear.cs" />
     <Compile Include="Models\AjaxClassOrder.cs" />
+    <Compile Include="Models\FeeCollectedBySchoolViewModel.cs" />
+    <Compile Include="Models\FeeCollectedViewModel.cs" />
     <Compile Include="Models\InvoiceDetailsViewModel.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\InvoiceDetails.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceSingle.cs" />
+    <Compile Include="Models\ShowApplicationForm.cs" />
+    <Compile Include="Reports\ApplicationForm.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApplicationForm.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Invoice.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Invoice.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\TotalFeescollected.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TotalFeescollected.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\TotalFeescollectedBySchool.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TotalFeescollectedBySchool.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\AcademicYearService.cs" />
@@ -321,6 +342,14 @@
     <Content Include="Content\bootstrap-datepicker3.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\1000bbg4.png" />
+    <Content Include="Content\images\arch.jpg" />
+    <Content Include="Content\images\blue_bg.jpg" />
+    <Content Include="Content\images\kids-banner1.jpg" />
+    <Content Include="Content\images\school.jpg" />
+    <Content Include="Content\images\schoollogo.png" />
+    <Content Include="Content\images\slide-img1.jpg" />
+    <Content Include="Content\images\SMS.gif" />
     <Content Include="Content\simple-sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -350,6 +379,7 @@
     <Content Include="databasebackup\05-Oct-2015full.bak" />
     <Content Include="databasebackup\osismodel31-aug-2015.bak" />
     <Content Include="databasebackup\13-nov-2015OsisModel.bak" />
+    <Content Include="databasebackup\osismodel-06-dec-2015.bak" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\globalize\cultures\globalize.culture.af-ZA.js" />
     <Content Include="Scripts\globalize\cultures\globalize.culture.af.js" />
@@ -780,6 +810,9 @@
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Invoice\Create.cshtml" />
     <Content Include="Views\Invoice\Edit.cshtml" />
+    <Content Include="Views\Invoice\FeeCollectedReport.cshtml" />
+    <Content Include="Views\Invoice\FeeCollectedReportBySchool.cshtml" />
+    <Content Include="Views\Invoice\ShowApplicationIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -796,9 +829,21 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\ApplicationForm.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ApplicationForm.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Invoice.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Invoice.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\TotalFeescollected.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>TotalFeescollected.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\TotalFeescollectedBySchool.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>TotalFeescollectedBySchool.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="test.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

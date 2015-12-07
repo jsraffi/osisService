@@ -85,6 +85,7 @@ D:\Raffi\Projects\osisService\OsisModel\bin\Antlr3.Runtime.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\AutoMapper.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.CrystalReports.Engine.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.Controllers.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportSource.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.Shared.dll
@@ -168,6 +169,6 @@ D:\Raffi\Projects\osisService\OsisModel\bin\pt\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\ru\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\sv\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\tr\FluentValidation.resources.dll
+D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.csprojResolveAssemblyReference.cache
 D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.dll
 D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.pdb
-D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.Controllers.dll

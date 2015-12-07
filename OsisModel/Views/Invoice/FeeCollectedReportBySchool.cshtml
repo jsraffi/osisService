@@ -1,0 +1,60 @@
+﻿@model OsisModel.Models.FeeCollectedBySchoolViewModel
+
+@{
+    ViewBag.Title = "Fee Collection report by school";
+}
+
+<h1>Fee collected report by school</h1>
+<div class="rowbetweenspace"></div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-horizontal formpadleft">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SchoolID, "School Name", new { @class = "controlLabel col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SchoolID","Please select a school name")
+                @Html.ValidationMessageFor(model => model.SchoolID)
+            </div>
+        </div>  
+
+         <div class="form-group">
+            @Html.LabelFor(model => model.DateFrom, new { @class = "controlLabel col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateFrom)
+                @Html.ValidationMessageFor(model => model.DateFrom)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateTo, new { @class = "controlLabel col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateTo)
+                @Html.ValidationMessageFor(model => model.DateTo)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Show report" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/globalize")
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#SchoolID").addClass("schoolName")
+    });
+</script>
+}

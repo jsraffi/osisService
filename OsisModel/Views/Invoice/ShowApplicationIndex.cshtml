@@ -1,0 +1,64 @@
+﻿@model IEnumerable<OsisModel.Models.ShowApplicationForm>
+
+@{
+    ViewBag.Title = "ShowApplicationIndex";
+}
+
+<h1>Show Application Form Report</h1>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfJoining)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SchoolName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClassName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SchoolRefID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AcademicYearRefID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DisplayYear)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfJoining, "ShortDateTime")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SchoolName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SchoolRefID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AcademicYearRefID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisplayYear)
+        </td>
+        <td>
+            @Html.ActionLink("Show Application", "ShowApplicationForm", "Invoice", new { id = item.StudentID }, null)|
+        </td>
+    </tr>
+}
+
+</table>

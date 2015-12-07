@@ -42,7 +42,16 @@ namespace OsisModel.Services
 
             return invoices.ToPagedList(pageNumber, pageSize);
         }
+        public PagedList.IPagedList<ShowApplicationForm> getApplicationList(int? page, string user = null)
+        {
+            Tuple<int, int> currentschoolandacademicyear = getUserCurrentSchool(db, user);
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
+            var pageNumber = page ?? 1;
 
+            var appplicationlist = db.ShowApplicationForms.AsNoTracking().OrderBy(d => d.DateOfJoining).Where(sa => sa.SchoolRefID == currentschoolandacademicyear.Item1 && sa.AcademicYearRefID == currentschoolandacademicyear.Item2);
+
+            return appplicationlist.ToPagedList(pageNumber, pageSize);
+        }
         public InvoiceViewModel createInvoice(Guid id)
         {
             StudentCurrentYear studentcurrentyear = db.StudentCurrentYears.Where(sid => sid.StudentRefID == id && sid.Active == true).SingleOrDefault();
@@ -151,16 +160,8 @@ namespace OsisModel.Services
             return true;
         }
 
-        public Stream generateInVoiceReport(string id,HttpContext httpctx)
+        private Stream genericReportSetting(ReportDocument report, HttpContext httpctx)
         {
-            ReportDocument feereport = new ReportDocument();
-            
-            feereport.Load(httpctx.Server.MapPath("~/Reports/Invoice.rpt"));
-            feereport.PrintOptions.PaperSize = PaperSize.PaperA4;
-            feereport.SetParameterValue("InvoiceID", id);
-
-
-
             PropertyBag connectionAttributes = new PropertyBag();
             connectionAttributes.Add("Auto Translate", "-1");
             connectionAttributes.Add("Connect Timeout", "15");
@@ -190,7 +191,7 @@ namespace OsisModel.Services
             ci.UserName = ConfigurationManager.AppSettings["UserID"];
             ci.Password = ConfigurationManager.AppSettings["Password"];
 
-            foreach (CrystalDecisions.ReportAppServer.DataDefModel.Table table in feereport.ReportClientDocument.DatabaseController.Database.Tables)
+            foreach (CrystalDecisions.ReportAppServer.DataDefModel.Table table in report.ReportClientDocument.DatabaseController.Database.Tables)
             {
                 CrystalDecisions.ReportAppServer.DataDefModel.Procedure newTable = new CrystalDecisions.ReportAppServer.DataDefModel.Procedure();
 
@@ -198,16 +199,58 @@ namespace OsisModel.Services
                 newTable.Name = table.Name;
                 newTable.Alias = table.Alias;
                 newTable.QualifiedName = ConfigurationManager.AppSettings["Database"] + ".dbo." + table.Name;
-                feereport.ReportClientDocument.DatabaseController.SetTableLocation(table, newTable);
+                report.ReportClientDocument.DatabaseController.SetTableLocation(table, newTable);
             }
 
 
-            Stream stream = feereport.ExportToStream(ExportFormatType.PortableDocFormat);
-            feereport.Dispose();
+            Stream stream = report.ExportToStream(ExportFormatType.PortableDocFormat);
+            report.Dispose();
             return stream;
+        }
+        public Stream generateInVoiceReport(string id,HttpContext httpctx)
+        {
+            ReportDocument feereport = new ReportDocument();
+            
+            feereport.Load(httpctx.Server.MapPath("~/Reports/Invoice.rpt"));
+            feereport.PrintOptions.PaperSize = PaperSize.PaperA4;
+            feereport.SetParameterValue("InvoiceID", id);
 
+            return genericReportSetting(feereport, httpctx);
+        }
+        public Stream generateTotalFeeReport(HttpContext httpctx,DateTime FromDate,DateTime ToDate)
+        {
+            ReportClass totalfeereport = new ReportClass();
+            totalfeereport.FileName = httpctx.Server.MapPath("~/Reports/TotalFeescollected.rpt");
+            totalfeereport.Load();
+            totalfeereport.PrintOptions.PaperSize = PaperSize.PaperA4;
+            totalfeereport.SetParameterValue("InvoicefrmDate", FromDate);
+            totalfeereport.SetParameterValue("Invoicetodate", ToDate);
+
+            return genericReportSetting(totalfeereport, httpctx);
+        }
+        public Stream generateTotalFeeReportBySchool(HttpContext httpctx, DateTime FromDate, DateTime ToDate, int schoolid)
+        {
+            ReportClass feereportbyschool = new ReportClass();
+            feereportbyschool.FileName = httpctx.Server.MapPath("~/Reports/TotalFeescollectedBySchool.rpt");
+            feereportbyschool.Load();
+            feereportbyschool.PrintOptions.PaperSize = PaperSize.PaperA4;
+            feereportbyschool.SetParameterValue("InvoicefrmDate",FromDate);
+            feereportbyschool.SetParameterValue("Invoicetodate", ToDate);
+            feereportbyschool.SetParameterValue("SchoolID", schoolid);
+
+            return genericReportSetting(feereportbyschool, httpctx);
         }
 
+        public Stream generateApplicationForm(HttpContext httpctx, string id)
+        {
+            ReportClass ApplicationForm = new ReportClass();
+            ApplicationForm.FileName = httpctx.Server.MapPath("~/Reports/ApplicationForm.rpt");
+            ApplicationForm.Load();
+            ApplicationForm.PrintOptions.PaperSize = PaperSize.PaperA4;
+            ApplicationForm.SetParameterValue("StudentID", "{" + id + "}");
+            
+            return genericReportSetting(ApplicationForm, httpctx);
+        }
         public InvoiceViewModel getInvoiceForEdit(string id)
         {
             int invoiceid = Convert.ToInt32(id);
@@ -276,5 +319,9 @@ namespace OsisModel.Services
         Stream generateInVoiceReport(string id,HttpContext httpctx);
         InvoiceViewModel getInvoiceForEdit(string id);
         bool saveAfterEdit(InvoiceViewModel invoiceVM);
+        Stream generateTotalFeeReport(HttpContext httpctx,DateTime FromDate,DateTime ToDate);
+        Stream generateTotalFeeReportBySchool(HttpContext httpctx, DateTime FromDate, DateTime ToDate,int schoolid);
+        Stream generateApplicationForm(HttpContext httpctx,string id);
+        PagedList.IPagedList<ShowApplicationForm> getApplicationList(int? page, string user = null);
     }
 }

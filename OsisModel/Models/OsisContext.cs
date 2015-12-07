@@ -21,6 +21,7 @@ namespace OsisModel.Models
         {
             
         }
+        public DbSet<ShowApplicationForm> ShowApplicationForms { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceDetails> InvoiceDetails { get; set; }
         public DbSet<InvoiceSingle> InvoiceSingle { get; set; }

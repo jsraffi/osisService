@@ -4,12 +4,10 @@
     ViewBag.Title = "List of Invoices";
 }
 
-<h2>View</h2>
+<h1>List of invoices</h1>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table-bordered table-striped" style="font-size:25px;" width="1500">
+
+<table class="table-bordered table-striped" style="font-size:25px;" width="2000">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.InvoiceID)
@@ -38,7 +36,7 @@
             @Html.DisplayFor(modelItem => item.InvoiceID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.InvoiceDate)
+            @Html.DisplayFor(modelItem => item.InvoiceDate, "ShortDateTime")
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TotalAmount)
