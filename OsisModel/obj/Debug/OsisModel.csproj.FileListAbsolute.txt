@@ -107,6 +107,9 @@ D:\Raffi\Projects\osisService\OsisModel\bin\Microsoft.Owin.Security.OAuth.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\Microsoft.Owin.Security.Twitter.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\Microsoft.Web.Infrastructure.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\Newtonsoft.Json.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\Ninject.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\Ninject.Web.Common.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\Ninject.Web.Mvc.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\Owin.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.Helpers.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.Mvc.dll
@@ -115,6 +118,7 @@ D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.Razor.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.WebPages.Deployment.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.WebPages.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.WebPages.Razor.dll
+D:\Raffi\Projects\osisService\OsisModel\bin\WebActivatorEx.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\WebGrease.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
@@ -134,6 +138,9 @@ D:\Raffi\Projects\osisService\OsisModel\bin\EntityFramework.SqlServer.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.pdb
 D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\FluentValidation.Mvc.pdb
+D:\Raffi\Projects\osisService\OsisModel\bin\Ninject.xml
+D:\Raffi\Projects\osisService\OsisModel\bin\Ninject.Web.Common.xml
+D:\Raffi\Projects\osisService\OsisModel\bin\Ninject.Web.Mvc.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.Helpers.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.Mvc.xml
 D:\Raffi\Projects\osisService\OsisModel\bin\System.Web.Razor.xml
@@ -169,6 +176,5 @@ D:\Raffi\Projects\osisService\OsisModel\bin\pt\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\ru\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\sv\FluentValidation.resources.dll
 D:\Raffi\Projects\osisService\OsisModel\bin\tr\FluentValidation.resources.dll
-D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.csprojResolveAssemblyReference.cache
 D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.dll
 D:\Raffi\Projects\osisService\OsisModel\obj\Debug\OsisModel.pdb

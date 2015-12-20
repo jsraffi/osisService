@@ -50,5 +50,7 @@ namespace OsisModel
             Thread.CurrentThread.CurrentCulture = cInf;
             Thread.CurrentThread.CurrentUICulture = cInf;
         }
+
+        
     }
 }

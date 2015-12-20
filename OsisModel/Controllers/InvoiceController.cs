@@ -25,16 +25,26 @@ namespace okisSIS.Controllers
     {
         private IInvoiceService _service;
 
+        /*
         public InvoiceController(IInvoiceService service)
         {
             _service = service;
         }
+        */
+        public InvoiceController(IInvoiceService invoiceService)
+        {
+            _service = invoiceService;
+            _service.ModelState = this.ModelState;
+        }
+
         public InvoiceController()
         {
-            _service = new InvoiceService(this.ModelState);
+
         }
-        public async Task<ActionResult> Index(int? page)
+        
+        public async Task<ViewResult> Index(int? page)
         {
+            
             return View(await Task.Run(() => _service.getInvoiceList(page, User.Identity.GetUserName())));
         }
 

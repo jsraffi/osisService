@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsisModel", "OsisModel\OsisModel.csproj", "{56376B48-B611-4581-B589-1C282267BCAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsisModelTests", "OsisModelTests\OsisModelTests.csproj", "{07FCF67B-9833-471A-8222-BE977F6C69A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{56376B48-B611-4581-B589-1C282267BCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56376B48-B611-4581-B589-1C282267BCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56376B48-B611-4581-B589-1C282267BCAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07FCF67B-9833-471A-8222-BE977F6C69A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07FCF67B-9833-471A-8222-BE977F6C69A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07FCF67B-9833-471A-8222-BE977F6C69A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07FCF67B-9833-471A-8222-BE977F6C69A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
